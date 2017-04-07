@@ -1,0 +1,35 @@
+{
+  "name": "online-grocery-store",
+  "version": "1.0.0",
+  "description": "web project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ParasGarg/Online-Grocery-Store.git"
+  },
+  "keywords": [
+    "group-minions",
+    "project",
+    "spring-2017",
+    "stevens-intitute-of-technology",
+    "web-application"    
+  ],
+  "author": "Minions",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ParasGarg/Online-Grocery-Store/issues"
+  },
+  "homepage": "https://github.com/ParasGarg/Online-Grocery-Store#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "mongodb": "^2.2.25",
+    "path": "^0.12.7",
+    "uuid": "^3.0.1"
+  }
+}
