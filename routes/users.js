@@ -11,13 +11,14 @@
         ---------------------------------------------------------------------------------------
         |   3.  | Put    | /user/:id | updateUserProfile | users   | Update user profile info |
         ---------------------------------------------------------------------------------------
- */
+*/
 
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const usersData = data.users;
+const credentialsData = data.credentails;
 
 // route to fetch user information by id
 router.get('/:id', (req, res) => {
@@ -43,23 +44,37 @@ router.post('/new', (req, res) => {
     } else if (!newUser.mobile) {
         res.status(400).json({ error: "Please provide your contact number." });
         return;
-    } else if (!newUser.image) {
+    } else if (!newUser.password) {
+        res.status(400).json({ error: "Please provide your account password." });
+        return;
+    }  else if (!newUser.image) {
         newUser.image = null;
     }
 
     // searching for an existing id
-    usersData.getUserById(newUser.email).then((userInfoFound) => {
+    usersData.getUserById(newUser.email).then((userJsonDocument) => {
         
-        if (userInfoFound == null) {
+        if (userJsonDocument == null) {     // no user document found
+            // creating new json document in users collection 
             usersData.createNewUser(newUser.name, newUser.email, newUser.mobile, newUser.image).then((userInfo) => {
-                res.json(userInfo);
+
+                if (userInfo != null) {     // newly created user document found
+                    // creating new json document in credentials collection
+                    credentialsData.createNewCredential(newUser.email, newUser.password).then((userCredential) => {
+                        res.status(200).json(userCredential);
+                    });
+                } else {
+                    res.status(500).json({ error: "Users collection error in creating new documents." })
+                }
             }).catch(() => {
-                res.status(404).json({ error: "Invalid input stream" });
+                res.status(404).json({ error: "Invalid user input stream." });
             });
-        } else {
-            res.status(400).json({ error: "Registered user" });
+        } else {                            // user document found
+            res.status(400).json({ error: "User is already registered." });
         }
 
+    }, (collectionError) => {
+        res.status(500).json({ error: collectionError });
     });
 });
 
@@ -73,14 +88,19 @@ router.put('/:id', (req, res) => {
         return;
     }
 
-    usersData.getUserById(req.params.id).then(() => {
-        usersData.updateUserProfile(req.params.id, userUpdates).then((updates) => {
-            res.json(updates);
-        }, (err) => {
-            res.status(500).json({ error: err });
-        });
-    }).catch(() => {
-        res.status(404).json({ error: "No user found." });
+    usersData.getUserById(req.params.id).then((userJsonDocument) => {
+        
+        if (userJsonDocument != null) {     // user document exists
+            // update new json document in users collection
+            usersData.updateUserProfile(req.params.id, userUpdates).then((updates) => {
+                res.status(200).json(updates);
+            });
+        } else {
+            res.status(400).json({ error: "No user exists to update" })
+        }
+    
+    }, (collectionError) => {
+        res.status(500).json({ error: collectionError });
     });
 });
 

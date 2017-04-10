@@ -9,7 +9,7 @@
         ----------------------------------------------------------------------------------------------
         |   2.  | Delete | /admin/users/:id | deleteUser        | users   | Insert new user record   |
         ----------------------------------------------------------------------------------------------
- */
+*/
 
 /* importing required files and packages */
 const express = require('express');

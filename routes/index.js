@@ -1,4 +1,5 @@
 const adminRoutes = require("./admin");
+const credentialsRoutes = require("./credentials");
 const usersRoutes = require("./users");
 
 const routesMethod = (app) => {
