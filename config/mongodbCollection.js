@@ -1,5 +1,5 @@
 /* database collection configuration */
-const dbConnection = require('./mongodbConnection');
+const dbConnection = require('./mongoDbConnection');
 
 /* This will allow to have one reference to each collection per app */
 let getCollectionFn = (collection) => {
