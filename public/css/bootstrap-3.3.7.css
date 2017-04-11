@@ -45,18 +45,6 @@ b, strong {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 [hidden],
 template {
   display: none;
@@ -3067,6 +3055,7 @@ fieldset[disabled] a.btn {
   color: #333;
   background-color: #fff;
   border-color: #ccc;
+  line-height: 1.45;
 }
 .btn-default:focus,
 .btn-default.focus {
@@ -4172,7 +4161,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar {
   position: relative;
-  min-height: 80px;
+  min-height: 50px;
 }
 @media (min-width: 768px) {
   .navbar {
@@ -4384,11 +4373,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-form .form-group {
     display: inline-block;
     margin-bottom: 0;
+    width: 90%;
     vertical-align: middle;
   }
   .navbar-form .form-control {
     display: inline-block;
-    width: auto;
+    width: 101%;
     vertical-align: middle;
   }
   .navbar-form .form-control-static {
@@ -4491,7 +4481,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-right {
     float: right !important;
-    margin-right: -15px;
+    margin-right: -20%;
   }
   .navbar-right ~ .navbar-right {
     margin-right: 0;
@@ -4545,6 +4535,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
   border-color: #e7e7e7;
+  width: 80%;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,

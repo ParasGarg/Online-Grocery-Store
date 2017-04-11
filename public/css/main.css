@@ -8,3 +8,11 @@ header {
 	width: 90%;
 	margin: auto 5%;
 }
+
+i.fa {
+	margin-right: 1rem
+}
+
+.btn.lh {
+	line-height: 1.45;
+}
