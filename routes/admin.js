@@ -25,51 +25,118 @@ const credentialsData = data.credentails;
 /* routes for user collection operations */
 // route to fetch user information by id
 router.get('/user/id/:id', (req, res) => {
-    usersData.getUserById(req.params.id).then((userInfo) => {
-        
-        if (userInfo == null) {
-            res.status(400).json({ error: "Not a valid id" });
-        }
+    usersData.getUserById(req.params.id).then((userJsonDocument) => {
 
-        res.json(userInfo);
-        //res.render('checker/results', { check: checkPhrases })        
-    }).catch(() => {
-        res.status(500).json({ error: "Server issue with users collection" });
+        // validating received user information
+        if (userJsonDocument == null) {
+            res.render('errors/index', { 
+                code: 400,
+                message: `User with '${req.params.id}' email id is not a registered user.`,
+                url: req.originalUrl
+            });
+        } else {
+            res.json(userJsonDocument);
+        }
+        
+    }).catch((collectionError) => {
+        res.render('errors/index', { 
+            code: 500,
+            message: collectionError,
+            url: req.originalUrl
+        });
     });
 });
 
 // route to fetch information for all users 
 router.get('/user/list', (req, res) => {
-    usersData.getAllUsers().then((usersInfo) => {
-        res.json(usersInfo);        
-    }).catch(() =>{
-        res.status(404).json({ error: "No user records" });
+    usersData.getAllUsers().then((userJsonDocumentList) => {
+
+        // validating received user information
+        if (userJsonDocumentList == null) {
+            res.render('errors/index', { 
+                code: 400,
+                message: `No user is registered.`,
+                url: req.originalUrl
+            });
+        } else {
+            res.json(userJsonDocumentList);
+        }
+
+    }).catch((collectionError) =>{
+        res.render('errors/index', { 
+            code: 500,
+            message: collectionError,
+            url: req.originalUrl
+        });
     });
 });
 
 // route to delete user information by id
 router.delete('/user/id/:id', (req, res) => {
-    usersData.getUserById(req.params.id).then(() => {
-        usersData.deleteUser(req.params.id).then(() => {
-            res.status(200).send(`Pharse of id ${req.params.id} has been deleted`);
-        }, (err) => {
-            res.status(500).json({ error: err });            
+    usersData.getUserById(req.params.id).then((userJsonDocument) => {
+
+        // validating received user information
+        if (userJsonDocument == null) {
+            res.render('errors/index', { 
+                code: 400,
+                message: `User with '${req.params.id}' email id does not exist.`,
+                url: req.originalUrl
+            });
+        } else {
+            // deleting user
+            usersData.deleteUser(req.params.id).then(() => {
+                credentialsData.deleteCredential(req.params.id).then(() => {
+                    res.status(200).send(`User and its credentials with ${req.params.id} email id has been deleted`);
+                });
+
+            }).catch((collectionError) =>{
+                res.render('errors/index', { 
+                    code: 500,
+                    message: collectionError,
+                    url: req.originalUrl
+                });
+            });
+        }
+    }, (collectionError) => {
+        res.render('errors/index', { 
+            code: 500,
+            message: collectionError,
+            url: req.originalUrl
         });
-    }). catch(() => {
-        res.status(404).json({ error: "No such user exists" });
     });
 });
 
 // route to delete credential information by id
-router.delete('/user/creds/:id', (req, res) => {
-    credentialsData.getCredentialById(req.params.id).then(() => {
+router.delete('/user/credential/:id', (req, res) => {
+    credentialsData.getCredentialById(req.params.id).then((credentialJsonDocument) => {
+
+        // validating received credentails information
+        if (credentialJsonDocument == null) {
+            res.render('errors/index', { 
+                code: 400,
+                message: `Credential with '${req.params.id}' email id does not exists.`,
+                url: req.originalUrl
+            });
+        }
+
+        // deleting credentials
         credentialsData.deleteCredential(req.params.id).then(() => {
-            res.status(200).send(`Pharse of id ${req.params.id} has been deleted`);
-        }, (err) => {
-            res.status(500).json({ error: err });            
+            res.status(200).send(`Credential wirh ${req.params.id} email id has been deleted`);
+
+        }, (collectionError) => {
+            res.render('errors/index', { 
+                code: 500,
+                message: collectionError,
+                url: req.originalUrl
+            });
+        }); 
+
+    }, (collectionError) => {
+        res.render('errors/index', { 
+            code: 500,
+            message: collectionError,
+            url: req.originalUrl
         });
-    }). catch(() => {
-        res.status(404).json({ error: "No such user exists" });
     });
 });
 

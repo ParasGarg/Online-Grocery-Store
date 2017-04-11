@@ -33,7 +33,7 @@ module.exports = usersControllers = {
             // return a found json document else null 
             return usersCollection.findOne({ _id:id }, { _id:1, name:1, mobile:1 });
         }, () => {
-            return Promise.reject("Users collection response error.");
+            return Promise.reject("Server issue with 'users' collection.");
         });
     },
 
@@ -43,7 +43,7 @@ module.exports = usersControllers = {
             // return all found json documents else null
             return usersCollection.find({}, { _id:1, name:1, mobile:1 }).toArray();
         }, () => {
-            return Promise.reject("User collection response error.");
+            return Promise.reject("Server issue with 'users' collection.");
         });
     },
 
@@ -70,7 +70,9 @@ module.exports = usersControllers = {
                 })
                 .then((newUserId) => {
                     return usersControllers.getUserById(newUserId);
-                });
+                })
+        }, () => {
+            return Promise.reject("Server issue with 'users' collection.");            
         });
     },
 
@@ -99,7 +101,7 @@ module.exports = usersControllers = {
                     return usersControllers.getUserById(userEmail);
                 });
         }, () => {
-            return Promise.reject("User collection response error.");
+            return Promise.reject("Server issue with 'users' collection.");
         });
     },
 
@@ -113,7 +115,7 @@ module.exports = usersControllers = {
                     }
                 });
         }, () => {
-            return Promise.reject("User collection response error.");
+            return Promise.reject("Server issue with 'users' collection.");
         });
     }
 };

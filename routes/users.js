@@ -22,11 +22,25 @@ const credentialsData = data.credentails;
 
 // route to fetch user information by id
 router.get('/:id', (req, res) => {
-    usersData.getUserById(req.params.id).then((userInfo) => {
-        res.json(userInfo);
-        //res.render('checker/results', { check: checkPhrases })        
-    }).catch(() => {
-        res.status(404).json({ error: "Not a valid id" });
+    usersData.getUserById(req.params.id).then((userJsonDocument) => {
+        
+        // validating received user information
+        if (userJsonDocument == null) {
+            res.render('errors/index', { 
+                code: 400,
+                message: `User with '${req.params.id}' email id is not a registered user.`,
+                url: req.originalUrl
+            });
+        }
+        
+        res.json(userJsonDocument);
+        
+    }).catch((collectionError) => {
+        res.render('errors/index', { 
+            code: 500,
+            message: collectionError,
+            url: req.originalUrl
+        });
     });
 });
 
@@ -53,28 +67,35 @@ router.post('/new', (req, res) => {
 
     // searching for an existing id
     usersData.getUserById(newUser.email).then((userJsonDocument) => {
-        
-        if (userJsonDocument == null) {     // no user document found
-            // creating new json document in users collection 
-            usersData.createNewUser(newUser.name, newUser.email, newUser.mobile, newUser.image).then((userInfo) => {
 
-                if (userInfo != null) {     // newly created user document found
-                    // creating new json document in credentials collection
-                    credentialsData.createNewCredential(newUser.email, newUser.password).then((userCredential) => {
-                        res.status(200).json(userCredential);
-                    });
-                } else {
-                    res.status(500).json({ error: "Users collection error in creating new documents." })
-                }
-            }).catch(() => {
-                res.status(404).json({ error: "Invalid user input stream." });
+        // validating received user information
+        if (userJsonDocument == null) {
+            // creating new json document in users collection 
+            usersData.createNewUser(newUser.name, newUser.email, newUser.mobile, newUser.image).then(() => {
+                credentialsData.createNewCredential(newUser.email, newUser.password).then((userCredential) => {
+                    res.status(200).json(userCredential);
+                });
+            }).catch(() => {    // invalid user input
+                res.render('errors/index', { 
+                    code: 400,
+                    message: `Invalid user input stream.`,
+                    url: req.originalUrl
+                });
             });
-        } else {                            // user document found
-            res.status(400).json({ error: "User is already registered." });
+        } else {    // user document found
+            res.render('errors/index', { 
+                code: 400,
+                message: `User with '${newUser.email}' email id is already a registered user.`,
+                url: req.originalUrl
+            });
         }
 
     }, (collectionError) => {
-        res.status(500).json({ error: collectionError });
+        res.render('errors/index', { 
+            code: 500,
+            message: collectionError,
+            url: req.originalUrl
+        });
     });
 });
 
@@ -96,11 +117,19 @@ router.put('/:id', (req, res) => {
                 res.status(200).json(updates);
             });
         } else {
-            res.status(400).json({ error: "No user exists to update" })
+            res.render('errors/index', { 
+                code: 400,
+                message: `User with '${req.params.id}' email id does not exists.`,
+                url: req.originalUrl
+            });
         }
     
     }, (collectionError) => {
-        res.status(500).json({ error: collectionError });
+        res.render('errors/index', { 
+            code: 500,
+            message: collectionError,
+            url: req.originalUrl
+        });
     });
 });
 

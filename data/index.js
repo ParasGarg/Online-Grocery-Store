@@ -1,7 +1,8 @@
-const usersData = require('./users');
 const credentialsData = require('./credentials');
+const usersData = require('./users');
 
 let dataMethod = (app) => {
+    app.use("/credentials", credentialsData);
     app.use("/user", usersData);
 };
 
