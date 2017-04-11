@@ -9,7 +9,7 @@ const routesMethod = (app) => {
     });
 
     app.use("*", (req, res) => {        // no page routes
-        res.render('errors/index', { 
+        res.render('alerts/error', { 
             code: 404,
             message: `Page Not Found`,
             url: req.originalUrl 

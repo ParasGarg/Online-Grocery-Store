@@ -77,10 +77,8 @@ module.exports = credentialsControllers = {
                 credentialChanges['password'] = generateHashedPassword(password);
             }
 
-            return credentialsCollection.updateOne( { _id:email }, { $set:credentialChanges } )
-                .then(() => {
-                    return credentialsControllers.getCredentialById(email);
-                });
+            return credentialsCollection.updateOne( { _id:email }, { $set:credentialChanges });
+            //    .then(() => { return credentialsControllers.getCredentialById(email); });
         }).catch(() => {
             return Promise.reject("Server issue with 'credentials' collection.");
         });

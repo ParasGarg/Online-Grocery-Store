@@ -29,7 +29,7 @@ router.get('/user/id/:id', (req, res) => {
 
         // validating received user information
         if (userJsonDocument == null) {
-            res.render('errors/index', { 
+            res.render('alerts/error', { 
                 code: 400,
                 message: `User with '${req.params.id}' email id is not a registered user.`,
                 url: req.originalUrl
@@ -39,7 +39,7 @@ router.get('/user/id/:id', (req, res) => {
         }
         
     }).catch((collectionError) => {
-        res.render('errors/index', { 
+        res.render('alerts/error', { 
             code: 500,
             message: collectionError,
             url: req.originalUrl
@@ -53,7 +53,7 @@ router.get('/user/list', (req, res) => {
 
         // validating received user information
         if (userJsonDocumentList == null) {
-            res.render('errors/index', { 
+            res.render('alerts/error', { 
                 code: 400,
                 message: `No user is registered.`,
                 url: req.originalUrl
@@ -63,7 +63,7 @@ router.get('/user/list', (req, res) => {
         }
 
     }).catch((collectionError) => {
-        res.render('errors/index', {
+        res.render('alerts/error', {
             code: 500,
             message: collectionError,
             url: req.originalUrl
@@ -77,7 +77,7 @@ router.delete('/user/id/:id', (req, res) => {
 
         // validating received user information
         if (userJsonDocument == null) {
-            res.render('errors/index', {
+            res.render('alerts/error', {
                 code: 400,
                 message: `User with '${req.params.id}' email id does not exist.`,
                 url: req.originalUrl
@@ -90,7 +90,7 @@ router.delete('/user/id/:id', (req, res) => {
                     res.status(200).send(`User and its credentials with ${req.params.id} email id has been deleted`);
                 
                 }, (noResultError) => {
-                    res.render('errors/index', {
+                    res.render('alerts/error', {
                         code: 400,
                         message: noResultError,
                         url: req.originalUrl
@@ -98,7 +98,7 @@ router.delete('/user/id/:id', (req, res) => {
                 });
             
             }, (noResultError) => {
-                res.render('errors/index', {
+                res.render('alerts/error', {
                     code: 400,
                     message: noResultError,
                     url: req.originalUrl
@@ -106,7 +106,7 @@ router.delete('/user/id/:id', (req, res) => {
             });
         }
     }, (collectionError) => {
-        res.render('errors/index', {
+        res.render('alerts/error', {
             code: 500,
             message: collectionError,
             url: req.originalUrl
@@ -120,7 +120,7 @@ router.delete('/user/credential/:id', (req, res) => {
 
         // validating received credentails information
         if (credentialJsonDocument == null) {
-            res.render('errors/index', { 
+            res.render('alerts/error', { 
                 code: 400,
                 message: `Credential with '${req.params.id}' email id does not exists.`,
                 url: req.originalUrl
@@ -131,7 +131,7 @@ router.delete('/user/credential/:id', (req, res) => {
                 res.status(200).send(`Credential wirh ${req.params.id} email id has been deleted`);
 
             }, (collectionError) => {
-                res.render('errors/index', {
+                res.render('alerts/error', {
                     code: 500,
                     message: collectionError,
                     url: req.originalUrl
@@ -139,7 +139,7 @@ router.delete('/user/credential/:id', (req, res) => {
             });
         }
     }, (collectionError) => {
-        res.render('errors/index', { 
+        res.render('alerts/error', { 
             code: 500,
             message: collectionError,
             url: req.originalUrl

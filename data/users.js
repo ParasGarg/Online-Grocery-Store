@@ -96,10 +96,8 @@ module.exports = usersControllers = {
                 userChanges['image'] = userUpdates.image;
             }
 
-            return usersCollection.updateOne( { _id:userEmail }, { $set:userChanges } )
-                .then(() => {
-                    return usersControllers.getUserById(userEmail);
-                });
+            return usersCollection.updateOne( { _id:userEmail }, { $set:userChanges } );
+            //    .then(() => { return usersControllers.getUserById(userEmail); });
         }, () => {
             return Promise.reject("Server issue with 'users' collection.");
         });

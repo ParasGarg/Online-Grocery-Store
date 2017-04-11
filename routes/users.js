@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
  
         // validating received user information
         if (userJsonDocument == null) {
-            res.render('errors/index', {
+            res.render('alerts/error', {
                 code: 400,
                 message: `User with '${req.params.id}' email id is not a registered user.`,
                 url: req.originalUrl
@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
             res.json(userJsonDocument);
         }
     }).catch((collectionError) => {
-        res.render('errors/index', { 
+        res.render('alerts/error', { 
             code: 500,
             message: collectionError,
             url: req.originalUrl
@@ -74,7 +74,7 @@ router.post('/new', (req, res) => {
 
                 // validating received user information
                 if (createUserDocument == null) {
-                    res.render('errors/index', { 
+                    res.render('alerts/error', { 
                         code: 400,
                         message: `Invalid user input stream.`,
                         url: req.originalUrl
@@ -89,7 +89,7 @@ router.post('/new', (req, res) => {
                                 res.status(200).json(userCredential);
                             });
                         } else {   // user document found
-                            res.render('errors/index', { 
+                            res.render('alerts/error', { 
                                 code: 400,
                                 message: `Credential with '${newUser.email}' email id is already a registered.`,
                                 url: req.originalUrl
@@ -99,14 +99,14 @@ router.post('/new', (req, res) => {
                 }
             });
         } else {    // user document found
-            res.render('errors/index', { 
+            res.render('alerts/error', { 
                 code: 400,
                 message: `User with '${newUser.email}' email id is already a registered.`,
                 url: req.originalUrl
             });
         }
     }).catch((collectionError) => {
-        res.render('errors/index', {
+        res.render('alerts/error', {
             code: 500,
             message: collectionError,
             url: req.originalUrl
@@ -120,7 +120,7 @@ router.put('/:id', (req, res) => {
 
     // checking for empty json
     if (Object.keys(userUpdates).length === 0) {
-        res.render('errors/index', {
+        res.render('alerts/error', {
             code: 400,
             message: `No data is provided to update the user information.`,
             url: req.originalUrl
@@ -128,51 +128,85 @@ router.put('/:id', (req, res) => {
     } else  {
         // validating user existance
         usersData.getUserById(req.params.id).then((userJsonDocument) => {
-            // user not exist
-            if (userJsonDocument == null) {     // user document exists
-                res.render('errors/index', {
-                    code: 400,
-                    message: `User with '${req.params.id}' email id does not exists.`,
-                    url: req.originalUrl
-                });
-            } else {
-                // checking for user profile updates
-                if (userUpdates.name || userUpdates.mobile || userUpdates.image) {
-                    // update new json document in users collection for user profile
-                    usersData.updateUserProfile(req.params.id, userUpdates).then((profileUpdates) => {
-                        // validating updates
-                        if (profileUpdates == null) {
-                            res.render('errors/index', {
-                                code: 400,
-                                message: `User with '${req.params.id}' email id does not exists.`,
+            credentialsData.getCredentialById(req.params.id).then((credentialJsonDocument) => {
+                   
+                // user not exist
+                if (userJsonDocument == null || credentialJsonDocument == null) {     // user document exists
+                    res.render('alerts/error', {
+                        code: 400,
+                        message: `User and credentials with '${req.params.id}' email id does not exists.`,
+                        url: req.originalUrl
+                    });
+                } else {
+                    // checking for user profile updates
+                    if (userUpdates.name || userUpdates.mobile || userUpdates.image) {
+                        // update new json document in users collection for user profile
+                        usersData.updateUserProfile(req.params.id, userUpdates).then((profileUpdates) => {
+                            // validating updates
+                            if (profileUpdates == null) {
+                                res.render('alerts/error', {
+                                    code: 400,
+                                    message: `User with '${req.params.id}' email id does not exists.`,
+                                    url: req.originalUrl
+                                });
+                            }
+                        }, (collectionError) => {
+                            res.render('alerts/error', {
+                                code: 500,
+                                message: collectionError,
                                 url: req.originalUrl
                             });
-                        }
+                        });
+                    }
+
+                    // checking for user security updates
+                    if (userUpdates.password) {
+                        // update new json document in credentials collection for user password
+                        credentialsData.updateCredential(req.params.id, userUpdates.password).then((credentialUpdate) => {
+                            // validating updates
+                            if (credentialUpdate == null) {
+                                res.render('alerts/error', {
+                                    code: 400,
+                                    message: `User with '${req.params.id}' email id does not exists.`,
+                                    url: req.originalUrl
+                                });
+                            }                            
+                        }, (collectionError) => {
+                            res.render('alerts/error', {
+                                code: 500,
+                                message: collectionError,
+                                url: req.originalUrl
+                            });
+                        });
+                    }
+
+                    // checking for user payment updates
+                    if (userUpdates.paymentMode || userUpdates.paymentInfo || userUpdates.wallet) {
+
+                        /*
+    **********************
+    **********************  INSERT CODE FOR UPDATE OF USER PAYMENT OPTIONS
+    **********************
+                        */
+                    }
+
+                    res.render('alerts/success', {
+                        code: 200,
+                        message: "Yay! User profile updated!",
+                        url: req.originalUrl
                     });
                 }
-
-                // checking for user security updates
-                if (userUpdates.password) {
-
-                }
-
-                // checking for user payment updates
-                if (userUpdates.paymentMode || userUpdates.paymentInfo) {
-
-                }
-
-                // checking for user wallet updates
-                if (userUpdates.wallet) {
-
-                }
-
-
-                        res.status(200).json(updates);
-
-
-            }
+            // error checking for credentials collection
+            }, (collectionError) => {
+                res.render('alerts/error', {
+                    code: 500,
+                    message: collectionError,
+                    url: req.originalUrl
+                });
+            });
+        // error checking for users collection
         }, (collectionError) => {
-            res.render('errors/index', {
+            res.render('alerts/error', {
                 code: 500,
                 message: collectionError,
                 url: req.originalUrl
