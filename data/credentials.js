@@ -39,7 +39,7 @@ module.exports = credentialsControllers = {
             // return a found json document else null 
             return credentialsCollection.findOne({ _id:id }, { _id:1, password:1 });
         }).catch(() => {
-            return Promise.reject("Credentials collection response error.");
+            return Promise.reject("Server issue with 'credentials' collection.");
         });
     },
 
@@ -58,8 +58,10 @@ module.exports = credentialsControllers = {
                     return newCredentialInformation.insertedId;
                 })
                 .then((newCredentialId) => {
-                    return credentialsCollection.getCredentialById(newCredentialId);
+                    return credentialsControllers.getCredentialById(newCredentialId);
                 });
+        }, () => {
+            return Promise.reject("Server issue with 'credentials' collection.");            
         });
     },
 
@@ -80,7 +82,7 @@ module.exports = credentialsControllers = {
                     return credentialsControllers.getCredentialById(email);
                 });
         }).catch(() => {
-            return Promise.reject("Credentials collection response error.");
+            return Promise.reject("Server issue with 'credentials' collection.");
         });
     },
 
@@ -95,7 +97,7 @@ module.exports = credentialsControllers = {
 					return Promise.reject("Incorrect Password");
 				});
 		}).catch(() => {
-            return Promise.reject("Credentials collection response error.");
+            return Promise.reject("Server issue with 'credentials' collection.");
         });
 	},
 
@@ -109,7 +111,7 @@ module.exports = credentialsControllers = {
                     }
                 });
         }).catch(() => {
-            return Promise.reject("Credentials collection response error.");
+            return Promise.reject("Server issue with 'credentials' collection.");
         });
     }
 };

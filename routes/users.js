@@ -18,23 +18,22 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const usersData = data.users;
-const credentialsData = data.credentails;
+const credentialsData = data.credentials;
 
 // route to fetch user information by id
 router.get('/:id', (req, res) => {
     usersData.getUserById(req.params.id).then((userJsonDocument) => {
-        
+ 
         // validating received user information
         if (userJsonDocument == null) {
-            res.render('errors/index', { 
+            res.render('errors/index', {
                 code: 400,
                 message: `User with '${req.params.id}' email id is not a registered user.`,
                 url: req.originalUrl
             });
+        } else {
+            res.json(userJsonDocument);
         }
-        
-        res.json(userJsonDocument);
-        
     }).catch((collectionError) => {
         res.render('errors/index', { 
             code: 500,
@@ -71,16 +70,21 @@ router.post('/new', (req, res) => {
         // validating received user information
         if (userJsonDocument == null) {
             // creating new json document in users collection 
-            usersData.createNewUser(newUser.name, newUser.email, newUser.mobile, newUser.image).then(() => {
-                credentialsData.createNewCredential(newUser.email, newUser.password).then((userCredential) => {
-                    res.status(200).json(userCredential);
-                });
-            }).catch(() => {    // invalid user input
-                res.render('errors/index', { 
-                    code: 400,
-                    message: `Invalid user input stream.`,
-                    url: req.originalUrl
-                });
+            usersData.createNewUser(newUser.name, newUser.email, newUser.mobile, newUser.image).then((createUserDocument) => {
+
+                // validating received user information
+                if (createUserDocument == null) {
+                    res.render('errors/index', { 
+                        code: 400,
+                        message: `Invalid user input stream.`,
+                        url: req.originalUrl
+                    });
+                } else {
+                    credentialsData.createNewCredential(newUser.email, newUser.password).then((userCredential) => {
+                        res.status(200).json(userCredential);
+                    });
+                }
+
             });
         } else {    // user document found
             res.render('errors/index', { 
@@ -89,9 +93,8 @@ router.post('/new', (req, res) => {
                 url: req.originalUrl
             });
         }
-
-    }, (collectionError) => {
-        res.render('errors/index', { 
+    }).catch((collectionError) => {
+        res.render('errors/index', {
             code: 500,
             message: collectionError,
             url: req.originalUrl
@@ -105,32 +108,35 @@ router.put('/:id', (req, res) => {
 
     // checking for empty json
     if (Object.keys(userUpdates).length === 0) {
-        res.status(400).json({ error: "No data to update" });
-        return;
-    }
-
-    usersData.getUserById(req.params.id).then((userJsonDocument) => {
-        
-        if (userJsonDocument != null) {     // user document exists
-            // update new json document in users collection
-            usersData.updateUserProfile(req.params.id, userUpdates).then((updates) => {
-                res.status(200).json(updates);
-            });
-        } else {
-            res.render('errors/index', { 
-                code: 400,
-                message: `User with '${req.params.id}' email id does not exists.`,
-                url: req.originalUrl
-            });
-        }
-    
-    }, (collectionError) => {
-        res.render('errors/index', { 
-            code: 500,
-            message: collectionError,
+        res.render('errors/index', {
+            code: 400,
+            message: `No data is provided to update the user information.`,
             url: req.originalUrl
         });
-    });
+    } else {
+        usersData.getUserById(req.params.id).then((userJsonDocument) => {
+        
+            if (userJsonDocument != null) {     // user document exists
+                // update new json document in users collection
+                usersData.updateUserProfile(req.params.id, userUpdates).then((updates) => {
+                    res.status(200).json(updates);
+                });
+            } else {
+                res.render('errors/index', {
+                    code: 400,
+                    message: `User with '${req.params.id}' email id does not exists.`,
+                    url: req.originalUrl
+                });
+            }
+
+        }, (collectionError) => {
+            res.render('errors/index', {
+                code: 500,
+                message: collectionError,
+                url: req.originalUrl
+            });
+        });
+    }
 });
 
 // exporting routing apis

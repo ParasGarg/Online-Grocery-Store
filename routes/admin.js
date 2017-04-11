@@ -117,20 +117,19 @@ router.delete('/user/credential/:id', (req, res) => {
                 message: `Credential with '${req.params.id}' email id does not exists.`,
                 url: req.originalUrl
             });
-        }
+        } else {
+             // deleting credentials
+            credentialsData.deleteCredential(req.params.id).then(() => {
+                res.status(200).send(`Credential wirh ${req.params.id} email id has been deleted`);
 
-        // deleting credentials
-        credentialsData.deleteCredential(req.params.id).then(() => {
-            res.status(200).send(`Credential wirh ${req.params.id} email id has been deleted`);
-
-        }, (collectionError) => {
-            res.render('errors/index', { 
-                code: 500,
-                message: collectionError,
-                url: req.originalUrl
+            }, (collectionError) => {
+                res.render('errors/index', { 
+                    code: 500,
+                    message: collectionError,
+                    url: req.originalUrl
+                });
             });
-        }); 
-
+        }
     }, (collectionError) => {
         res.render('errors/index', { 
             code: 500,
