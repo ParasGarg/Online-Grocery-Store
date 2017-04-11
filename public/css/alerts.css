@@ -1,0 +1,16 @@
+article {
+	padding: 10% auto;
+	text-align: center;
+}
+
+h2 {
+	font-size: 32rem;
+}
+
+p {
+	font-size: 6rem;
+}
+
+label {
+	margin-top: 3%;
+}
