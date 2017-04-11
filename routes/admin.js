@@ -1,7 +1,7 @@
-/* 
+/*
  * Admin Routers *
  * This route file contains all apis for admin operations
- * Functionalities Index: 
+ * Functionalities Index:
         ========================================================================================================
         | S.No. |  Type  |         URL        |   Function Call   |    Fn Path    |         Description        |
         ========================================================================================================
@@ -20,7 +20,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const usersData = data.users;
-const credentialsData = data.credentails;
+const credentialsData = data.credentials;
 
 /* routes for user collection operations */
 // route to fetch user information by id
@@ -62,8 +62,8 @@ router.get('/user/list', (req, res) => {
             res.json(userJsonDocumentList);
         }
 
-    }).catch((collectionError) =>{
-        res.render('errors/index', { 
+    }).catch((collectionError) => {
+        res.render('errors/index', {
             code: 500,
             message: collectionError,
             url: req.originalUrl
@@ -77,7 +77,7 @@ router.delete('/user/id/:id', (req, res) => {
 
         // validating received user information
         if (userJsonDocument == null) {
-            res.render('errors/index', { 
+            res.render('errors/index', {
                 code: 400,
                 message: `User with '${req.params.id}' email id does not exist.`,
                 url: req.originalUrl
@@ -85,20 +85,28 @@ router.delete('/user/id/:id', (req, res) => {
         } else {
             // deleting user
             usersData.deleteUser(req.params.id).then(() => {
+                // deleting user credentails
                 credentialsData.deleteCredential(req.params.id).then(() => {
                     res.status(200).send(`User and its credentials with ${req.params.id} email id has been deleted`);
+                
+                }, (noResultError) => {
+                    res.render('errors/index', {
+                        code: 400,
+                        message: noResultError,
+                        url: req.originalUrl
+                    });
                 });
-
-            }).catch((collectionError) =>{
-                res.render('errors/index', { 
-                    code: 500,
-                    message: collectionError,
+            
+            }, (noResultError) => {
+                res.render('errors/index', {
+                    code: 400,
+                    message: noResultError,
                     url: req.originalUrl
                 });
             });
         }
     }, (collectionError) => {
-        res.render('errors/index', { 
+        res.render('errors/index', {
             code: 500,
             message: collectionError,
             url: req.originalUrl
@@ -123,7 +131,7 @@ router.delete('/user/credential/:id', (req, res) => {
                 res.status(200).send(`Credential wirh ${req.params.id} email id has been deleted`);
 
             }, (collectionError) => {
-                res.render('errors/index', { 
+                res.render('errors/index', {
                     code: 500,
                     message: collectionError,
                     url: req.originalUrl

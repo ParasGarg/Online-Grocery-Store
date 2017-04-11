@@ -64,7 +64,7 @@ router.post('/new', (req, res) => {
         newUser.image = null;
     }
 
-    // searching for an existing id
+    // searching for an existing user
     usersData.getUserById(newUser.email).then((userJsonDocument) => {
 
         // validating received user information
@@ -80,16 +80,28 @@ router.post('/new', (req, res) => {
                         url: req.originalUrl
                     });
                 } else {
-                    credentialsData.createNewCredential(newUser.email, newUser.password).then((userCredential) => {
-                        res.status(200).json(userCredential);
+                     // searching for an existing credential
+                    credentialsData.getCredentialById(newUser.email).then((credentialJsonDocument) => {
+                        // validating received user information
+                        if (credentialJsonDocument == null) {
+                            // creating new json document in credentials collection 
+                            credentialsData.createNewCredential(newUser.email, newUser.password).then((userCredential) => {
+                                res.status(200).json(userCredential);
+                            });
+                        } else {   // user document found
+                            res.render('errors/index', { 
+                                code: 400,
+                                message: `Credential with '${newUser.email}' email id is already a registered.`,
+                                url: req.originalUrl
+                            });
+                        }
                     });
                 }
-
             });
         } else {    // user document found
             res.render('errors/index', { 
                 code: 400,
-                message: `User with '${newUser.email}' email id is already a registered user.`,
+                message: `User with '${newUser.email}' email id is already a registered.`,
                 url: req.originalUrl
             });
         }
@@ -113,22 +125,52 @@ router.put('/:id', (req, res) => {
             message: `No data is provided to update the user information.`,
             url: req.originalUrl
         });
-    } else {
+    } else  {
+        // validating user existance
         usersData.getUserById(req.params.id).then((userJsonDocument) => {
-        
-            if (userJsonDocument != null) {     // user document exists
-                // update new json document in users collection
-                usersData.updateUserProfile(req.params.id, userUpdates).then((updates) => {
-                    res.status(200).json(updates);
-                });
-            } else {
+            // user not exist
+            if (userJsonDocument == null) {     // user document exists
                 res.render('errors/index', {
                     code: 400,
                     message: `User with '${req.params.id}' email id does not exists.`,
                     url: req.originalUrl
                 });
-            }
+            } else {
+                // checking for user profile updates
+                if (userUpdates.name || userUpdates.mobile || userUpdates.image) {
+                    // update new json document in users collection for user profile
+                    usersData.updateUserProfile(req.params.id, userUpdates).then((profileUpdates) => {
+                        // validating updates
+                        if (profileUpdates == null) {
+                            res.render('errors/index', {
+                                code: 400,
+                                message: `User with '${req.params.id}' email id does not exists.`,
+                                url: req.originalUrl
+                            });
+                        }
+                    });
+                }
 
+                // checking for user security updates
+                if (userUpdates.password) {
+
+                }
+
+                // checking for user payment updates
+                if (userUpdates.paymentMode || userUpdates.paymentInfo) {
+
+                }
+
+                // checking for user wallet updates
+                if (userUpdates.wallet) {
+
+                }
+
+
+                        res.status(200).json(updates);
+
+
+            }
         }, (collectionError) => {
             res.render('errors/index', {
                 code: 500,
