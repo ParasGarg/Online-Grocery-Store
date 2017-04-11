@@ -1,9 +1,12 @@
+const credentialsData = require('./credentials');
 const usersData = require('./users');
 
 let dataMethod = (app) => {
+    app.use("/credentials", credentialsData);
     app.use("/user", usersData);
 };
 
 module.exports = {
-    users: require("./users")
+    credentials: require('./credentials'),
+    users: require('./users')
 };

@@ -11,21 +11,35 @@
         ---------------------------------------------------------------------------------------
         |   3.  | Put    | /user/:id | updateUserProfile | users   | Update user profile info |
         ---------------------------------------------------------------------------------------
- */
+*/
 
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const usersData = data.users;
+const credentialsData = data.credentials;
 
 // route to fetch user information by id
 router.get('/:id', (req, res) => {
-    usersData.getUserById(req.params.id).then((userInfo) => {
-        res.json(userInfo);
-        //res.render('checker/results', { check: checkPhrases })        
-    }).catch(() => {
-        res.status(404).json({ error: "Not a valid id" });
+    usersData.getUserById(req.params.id).then((userJsonDocument) => {
+ 
+        // validating received user information
+        if (userJsonDocument == null) {
+            res.render('alerts/error', {
+                code: 400,
+                message: `User with '${req.params.id}' email id is not a registered user.`,
+                url: req.originalUrl
+            });
+        } else {
+            res.json(userJsonDocument);
+        }
+    }).catch((collectionError) => {
+        res.render('alerts/error', { 
+            code: 500,
+            message: collectionError,
+            url: req.originalUrl
+        });
     });
 });
 
@@ -43,23 +57,60 @@ router.post('/new', (req, res) => {
     } else if (!newUser.mobile) {
         res.status(400).json({ error: "Please provide your contact number." });
         return;
-    } else if (!newUser.image) {
+    } else if (!newUser.password) {
+        res.status(400).json({ error: "Please provide your account password." });
+        return;
+    }  else if (!newUser.image) {
         newUser.image = null;
     }
 
-    // searching for an existing id
-    usersData.getUserById(newUser.email).then((userInfoFound) => {
-        
-        if (userInfoFound == null) {
-            usersData.createNewUser(newUser.name, newUser.email, newUser.mobile, newUser.image).then((userInfo) => {
-                res.json(userInfo);
-            }).catch(() => {
-                res.status(404).json({ error: "Invalid input stream" });
-            });
-        } else {
-            res.status(400).json({ error: "Registered user" });
-        }
+    // searching for an existing user
+    usersData.getUserById(newUser.email).then((userJsonDocument) => {
 
+        // validating received user information
+        if (userJsonDocument == null) {
+            // creating new json document in users collection 
+            usersData.createNewUser(newUser.name, newUser.email, newUser.mobile, newUser.image).then((createUserDocument) => {
+
+                // validating received user information
+                if (createUserDocument == null) {
+                    res.render('alerts/error', { 
+                        code: 400,
+                        message: `Invalid user input stream.`,
+                        url: req.originalUrl
+                    });
+                } else {
+                     // searching for an existing credential
+                    credentialsData.getCredentialById(newUser.email).then((credentialJsonDocument) => {
+                        // validating received user information
+                        if (credentialJsonDocument == null) {
+                            // creating new json document in credentials collection 
+                            credentialsData.createNewCredential(newUser.email, newUser.password).then((userCredential) => {
+                                res.status(200).json(userCredential);
+                            });
+                        } else {   // user document found
+                            res.render('alerts/error', { 
+                                code: 400,
+                                message: `Credential with '${newUser.email}' email id is already a registered.`,
+                                url: req.originalUrl
+                            });
+                        }
+                    });
+                }
+            });
+        } else {    // user document found
+            res.render('alerts/error', { 
+                code: 400,
+                message: `User with '${newUser.email}' email id is already a registered.`,
+                url: req.originalUrl
+            });
+        }
+    }).catch((collectionError) => {
+        res.render('alerts/error', {
+            code: 500,
+            message: collectionError,
+            url: req.originalUrl
+        });
     });
 });
 
@@ -69,19 +120,99 @@ router.put('/:id', (req, res) => {
 
     // checking for empty json
     if (Object.keys(userUpdates).length === 0) {
-        res.status(400).json({ error: "No data to update" });
-        return;
-    }
-
-    usersData.getUserById(req.params.id).then(() => {
-        usersData.updateUserProfile(req.params.id, userUpdates).then((updates) => {
-            res.json(updates);
-        }, (err) => {
-            res.status(500).json({ error: err });
+        res.render('alerts/error', {
+            code: 400,
+            message: `No data is provided to update the user information.`,
+            url: req.originalUrl
         });
-    }).catch(() => {
-        res.status(404).json({ error: "No user found." });
-    });
+    } else  {
+        // validating user existance
+        usersData.getUserById(req.params.id).then((userJsonDocument) => {
+            credentialsData.getCredentialById(req.params.id).then((credentialJsonDocument) => {
+                   
+                // user not exist
+                if (userJsonDocument == null || credentialJsonDocument == null) {     // user document exists
+                    res.render('alerts/error', {
+                        code: 400,
+                        message: `User and credentials with '${req.params.id}' email id does not exists.`,
+                        url: req.originalUrl
+                    });
+                } else {
+                    // checking for user profile updates
+                    if (userUpdates.name || userUpdates.mobile || userUpdates.image) {
+                        // update new json document in users collection for user profile
+                        usersData.updateUserProfile(req.params.id, userUpdates).then((profileUpdates) => {
+                            // validating updates
+                            if (profileUpdates == null) {
+                                res.render('alerts/error', {
+                                    code: 400,
+                                    message: `User with '${req.params.id}' email id does not exists.`,
+                                    url: req.originalUrl
+                                });
+                            }
+                        }, (collectionError) => {
+                            res.render('alerts/error', {
+                                code: 500,
+                                message: collectionError,
+                                url: req.originalUrl
+                            });
+                        });
+                    }
+
+                    // checking for user security updates
+                    if (userUpdates.password) {
+                        // update new json document in credentials collection for user password
+                        credentialsData.updateCredential(req.params.id, userUpdates.password).then((credentialUpdate) => {
+                            // validating updates
+                            if (credentialUpdate == null) {
+                                res.render('alerts/error', {
+                                    code: 400,
+                                    message: `User with '${req.params.id}' email id does not exists.`,
+                                    url: req.originalUrl
+                                });
+                            }                            
+                        }, (collectionError) => {
+                            res.render('alerts/error', {
+                                code: 500,
+                                message: collectionError,
+                                url: req.originalUrl
+                            });
+                        });
+                    }
+
+                    // checking for user payment updates
+                    if (userUpdates.paymentMode || userUpdates.paymentInfo || userUpdates.wallet) {
+
+                        /*
+    **********************
+    **********************  INSERT CODE FOR UPDATE OF USER PAYMENT OPTIONS
+    **********************
+                        */
+                    }
+
+                    res.render('alerts/success', {
+                        code: 200,
+                        message: "Yay! User profile updated!",
+                        url: req.originalUrl
+                    });
+                }
+            // error checking for credentials collection
+            }, (collectionError) => {
+                res.render('alerts/error', {
+                    code: 500,
+                    message: collectionError,
+                    url: req.originalUrl
+                });
+            });
+        // error checking for users collection
+        }, (collectionError) => {
+            res.render('alerts/error', {
+                code: 500,
+                message: collectionError,
+                url: req.originalUrl
+            });
+        });
+    }
 });
 
 // exporting routing apis

@@ -1,18 +1,38 @@
+/* importing node module files */
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
+const exphbs = require('express-handlebars');
+const express = require('express');
+const flash = require('connect-flash');
+const passport = require('passport');
+
 /* express server configuration */
-const express = require("express");
 const app = express();
+
+/* session  configuration */
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
+app.use(flash());
+app.use(cookieParser());
+
+/* passport authenticator initialization */
+app.use(passport.initialize());
+app.use(passport.session());
+
+/* body parser configuration */
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /* static pages configuration */
 const static = express.static(__dirname + '/public');
 app.use("/public", static);
 
-/* body parser configuration */
-const bodyParser = require("body-parser");
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-/* express handlebars configuration */
-const exphbs = require("express-handlebars");
+/* view or handlebars configuration */
 app.engine('handlebars', exphbs({ defaultLayout:'main' }));
 app.set('view engine', 'handlebars');
 

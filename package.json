@@ -16,7 +16,7 @@
     "project",
     "spring-2017",
     "stevens-intitute-of-technology",
-    "web-application"    
+    "web-application"
   ],
   "author": "Minions",
   "license": "MIT",
@@ -25,10 +25,18 @@
   },
   "homepage": "https://github.com/ParasGarg/Online-Grocery-Store#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
+    "bootstrap": "^4.0.0-alpha.6",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.1",
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.2",
     "mongodb": "^2.2.25",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "uuid": "^3.0.1"
   }
