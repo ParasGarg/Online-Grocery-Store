@@ -1,0 +1,18 @@
+
+header {
+	background-color: #f8f8f8;
+	border: 1px solid #e7e7e7;
+}
+
+.wrapper {
+	width: 90%;
+	margin: auto 5%;
+}
+
+i.fa {
+	margin-right: 1rem
+}
+
+.btn.lh {
+	line-height: 1.45;
+}
