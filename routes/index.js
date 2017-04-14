@@ -1,13 +1,18 @@
 const adminRoutes = require('./admin');
-const usersRoutes = require('./users');
+//const usersRoutes = require('./users');
 
 const routesMethod = (app) => {
-    app.use("/admin", adminRoutes);     // admin routes
-    app.use("/user", usersRoutes);      // user routes
+    
     app.use("/$/", (req, res) => {      // home routes
         res.render('index');
-// /        res.status(200).json({ Message: "Your are at the home page" });
     });
+
+    app.use("/admin", adminRoutes);     // admin routes
+//    app.use("/user", usersRoutes);      // user routes
+
+    /* sub routes configuration */
+    const configUserRoutes = require("./users");
+    configUserRoutes(app);
 
     app.use("*", (req, res) => {        // no page routes
         res.render('alerts/error', { 

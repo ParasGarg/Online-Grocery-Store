@@ -24,7 +24,7 @@ const credentialsData = data.credentials;
 
 /* routes for user collection operations */
 // route to fetch user information by id
-router.get('/user/id/:id', (req, res) => {
+router.get('/user/info/:id', (req, res) => {
     usersData.getUserById(req.params.id).then((userJsonDocument) => {
 
         // validating received user information
@@ -72,7 +72,7 @@ router.get('/user/list', (req, res) => {
 });
 
 // route to delete user information by id
-router.delete('/user/id/:id', (req, res) => {
+router.delete('/user/info/:id', (req, res) => {
     usersData.getUserById(req.params.id).then((userJsonDocument) => {
 
         // validating received user information
