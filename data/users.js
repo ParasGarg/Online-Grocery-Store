@@ -13,7 +13,7 @@
         ------------------------------------------------------------------------------------
         |   3.  | createNewUser     | Create new user record in the collection             |
         ------------------------------------------------------------------------------------
-        |   4.  | updateUserProfile | Update user profile information in the collection    |
+        |   4.  | updateUser        | Update user information in the collection            |
         ------------------------------------------------------------------------------------
         |   5.  | deleteUser        | Delete the user from the collection                  |
         ------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ module.exports = usersControllers = {
     },
 
     // updating a user information in the users collection
-    updateUserProfile: (userEmail, userUpdates) => {
+    updateUser: (userEmail, userUpdates) => {
         return users().then((usersCollection) => {
             
             // update user object (empty)
@@ -94,6 +94,18 @@ module.exports = usersControllers = {
 
             if (userUpdates.image) {
                 userChanges['image'] = userUpdates.image;
+            }
+
+            if(userUpdates.paymentMode) {
+                userChanges['paymentMode'] = userUpdates.paymentMode;
+            }
+
+            if (userUpdates.paymentInfo) {
+                userChanges['paymentInfo'] = userUpdates.paymentInfo;
+            }
+
+            if (userUpdates.wallet) {
+                userChanges['wallet'] = userUpdates.wallet;
             }
 
             return usersCollection.updateOne( { _id:userEmail }, { $set:userChanges } );
