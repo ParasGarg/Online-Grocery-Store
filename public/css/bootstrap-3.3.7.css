@@ -1470,7 +1470,7 @@ abbr[data-original-title] {
   text-transform: uppercase;
 }
 blockquote {
-  padding: 10px 20px;
+  padding: 0px 10px;
   margin: 0 0 20px;
   font-size: 17.5px;
   border-left: 5px solid #eee;
@@ -4373,7 +4373,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-form .form-group {
     display: inline-block;
     margin-bottom: 0;
-    width: 90%;
+    width: 85%;
     vertical-align: middle;
   }
   .navbar-form .form-control {
@@ -4481,7 +4481,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-right {
     float: right !important;
-    margin-right: -20%;
+    margin-right: -13%;
   }
   .navbar-right ~ .navbar-right {
     margin-right: 0;
@@ -4535,6 +4535,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
   border-color: #e7e7e7;
+  float: left;
   width: 80%;
 }
 .navbar-default .navbar-nav > .open > a,
