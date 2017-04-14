@@ -2,15 +2,29 @@
  * Users Routers *
  * This route file contains all apis for basic user operations
  * Functionalities Index: 
-        =======================================================================================
-        | S.No. |  Type  |    URL    |   Function Call   | Fn Path |       Description        |
-        =======================================================================================
-        |   1.  | Get    | /user/:id | getUserById       | users   | Search user from it's id |
-        ---------------------------------------------------------------------------------------
-        |   2.  | Post   | /user/new | createNewUser     | users   | Insert new user record   |
-        ---------------------------------------------------------------------------------------
-        |   3.  | Put    | /user/:id | updateUserProfile | users   | Update user profile info |
-        ---------------------------------------------------------------------------------------
+        ===================================================================================================
+        | S.No. |  Type  |        URL        |   Function Call   | Controller |       Description         |
+        ===================================================================================================
+                                                --- OPERATIONS ---
+        ---------------------------------------------------------------------------------------------------
+        |   1.  | Get    | /user/info/:id    | getUserById       | users      | Search user from it's id  |
+        ---------------------------------------------------------------------------------------------------
+        |   2.  | Get    | /user/new         | createNewUser     | ***        | Page for new user form    |
+        ---------------------------------------------------------------------------------------------------
+        |   3.  | Post   | /user/new         | createNewUser     | users      | Insert new user record    |
+        ---------------------------------------------------------------------------------------------------
+        |   4.  | Get    | /user/update/:id  | updateUserProfile | ***        | Page for update user form |
+        ---------------------------------------------------------------------------------------------------
+        |   5.  | Put    | /user/update/:id  | updateUserProfile | users      | Update user profile info  |
+        ---------------------------------------------------------------------------------------------------
+                                                --- LOGIN / LOGOUT---
+        ---------------------------------------------------------------------------------------------------
+        |   6.  | Put    | /user/update/:id  | updateUserProfile | users      | Update user profile info  |
+        ---------------------------------------------------------------------------------------------------
+        |   7.  | Put    | /user/update/:id  | updateUserProfile | users      | Update user profile info  |
+        ---------------------------------------------------------------------------------------------------
+        |   8.  | Put    | /user/update/:id  | updateUserProfile | users      | Update user profile info  |
+        ---------------------------------------------------------------------------------------------------        
 */
 
 /* importing required files and packages */
@@ -19,9 +33,10 @@ const router = express.Router();
 const data = require('../data');
 const usersData = data.users;
 const credentialsData = data.credentials;
+const userPassport = require('../config/passport');
 
 // route to fetch user information by id
-router.get('/:id', (req, res) => {
+router.get('/info/:id', (req, res) => {
     usersData.getUserById(req.params.id).then((userJsonDocument) => {
  
         // validating received user information
@@ -41,6 +56,11 @@ router.get('/:id', (req, res) => {
             url: req.originalUrl
         });
     });
+});
+
+// route to render to create new user form
+router.get('/new', (req, res) => {
+    res.render('alerts/success', { message: "Page for create user form" });
 });
 
 // route to create new user into database
@@ -114,8 +134,13 @@ router.post('/new', (req, res) => {
     });
 });
 
-// rute to update user information by id
-router.put('/:id', (req, res) => {
+// route to render to update user form
+router.get('/update/:id', (req, res) => {
+    res.render('alerts/success', { message: "Page for update a user form" });
+});
+
+// route to update user information by id
+router.put('/update/:id', (req, res) => {
     let userUpdates = req.body;
 
     // checking for empty json
