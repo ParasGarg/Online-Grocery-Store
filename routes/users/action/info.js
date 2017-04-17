@@ -15,9 +15,9 @@
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
+const userPassport = require('../../../config/passportUsers');
 const data = require('../../../data');
 const usersData = data.users;
-const userPassport = require('../../../config/passport');
 
 // route to fetch user information by id
 router.get('/id/:id', (req, res) => {

@@ -15,10 +15,10 @@
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
+const userPassport = require('../../../config/passportUsers');
 const data = require('../../../data');
 const usersData = data.users;
 const credentialsData = data.credentials;
-const userPassport = require('../../../config/passport');
 
 // route to render to update user form
 router.get('/:id', (req, res) => {

@@ -8,31 +8,60 @@ const usersData = data.users;
 const credentialsData = data.credentials;
 
 // passport configuration
-passport.use('user', new LocalStrategy((email, password, done) => {
+passport.use(new LocalStrategy( {  }, (email, password, done) => {
+
+console.log(1);
+
     credentialsData.getCredentialById(email).then((userCredentials) => {
+
+console.log(2);
+      
         credentialsData.compareCredential(email, password).then(() => {
+
+console.log(3);
+
             return done(null, userCredentials);
         }, (err) => {
+
+console.log(4);
+
             return done(null, false, { message: err });
         });
     }, (err) => {
+
+console.log(5);
+    
         return done(null, false, { message: err });
     });
 }));
 
 // user serializer or deserializer for maintaining cookies and sessions
 passport.serializeUser(function(user, done) {               // user is receiving all user credentials from above
+
+console.log(6);
+  
   done(null, user._id);
 });
 
 passport.deserializeUser(function(userId, done) {           // getting user id from above
+
+console.log(7);
+
   usersData.getUserById(userId).then((user) => {
+
+console.log(8);
+  
     done(null, user);
   }, (err) => {      
+  
+console.log(9);
+
     done(null, false, { message: err });
   });
 });
 
+// exporting passport
+module.exports = passport;
 
 /*
 // use two LocalStrategies, registered under user and company names
