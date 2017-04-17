@@ -17,7 +17,7 @@
         ----------------------------------------------------------------------------------------
 		|   5.  | deleteCredential    | Delete the credential from the collection              |
         ----------------------------------------------------------------------------------------
-        
+ 
 */
 
 // importing required files and packages
@@ -61,7 +61,7 @@ module.exports = credentialsControllers = {
                     return credentialsControllers.getCredentialById(newCredentialId);
                 });
         }, () => {
-            return Promise.reject("Server issue with 'credentials' collection.");            
+            return Promise.reject("Server issue with 'credentials' collection.");
         });
     },
 
@@ -91,7 +91,8 @@ module.exports = credentialsControllers = {
 				.then((credentialInfo) => {
 					// validating passwords
 					if (bcrypt.compareSync(password, credentialInfo.password))
-						return Promise.resolve("Password matched");        
+						return Promise.resolve("Password matched");
+
 					return Promise.reject("Incorrect Password");
 				});
 		}).catch(() => {
