@@ -37,51 +37,17 @@ passport.use('user', new LocalStrategy({ usernameField:"email", passwordField:"p
 
 // user serializer or deserializer for maintaining cookies and sessions
 passport.serializeUser(function(user, done) {               // user is receiving all user credentials from above
-
-console.log(6);
-  
-  done(null, user._id);
+    done(null, user._id);
 });
 
 passport.deserializeUser(function(userId, done) {           // getting user id from above
-
-console.log(7);
-
-  usersData.getUserById(userId).then((user) => {
-
-console.log(8);
-  
-    done(null, user);
-  }, (err) => {      
-  
-console.log(9);
-
-    done(null, false, { message: err });
-  });
+    usersData.getUserById(userId).then((user) => {
+        done(null, user);
+    }) 
+    .catch((err) => {      
+        done(null, false, { message: err });
+   });
 });
 
 // exporting passport
 module.exports = passport;
-
-/*
-// use two LocalStrategies, registered under user and company names
-passport.use('user', new LocalStrategy(
-  function(username, password, done) {
-    User.findOne( ... )
-  }
-));
-
-passport.use('company', new LocalStrategy(
-  function(username, password, done) {
-    Company.findOne( ... )
-  }
-));
-
-
-// authenticate using local strategies, depending on whether the route is the user or company interface
-app.post('/user/login', 
-  passport.authenticate('user', { successRedirect: '/user/home', failureRedirect: '/user/login' }));
-
-app.post('/company/login', 
-  passport.authenticate('company', { successRedirect: '/company/home', failureRedirect: '/company/login' }));
-*/

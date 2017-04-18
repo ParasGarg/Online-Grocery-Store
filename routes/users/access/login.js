@@ -6,9 +6,9 @@
         =============================================================================================================
         | S.No. |  Type  |        URL        |   Function Call   |  Controller |       Description                  |
         =============================================================================================================
-        |   1.  | Get    | /user/login       | ***               | ***         | Search user from it's id           |
+        |   1.  | Get    | /user/login       | ***               | ***         | Render a user login page           |
         -------------------------------------------------------------------------------------------------------------
-        |   2.  | Post   | /user/login       | getCredentialById | credentials | Operations for user authentication |
+        |   2.  | Post   | /user/login       | compareCredential | credentials | Operations for user authentication |
         -------------------------------------------------------------------------------------------------------------
 */
 
@@ -49,64 +49,6 @@ router.post('/',
         failureFlash: true 
     })
 );
-
-/* route to fetch information for all users 
-router.post('/', (req, res) => {
-	let userLogin = req.body;
-
-	// checking null values
-    if(!userLogin.email) {
-        res.render('alerts/error', {
-			code: 400,
-			message: `Please provide your email id.`,
-			url: req.originalUrl
-        });
-        return;
-    } else if (!userLogin.password) {
-        res.render('alerts/error', {
-			code: 400,
-			message: `Please provide your password.`,
-			url: req.originalUrl
-        });
-        return;
-    }
-
-	// searching for an existing user
-	usersData.getUserById(userLogin.email).then((userDocument) => {
-
-		// validating received user information
-        if (userDocument != null) {
-            credentialsData.compareCredential(userLogin.email, userLogin.password).then((loginsuccess) => {
-				res.render('alerts/success', {
-					code: 200,
-					message: loginsuccess,
-					url: req.originalUrl
-				});
-
-			}, () => {
-				res.render('alerts/error', {
-					code: 400,
-					message: "Incorrect Password",
-					url: req.originalUrl
-				});
-			})
-        } else {
-            res.render('alerts/error', { 
-                code: 400,
-                message: `User is not registered.`,
-                url: req.originalUrl
-            });
-        }
-
-	}).catch((collectionError) => {
-        res.render('alerts/error', {
-            code: 500,
-            message: collectionError,
-            url: req.originalUrl
-        });
-    });
-});
-*/
 
 // exporting routing apis
 module.exports = router;
