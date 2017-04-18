@@ -52,7 +52,7 @@ module.exports = usersControllers = {
     },
 
 
-    // inserting a new user record into users collection
+    //------------------------ insert/create a new user record
     createNewUser: (usrName, usrEmail, usrMobile, usrImage) => {
         return users().then((usersCollection) => {
 
@@ -69,16 +69,20 @@ module.exports = usersControllers = {
                 wallet: 0                
             }
 
+            // adding a record in to the collection
             return usersCollection.insertOne(newUser)
                 .then((newUserInformation) => {
                     return newUserInformation.insertedId;
                 })
                 .then((newUserId) => {
+                    // returning created user document
                     return usersControllers.getUserById(newUserId);
                 })
-        }, () => {
-            return Promise.reject("Server issue with 'users' collection.");            
-        });
+        })
+        .catch(() => {
+            // returning a reject promise
+            return Promise.reject("Server issue with 'users' collection.");
+        });        
     },
 
     // updating a user information in the users collection

@@ -78,14 +78,15 @@ module.exports = credentialsControllers = {
 				password: generateHashedPassword(password)
             }
 
-            // adding a record in the collection
+            // adding a record in to the collection
             return credentialsCollection.insertOne(newCredential)
                 .then((newCredentialInformation) => {
                     return newCredentialInformation.insertedId;
                 })
                 .then((newCredentialId) => {
                     // returning created credential document id
-                    return credentialsControllers.getCredentialById(newCredentialId);
+                    //return credentialsControllers.getCredentialById(newCredentialId);                    
+                    return newCredentialId;
                 });
         })
         .catch(() => {

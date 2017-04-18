@@ -20,8 +20,18 @@ const usersData = data.users;
 const credentialsData = data.credentials;
 const passport = require('../../../config/passportUsers');
 
+
+// check user authenticity
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+        res.redirect('/');
+    } else {
+        return next();
+    }
+}
+
 // route to render to create new user form
-router.get('/', (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
     res.render('users/new');
 });
 
@@ -52,12 +62,14 @@ router.post('/', (req, res) => {
     usersData.getUserById(newUser.email).then((userJsonDocument) => {
 
         // validating received user information
+        // if user does not exists then value we get will be null
         if (userJsonDocument == null) {
             // creating new json document in users collection 
             usersData.createNewUser(newUser.name, newUser.email, newUser.mobile, newUser.image).then((createUserDocument) => {
 
                 // validating received user information
                 if (createUserDocument == null) {
+                    // rendering error page
                     res.render('alerts/error', { 
                         code: 400,
                         message: `Invalid user input stream.`,
@@ -72,7 +84,8 @@ router.post('/', (req, res) => {
                             credentialsData.createNewCredential(newUser.email, newUser.password).then((userCredential) => {
                                 res.status(200).json(userCredential);
                             });
-                        } else {   // user document found
+                        } else {
+                            // rendering error page if credential already exists
                             res.render('alerts/error', { 
                                 code: 400,
                                 message: `Credential with '${newUser.email}' email id is already a registered.`,
@@ -82,15 +95,18 @@ router.post('/', (req, res) => {
                     });
                 }
             });
-        } else {    // user document found
-            res.render('alerts/error', { 
+            
+        } else {
+            // rendering error page if user already exists
+            res.render('alerts/error', {
                 code: 400,
                 message: `User with '${newUser.email}' email id is already a registered.`,
                 url: req.originalUrl
             });
-        }
-        
-    }).catch((collectionError) => {
+        }        
+    })
+    .catch((collectionError) => {
+        // rendering error page
         res.render('alerts/error', {
             code: 500,
             message: collectionError,
