@@ -3,13 +3,13 @@
  * Users Login *
  * This route file contains apis to check authenticity of a user
  * Functionalities Index: 
-        ===================================================================================================
-        | S.No. |  Type  |        URL        |   Function Call   | Controller |       Description         |
-        ===================================================================================================
-        |   1.  | Get    | /user/login       | ***               | ***        | Search user from it's id  |
-        ---------------------------------------------------------------------------------------------------
-        |   2.  | Get    | /user/info/list   | getAllUsers       | users      | Search all user info      |
-        ---------------------------------------------------------------------------------------------------
+        =============================================================================================================
+        | S.No. |  Type  |        URL        |   Function Call   |  Controller |       Description                  |
+        =============================================================================================================
+        |   1.  | Get    | /user/login       | ***               | ***         | Search user from it's id           |
+        -------------------------------------------------------------------------------------------------------------
+        |   2.  | Post   | /user/login       | getCredentialById | credentials | Operations for user authentication |
+        -------------------------------------------------------------------------------------------------------------
 */
 
 /* importing required files and packages */
@@ -34,8 +34,6 @@ function isLoggedIn(req, res, next) {
 router.get('/', isLoggedIn, (req, res) => {
     req.flash('loginFlash');
 
-console.log(req.session.flash)
-
 	if (req.session.flash["error"] === undefined) {
         res.render('users/login', { error: req.session.flash.error });   
     } else {
@@ -45,7 +43,7 @@ console.log(req.session.flash)
 
 // routing for login form submit
 router.post('/',
-    passport.authenticate('local', { 
+    passport.authenticate('user', { 
         successRedirect: '/', 
         failureRedirect: '/user/login', 
         failureFlash: true 

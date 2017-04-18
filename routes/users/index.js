@@ -16,7 +16,7 @@ const usersRoutes = (app) => {
 	app.use("/user/login", loginUser);			// user login
 //	app.use("/user/logout", logoutUser);		// user logout
 
-	app.use("*", (req, res) => {        // no page routes
+	app.use("*", (req, res) => {                // no page routes
         res.render('alerts/error', { 
             code: 404,
             message: `Page Not Found`,

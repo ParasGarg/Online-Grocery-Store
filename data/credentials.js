@@ -9,15 +9,14 @@
         ========================================================================================
         |   1.  | getCredentialById   | Search a credential details from the collection        |
         ----------------------------------------------------------------------------------------
-        |   3.  | createNewCredential | Create new credential record in the collection         |
+        |   2.  | compareCredential   | Compares and matches email and password for validation |
+        ----------------------------------------------------------------------------------------
+		|   3.  | createNewCredential | Create new credential record in the collection         |
         ----------------------------------------------------------------------------------------
         |   4.  | updateCredential    | Update credential information in the collection        |
         ----------------------------------------------------------------------------------------
-        |   5.  | compareCredential   | Compares and matches email and password for validation |
+        |   5.  | deleteCredential    | Delete the credential from the collection              |
         ----------------------------------------------------------------------------------------
-		|   5.  | deleteCredential    | Delete the credential from the collection              |
-        ----------------------------------------------------------------------------------------
- 
 */
 
 // importing required files and packages
@@ -33,17 +32,43 @@ function generateHashedPassword(password) {
 // exporting controllers apis
 module.exports = credentialsControllers = {
 
-    // fetching a credential information by it's id from credentials collection
-    getCredentialById: (id) => {
+    //------------------------ fetch a credential information by email id
+    getCredentialById: (email) => {
         return credentials().then((credentialsCollection) => {
-            // return a found json document else null 
-            return credentialsCollection.findOne({ _id:id }, { _id:1, password:1 });
-        }).catch(() => {
+            // returning a found json document else returning null
+            return credentialsCollection.findOne({ _id:email }, { _id:1 });
+        })
+        .catch(() => {
+            // returning a reject promise
             return Promise.reject("Server issue with 'credentials' collection.");
         });
     },
 
-    // inserting a new credential record into credentials collection
+
+    //------------------------ compare the given credential
+	compareCredential: (email, password) => {
+		return credentials().then((credentialsCollection) => {
+            // finding passed email id document
+			return credentialsCollection.findOne({ _id:email }, { _id:1, password:1 })
+				.then((credentialInfo) => {
+
+					// validating passwords
+					if (bcrypt.compareSync(password, credentialInfo.password)) {
+						return Promise.resolve("Password matched");
+                    } else {
+    					return Promise.reject("Incorrect Password");
+                    }
+
+				});
+		},
+        () => {
+            // returning a reject promise
+            return Promise.reject("Server issue with 'credentials' collection.");
+        });
+	},
+
+
+    //------------------------ insert/create a new credential record
     createNewCredential: (email, password) => {
         return credentials().then((credentialsCollection) => {
 
@@ -53,19 +78,24 @@ module.exports = credentialsControllers = {
 				password: generateHashedPassword(password)
             }
 
+            // adding a record in the collection
             return credentialsCollection.insertOne(newCredential)
                 .then((newCredentialInformation) => {
                     return newCredentialInformation.insertedId;
                 })
                 .then((newCredentialId) => {
+                    // returning created credential document id
                     return credentialsControllers.getCredentialById(newCredentialId);
                 });
-        }, () => {
+        })
+        .catch(() => {
+            // returning a reject promise
             return Promise.reject("Server issue with 'credentials' collection.");
         });
     },
 
-    // updating a credential information in the credentials collection
+
+    //------------------------ update a credential information
     updateCredential: (email, password) => {
         return credentials().then((credentialsCollection) => {
             
@@ -74,42 +104,35 @@ module.exports = credentialsControllers = {
 
             // checking for values to update
             if(password) {
+                // saving the password after hashing it
                 credentialChanges['password'] = generateHashedPassword(password);
             }
 
+            // updating credential information in the collection
             return credentialsCollection.updateOne( { _id:email }, { $set:credentialChanges });
             //    .then(() => { return credentialsControllers.getCredentialById(email); });
-        }).catch(() => {
+        })
+        .catch(() => {
+            // returning a reject promise
             return Promise.reject("Server issue with 'credentials' collection.");
         });
     },
 
-	// compare the given credentials
-	compareCredential: (id, password) => {
-		return credentials().then((credentialsCollection) => {
-			return credentialsCollection.findOne({ _id:id }, { _id:1, password:1 })
-				.then((credentialInfo) => {
-					// validating passwords
-					if (bcrypt.compareSync(password, credentialInfo.password))
-						return Promise.resolve("Password matched");
-
-					return Promise.reject("Incorrect Password");
-				});
-		}).catch(() => {
-            return Promise.reject("Server issue with 'credentials' collection.");
-        });
-	},
-
-    // delete a credential record of specific id from credentials collection
-    deleteCredential: (id) => {
+	
+    //------------------------ delete a credential record of specific email id
+    deleteCredential: (email) => {
         return credentials().then((credentialsCollection) => {
-            return credentialsCollection.removeOne({ _id:id })
+            // deleting a record
+            return credentialsCollection.removeOne({ _id:email })
                 .then((deletedCredentialInformation) => {
                     if (deletedCredentialInformation.deletedCount === 0) {
-                        return Promise.reject(`No result having id ${id} from credentials collection`);
+                        // returning a reject promise
+                        return Promise.reject(`No result having email id '${email}' from credentials collection`);
                     }
                 });
-        }).catch(() => {
+        })
+        .catch(() => {
+            // returning a reject promise
             return Promise.reject("Server issue with 'credentials' collection.");
         });
     }

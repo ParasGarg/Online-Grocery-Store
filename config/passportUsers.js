@@ -8,30 +8,30 @@ const usersData = data.users;
 const credentialsData = data.credentials;
 
 // passport configuration
-passport.use(new LocalStrategy( {  }, (email, password, done) => {
-
-console.log(1);
-
+passport.use('user', new LocalStrategy({ usernameField:"email", passwordField:"password" }, (email, password, done) => {
     credentialsData.getCredentialById(email).then((userCredentials) => {
 
-console.log(2);
-      
-        credentialsData.compareCredential(email, password).then(() => {
+        // validating received user information
+        if (userCredentials != null) {
+            // comparing provided email and password
+            credentialsData.compareCredential(email, password).then(() => {
+                // returning success results
+                return done(null, userCredentials);
+            }) 
+            .catch((passwordError) => {
+                // returning incorrect password error
+                return done(null, false, { message: passwordError });
+            });
 
-console.log(3);
+      } else {
+          // returning unregistered user error
+          return done(null, false, { message: "User is not registered." });
+      }
 
-            return done(null, userCredentials);
-        }, (err) => {
-
-console.log(4);
-
-            return done(null, false, { message: err });
-        });
-    }, (err) => {
-
-console.log(5);
-    
-        return done(null, false, { message: err });
+    })
+    .catch((serverError) => {
+        // returning server error
+        return done(null, false, { message: serverError });
     });
 }));
 
