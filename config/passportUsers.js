@@ -8,80 +8,46 @@ const usersData = data.users;
 const credentialsData = data.credentials;
 
 // passport configuration
-passport.use(new LocalStrategy( {  }, (email, password, done) => {
-
-console.log(1);
-
+passport.use('user', new LocalStrategy({ usernameField:"email", passwordField:"password" }, (email, password, done) => {
     credentialsData.getCredentialById(email).then((userCredentials) => {
 
-console.log(2);
-      
-        credentialsData.compareCredential(email, password).then(() => {
+        // validating received user information
+        if (userCredentials != null) {
+            // comparing provided email and password
+            credentialsData.compareCredential(email, password).then(() => {
+                // returning success results
+                return done(null, userCredentials);
+            }) 
+            .catch((passwordError) => {
+                // returning incorrect password error
+                return done(null, false, { message: passwordError });
+            });
 
-console.log(3);
+      } else {
+          // returning unregistered user error
+          return done(null, false, { message: "User is not registered." });
+      }
 
-            return done(null, userCredentials);
-        }, (err) => {
-
-console.log(4);
-
-            return done(null, false, { message: err });
-        });
-    }, (err) => {
-
-console.log(5);
-    
-        return done(null, false, { message: err });
+    })
+    .catch((serverError) => {
+        // returning server error
+        return done(null, false, { message: serverError });
     });
 }));
 
 // user serializer or deserializer for maintaining cookies and sessions
 passport.serializeUser(function(user, done) {               // user is receiving all user credentials from above
-
-console.log(6);
-  
-  done(null, user._id);
+    done(null, user._id);
 });
 
 passport.deserializeUser(function(userId, done) {           // getting user id from above
-
-console.log(7);
-
-  usersData.getUserById(userId).then((user) => {
-
-console.log(8);
-  
-    done(null, user);
-  }, (err) => {      
-  
-console.log(9);
-
-    done(null, false, { message: err });
-  });
+    usersData.getUserById(userId).then((user) => {
+        done(null, user);
+    }) 
+    .catch((err) => {      
+        done(null, false, { message: err });
+   });
 });
 
 // exporting passport
 module.exports = passport;
-
-/*
-// use two LocalStrategies, registered under user and company names
-passport.use('user', new LocalStrategy(
-  function(username, password, done) {
-    User.findOne( ... )
-  }
-));
-
-passport.use('company', new LocalStrategy(
-  function(username, password, done) {
-    Company.findOne( ... )
-  }
-));
-
-
-// authenticate using local strategies, depending on whether the route is the user or company interface
-app.post('/user/login', 
-  passport.authenticate('user', { successRedirect: '/user/home', failureRedirect: '/user/login' }));
-
-app.post('/company/login', 
-  passport.authenticate('company', { successRedirect: '/company/home', failureRedirect: '/company/login' }));
-*/

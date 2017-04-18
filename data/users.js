@@ -17,7 +17,6 @@
         ------------------------------------------------------------------------------------
         |   5.  | deleteUser        | Delete the user from the collection                  |
         ------------------------------------------------------------------------------------
-        
 */
 
 // importing required files and packages
@@ -27,27 +26,33 @@ const users = mongoDbCollection.users;
 // exporting controllers apis
 module.exports = usersControllers = {
 
-    // fetching a user information by it's id from users collection
-    getUserById: (id) => {
+    //------------------------ fetch a user information by email id
+    getUserById: (email) => {
         return users().then((usersCollection) => {
-            // return a found json document else null 
-            return usersCollection.findOne({ _id:id }, { _id:1, name:1, mobile:1 });
-        }, () => {
+            // returning a found json document else returning null
+            return usersCollection.findOne({ _id:email }, { _id:1, name:1, mobile:1 });
+        })
+        .catch(() => {
+            // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
         });
     },
 
-    // fetching all users information from users collection
+
+    //------------------------ fetch all users information
     getAllUsers: () => {
         return users().then((usersCollection) => {
-            // return all found json documents else null
-            return usersCollection.find({}, { _id:1, name:1, mobile:1 }).toArray();
-        }, () => {
+            // returning a found json document else returning null
+            return usersCollection.find({ }, { _id:1, name:1, mobile:1 }).toArray();
+        })
+        .catch(() => {
+            // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
         });
     },
 
-    // inserting a new user record into users collection
+
+    //------------------------ insert/create a new user record
     createNewUser: (usrName, usrEmail, usrMobile, usrImage) => {
         return users().then((usersCollection) => {
 
@@ -64,19 +69,23 @@ module.exports = usersControllers = {
                 wallet: 0                
             }
 
+            // adding a record in to the collection
             return usersCollection.insertOne(newUser)
                 .then((newUserInformation) => {
                     return newUserInformation.insertedId;
                 })
                 .then((newUserId) => {
+                    // returning created user document
                     return usersControllers.getUserById(newUserId);
                 })
-        }, () => {
-            return Promise.reject("Server issue with 'users' collection.");            
-        });
+        })
+        .catch(() => {
+            // returning a reject promise
+            return Promise.reject("Server issue with 'users' collection.");
+        });        
     },
 
-    // updating a user information in the users collection
+    //------------------------  update an existing user information
     updateUser: (userEmail, userUpdates) => {
         return users().then((usersCollection) => {
             
@@ -108,9 +117,13 @@ module.exports = usersControllers = {
                 userChanges['wallet'] = userUpdates.wallet;
             }
 
-            return usersCollection.updateOne( { _id:userEmail }, { $set:userChanges } );
-            //    .then(() => { return usersControllers.getUserById(userEmail); });
-        }, () => {
+            // updating user information into the collection
+            return usersCollection.updateOne( { _id:userEmail }, { $set:userChanges } ).then(() => { 
+                return usersControllers.getUserById(userEmail); 
+            });
+        })
+        .catch(() => {
+            // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
         });
     },

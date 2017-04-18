@@ -114,6 +114,32 @@ router.delete('/user/info/:id', (req, res) => {
     });
 });
 
+/*
+// route to fetch information for all users 
+router.get('/list', (req, res) => {
+    usersData.getAllUsers().then((usersJsonDocumentList) => {
+
+        // validating received user information
+        if (usersJsonDocumentList == null) {
+            res.render('alerts/error', { 
+                code: 400,
+                message: `No user is registered.`,
+                url: req.originalUrl
+            });
+        } else {
+            res.json(usersJsonDocumentList);
+        }
+
+    }).catch((collectionError) => {
+        res.render('alerts/error', {
+            code: 500,
+            message: collectionError,
+            url: req.originalUrl
+        });
+    });
+});
+*/
+
 // route to delete credential information by id
 router.delete('/user/credential/:id', (req, res) => {
     credentialsData.getCredentialById(req.params.id).then((credentialJsonDocument) => {
