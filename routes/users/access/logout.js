@@ -19,7 +19,7 @@ const passport = require('../../../config/passportUsers');
 const passportLogout = require('express-passport-logout');
 
 
-// checking user authenticity
+// check user authenticity
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
         res.redirect('/');

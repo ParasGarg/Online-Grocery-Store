@@ -26,25 +26,31 @@ const users = mongoDbCollection.users;
 // exporting controllers apis
 module.exports = usersControllers = {
 
-    // fetching a user information by it's id from users collection
-    getUserById: (id) => {
+    //------------------------ fetch a user information by email id
+    getUserById: (email) => {
         return users().then((usersCollection) => {
-            // return a found json document else null 
-            return usersCollection.findOne({ _id:id }, { _id:1, name:1, mobile:1 });
-        }, () => {
+            // returning a found json document else returning null
+            return usersCollection.findOne({ _id:email }, { _id:1, name:1, mobile:1 });
+        })
+        .catch(() => {
+            // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
         });
     },
 
-    // fetching all users information from users collection
+
+    //------------------------ fetch all users information
     getAllUsers: () => {
         return users().then((usersCollection) => {
-            // return all found json documents else null
-            return usersCollection.find({}, { _id:1, name:1, mobile:1 }).toArray();
-        }, () => {
+            // returning a found json document else returning null
+            return usersCollection.find({ }, { _id:1, name:1, mobile:1 }).toArray();
+        })
+        .catch(() => {
+            // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
         });
     },
+
 
     // inserting a new user record into users collection
     createNewUser: (usrName, usrEmail, usrMobile, usrImage) => {

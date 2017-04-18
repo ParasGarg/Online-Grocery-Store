@@ -21,7 +21,7 @@ const credentialsData = data.credentials;
 const passport = require('../../../config/passportUsers');
 
 
-// checking user authenticity
+// check user authenticity
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
         res.redirect('/');
@@ -30,7 +30,7 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-// route to fetch user information by id
+// route to fetch user information by email id
 router.get('/', isLoggedIn, (req, res) => {
     req.flash('loginFlash');
 

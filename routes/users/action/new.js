@@ -3,22 +3,22 @@
  * Create User *
  * This route file contains apis for user creation operations
  * Functionalities Index: 
-        ===================================================================================================
-        | S.No. |  Type  |        URL        |   Function Call   | Controller |       Description         |
-        ===================================================================================================
-        |   1.  | Get    | /user/new         | createNewUser     | ***        | Page for new user form    |
-        ---------------------------------------------------------------------------------------------------
-        |   2.  | Post   | /user/new         | createNewUser     | users      | Insert new user record    |
-        ---------------------------------------------------------------------------------------------------
+        =========================================================================================================
+        | S.No. |  Type  |        URL        |   Function Call   | Controller |           Description           |
+        =========================================================================================================
+        |   1.  | Get    | /user/new         | createNewUser     | ***        | Render a page for new user form |
+        ---------------------------------------------------------------------------------------------------------
+        |   2.  | Post   | /user/new         | createNewUser     | users      | Insert/create new user record   |
+        ---------------------------------------------------------------------------------------------------------
 */
 
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
-const userPassport = require('../../../config/passportUsers');
 const data = require('../../../data');
 const usersData = data.users;
 const credentialsData = data.credentials;
+const passport = require('../../../config/passportUsers');
 
 // route to render to create new user form
 router.get('/', (req, res) => {
