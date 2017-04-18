@@ -95,10 +95,10 @@ router.post('/', (req, res) => {
                     });
                 }
             });
-            
+
         } else {
             // rendering error page if user already exists
-            res.render('alerts/error', {
+            res.render('users/new', {
                 code: 400,
                 message: `User with '${newUser.email}' email id is already a registered.`,
                 url: req.originalUrl
