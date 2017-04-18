@@ -11,7 +11,7 @@
             <div class="form-group">
               <label for="email" class="col-sm-3 control-label">Email Id</label>
               <div class="col-sm-9">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ userEmail }}">
               </div>
             </div>
             <!-- email section ends here -->                        
@@ -20,7 +20,7 @@
             <div class="form-group">
               <label for="name" class="col-sm-3 control-label">Full Name</label>
               <div class="col-sm-9">
-                <input type="name" class="form-control" id="name" name="name" placeholder="Full Name">
+                <input type="name" class="form-control" id="name" name="name" placeholder="Full Name" value="{{ userName }}">
               </div>
             </div>
             <!-- full name section ends here -->
@@ -29,7 +29,7 @@
             <div class="form-group">
               <label for="mobile" class="col-sm-3 control-label">Contact Number</label>
               <div class="col-sm-9">
-                <input type="mobile" class="form-control" id="mobile" name="mobile" placeholder="Contact Number">
+                <input type="mobile" class="form-control" id="mobile" name="mobile" placeholder="Contact Number" value="{{ userMobile }}">
               </div>
             </div>
             <!-- mobile section ends here -->
@@ -48,5 +48,9 @@
           <!-- form starts from here -->
 
         </div>
+
+        <!-- backend errors -->
+        {{ message }}
+
 	</div>
 </div>

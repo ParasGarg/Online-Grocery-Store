@@ -85,7 +85,7 @@ module.exports = usersControllers = {
         });        
     },
 
-    // updating a user information in the users collection
+    //------------------------  update an existing user information
     updateUser: (userEmail, userUpdates) => {
         return users().then((usersCollection) => {
             
@@ -117,9 +117,13 @@ module.exports = usersControllers = {
                 userChanges['wallet'] = userUpdates.wallet;
             }
 
-            return usersCollection.updateOne( { _id:userEmail }, { $set:userChanges } );
-            //    .then(() => { return usersControllers.getUserById(userEmail); });
-        }, () => {
+            // updating user information into the collection
+            return usersCollection.updateOne( { _id:userEmail }, { $set:userChanges } ).then(() => { 
+                return usersControllers.getUserById(userEmail); 
+            });
+        })
+        .catch(() => {
+            // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
         });
     },
