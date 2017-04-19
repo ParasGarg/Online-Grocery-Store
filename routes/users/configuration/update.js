@@ -1,5 +1,5 @@
 /* 
- * Users Routers *
+ * Users Routers * Users Configuration *
  * Users Updates *
  * This route file contains apis for user information update operations
  * Functionalities Index: 
@@ -35,7 +35,7 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-// route to fetch user information for update by email id
+//------------------------ route to fetch user information for update by email id
 router.get('/:email', isLoggedIn, (req, res) => {
 
     // validating for requested user and logged in user
@@ -83,7 +83,7 @@ router.get('/:email', isLoggedIn, (req, res) => {
     }
 });
 
-// route to update user information by id
+//------------------------ route to update user information by id
 router.put('/:email', isLoggedIn, (req, res) => {
 
     // validating for requested user and logged in user

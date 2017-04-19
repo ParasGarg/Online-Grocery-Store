@@ -1,26 +1,25 @@
-const adminRoutes = require('./admin');
-//const usersRoutes = require('./users');
+const adminRoutes = require('./admin/index');
+const usersRoutes = require('./users/index');
 
-const routesMethod = (app) => {
-    
-    app.use("/$/", (req, res) => {      // home routes
+const mainRoutes = (app) => {
+
+    /* home page routes */
+    app.use("/$/", (req, res) => {
         res.render('index');
     });
 
-    app.use("/admin", adminRoutes);     // admin routes
-//    app.use("/user", usersRoutes);      // user routes
+    /* customized routes */
+    app.use("/admin", adminRoutes);         // admin routes
+    app.use("/user", usersRoutes);          // user routes
 
-    /* sub routes configuration */
-    const configUserRoutes = require("./users");
-    configUserRoutes(app);
-
-    app.use("*", (req, res) => {        // no page routes
-        res.render('alerts/error', { 
+    /* non existing page configuration */
+    app.use("*", (req, res) => {
+        res.render('alerts/error', {
             code: 404,
             message: `Page Not Found`,
-            url: req.originalUrl 
+            url: req.originalUrl
         });
     });
 };
 
-module.exports = routesMethod;
+module.exports = mainRoutes;

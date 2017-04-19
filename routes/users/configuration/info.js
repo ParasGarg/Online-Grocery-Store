@@ -1,5 +1,5 @@
 /* 
- * Users Routers *
+ * Users Routers * Users Configuration *
  * Users Info *
  * This route file contains apis to fetch user information
  * Functionalities Index: 
@@ -32,7 +32,7 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-// route to fetch user information by email id
+//------------------------ route to fetch user information by email id
 router.get('/:email', isLoggedIn, (req, res) => {
 
     // validating for inquired user and logged in user
