@@ -1,24 +1,22 @@
 /* 
- * Users Routers *
- * Users Login *
- * This route file contains apis to check authenticity of a user
+ * Users Routers * Users Authentication *
+ * Users Logout *
+ * This route file contains apis to discard authenticity of a user
  * Functionalities Index: 
         =============================================================================================================
         | S.No. |  Type  |        URL        |   Function Call   |  Controller |       Description                  |
         =============================================================================================================
-        |   1.  | Get    | /user/login       | ***               | ***         | Render a user login page           |
+        |   1.  | Get    | /user/logout      | ***               | ***         | Redirect to login page             |
         -------------------------------------------------------------------------------------------------------------
-        |   2.  | Post   | /user/login       | compareCredential | credentials | Operations for user authentication |
+        |   2.  | Post   | /user/logout      | ***               | ***         | Delete user session                |
         -------------------------------------------------------------------------------------------------------------
 */
 
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
-const data = require('../../../data');
-const usersData = data.users;
-const credentialsData = data.credentials;
 const passport = require('../../../config/passportUsers');
+const passportLogout = require('express-passport-logout');
 
 
 // check user authenticity
@@ -30,25 +28,16 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-// route to fetch user information by email id
+//------------------------ route to fetch user information by id
 router.get('/', isLoggedIn, (req, res) => {
-    req.flash('loginFlash');
-
-	if (req.session.flash["error"] === undefined) {
-        res.render('users/login', { error: req.session.flash.error });   
-    } else {
-        res.render('users/login', { error: req.session.flash.error.slice(-1)[0] });
-    }
+	res.redirect('/user/login');	
 });
 
-// routing for login form submit
-router.post('/',
-    passport.authenticate('user', { 
-        successRedirect: '/', 
-        failureRedirect: '/user/login', 
-        failureFlash: true 
-    })
-);
+//------------------------ routing for login form submit
+router.post('/', (req, res) => {
+	req.logOut();
+	res.redirect('/user/login');
+});
 
 // exporting routing apis
 module.exports = router;

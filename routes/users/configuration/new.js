@@ -1,5 +1,5 @@
 /* 
- * Users Routers *
+ * Users Routers * Users Configuration *
  * Create User *
  * This route file contains apis for user creation operations
  * Functionalities Index: 
@@ -30,12 +30,12 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-// route to render to create new user form
+//------------------------ route to render to create new user form
 router.get('/', isLoggedIn, (req, res) => {
     res.render('users/new');
 });
 
-// route to create new user into database
+//------------------------ route to create new user into database
 router.post('/', (req, res) => {
     let newUser = req.body;
 
