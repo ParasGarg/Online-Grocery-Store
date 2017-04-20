@@ -30,9 +30,7 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-/*
- * route to fetch user information by email id
- */
+//------------------------ route to fetch user information by email id
 router.get('/', isLoggedIn, (req, res) => {
     req.flash('loginFlash');
 
@@ -43,9 +41,7 @@ router.get('/', isLoggedIn, (req, res) => {
     }
 });
 
-/*
- * routing for login form submit
- */
+//------------------------ routing for login form submit
 router.post('/',
     passport.authenticate('user', { 
         successRedirect: '/', 

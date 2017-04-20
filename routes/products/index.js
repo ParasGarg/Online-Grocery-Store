@@ -9,7 +9,7 @@ const productsRouter = express.Router();
 //productsRouter.use("/delete", require('./dao/delete'));		// url: ~/product/delete	description: delete product route
 
 /* */
-productsRouter.use("/confirmation", require('./pay/payment-confirmation'));
+productsRouter.use("/confirmation", require('./cont/payment-confirmation'));
 
 /* non existing page configuration */
 productsRouter.use("*", (req, res) => {

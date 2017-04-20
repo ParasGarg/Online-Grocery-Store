@@ -1,6 +1,6 @@
-
-.confirmation { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;padding: 3rem 0;text-align: center;width: 100%; }
+/* product payment confirmation stylesheet */
+.confirmation { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;padding: 3rem 0 6rem;text-align: center;width: 100%; }
 .confirmation h2 { font-size: 4rem;font-weight: bold; }
-.confirmation i { font-size: 15rem;color: #32cd32;margin: 2rem 0 1rem; }
-.confirmation p { font-size: 2rem; }
+.confirmation i { font-size: 15rem;color: #32cd32;margin: 3rem 0 2rem; }
+.confirmation p { font-size: 2rem;margin-bottom: 3rem; }
 .confirmation label { font-size: 1.5rem;margin: 0 0 3px;padding: .5rem 1rem;background-color: #e2e2e2;border-radius: 5rem;  }
