@@ -15,7 +15,7 @@
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
-const passport = require('../../../config/passportUsers');
+const passport = require('../../../config/passport-users');
 const passportLogout = require('express-passport-logout');
 
 

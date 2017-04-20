@@ -2,14 +2,14 @@
 const express = require('express');
 const usersRouter = express.Router();
 
-/* users configuration */
-usersRouter.use("/info", require('./configuration/info'));			// url: ~/user/info		description: get user info route
-usersRouter.use("/new", require('./configuration/new'));			// url: ~/user/new		description: add new user route
-usersRouter.use("/update", require('./configuration/update'));		// url: ~/user/update	description: update user info route
-
 /* users authentication */
-usersRouter.use("/login", require('./authentication/login'));		// url: ~/user/login		description: user login route
-usersRouter.use("/logout", require('./authentication/logout'));		// url: ~/user/logout	description: user logout route
+usersRouter.use("/login", require('./auth/user-login'));		// url: ~/user/login	description: user login route
+usersRouter.use("/logout", require('./auth/user-logout'));		// url: ~/user/logout	description: user logout route
+
+/* users data access objects */
+usersRouter.use("/info", require('./dao/get-user-info'));		// url: ~/user/info		description: get user info route
+usersRouter.use("/new", require('./dao/create-new-user'));		// url: ~/user/new		description: add new user route
+usersRouter.use("/update", require('./dao/update-user-info'));	// url: ~/user/update	description: update user info route
 
 /* non existing page configuration */
 usersRouter.use("*", (req, res) => {

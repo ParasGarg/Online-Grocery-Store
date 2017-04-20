@@ -18,7 +18,7 @@ const router = express.Router();
 const data = require('../../../data');
 const usersData = data.users;
 const credentialsData = data.credentials;
-const passport = require('../../../config/passportUsers');
+const passport = require('../../../config/passport-users');
 
 
 // check user authenticity
@@ -30,7 +30,9 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-//------------------------ route to fetch user information by email id
+/*
+ * route to fetch user information by email id
+ */
 router.get('/', isLoggedIn, (req, res) => {
     req.flash('loginFlash');
 
@@ -41,7 +43,9 @@ router.get('/', isLoggedIn, (req, res) => {
     }
 });
 
-//------------------------ routing for login form submit
+/*
+ * routing for login form submit
+ */
 router.post('/',
     passport.authenticate('user', { 
         successRedirect: '/', 

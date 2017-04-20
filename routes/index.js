@@ -1,4 +1,5 @@
-const adminRoutes = require('./admin/index');
+//const adminRoutes = require('./admin/index');
+const productsRoutes = require('./products/index');
 const usersRoutes = require('./users/index');
 
 const mainRoutes = (app) => {
@@ -9,7 +10,8 @@ const mainRoutes = (app) => {
     });
 
     /* customized routes */
-    app.use("/admin", adminRoutes);         // admin routes
+    //app.use("/admin", adminRoutes);         // admin routes
+    app.use("/product", productsRoutes);    // products routes
     app.use("/user", usersRoutes);          // user routes
 
     /* non existing page configuration */

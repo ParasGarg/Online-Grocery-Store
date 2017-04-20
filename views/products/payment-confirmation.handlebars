@@ -1,0 +1,29 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/products/payment-confirmation.css">
+
+<!-- body -->
+<div class="confirmation">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+
+				<article>
+					<h2>Hey {{ userName }}, you're all set!</h2>
+
+					<div class="row">
+						<i class="fa fa-check-circle" aria-hidden="true"></i>
+					</div>
+
+					<div class="row">
+						<p>
+							Your order has been placed successfully!
+						</p>
+						<label>Order# {{ orderId }} </label><br/>
+						<label>Transaction# {{ transactionId }} </label>
+					</div>
+				</article>
+
+			</div>
+		</div>
+	</div>
+</div>

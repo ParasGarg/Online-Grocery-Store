@@ -11,12 +11,6 @@ const adminRouter = express.Router();
 //const loginAdmin = require('./authentication/login');
 //const logoutAdmin = require('./authentication/logout');
 
-/* admin products */
-//const getProduct = require('./products/info');
-//const addProduct = require('./products/add');
-//const updateProduct = require('./products/update');
-//const deleteProduct = require('./products/delete');
-
 /* admin users */
 adminRouter.use("/user/info", require('./users/info'));				// url: ~/admin/user/info		description: get user info route
 //adminRouter.use("/user/delete", require('./users/delete'));			// url: ~/admin/user/delete		description: delete user info route

@@ -15,7 +15,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../../../data');
 const usersData = data.users;
-const passport = require('../../../config/passportUsers');
+const passport = require('../../../config/passport-users');
 
 
 // check user authenticity
