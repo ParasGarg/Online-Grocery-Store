@@ -1,0 +1,187 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/payment/payment-gateway.css">
+<script>
+	$('#myTabs a').click(function (e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+
+</script>
+
+<!-- body -->
+<div class="gateway">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+
+				<article>
+					<h2>Pay and you're done!</h2>
+
+					<!-- payment mode detail starts from here -->
+					<div class="row">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs">
+							<li role="presentation" class="active">
+								<a href="#saved-card" aria-controls="Saved Cards" role="tab" data-toggle="tab">
+									<i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+									Saved Cards
+								</a>
+							</li>
+							<li role="presentation">
+								<a href="#new-card" aria-controls="New Card" role="tab" data-toggle="tab">
+									<i class="fa fa-credit-card" aria-hidden="true"></i>
+									New Card
+								</a>
+							</li>
+							<li role="presentation">
+								<a href="#other" aria-controls="Other" role="tab" data-toggle="tab">
+									<i class="fa fa-google-wallet" aria-hidden="true"></i>
+									Other
+								</a>
+							</li>
+						</ul>
+
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane desc-div active" id="saved-card">
+								<div class="row">
+
+									<div class="col-md-12">
+										<div class="row">
+											<div class="col-md-1"><strong>Select</strong></div>
+											<div class="col-md-4"><strong>Card Number</strong></div>
+											<div class="col-md-4"><strong>Name on Card</strong></div>
+											<div class="col-md-2"><strong>Card Expiry</strong></div>
+											<div class="col-md-1"><strong>CVV</strong></div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-1" style="text-align:center;"><input type="checkbox" value=""></div>
+											<div class="col-md-4">4234-6433-6433-1244</div>
+											<div class="col-md-4">Paras Garg</div>
+											<div class="col-md-2">12/2019</div>
+											<div class="col-md-1">4543</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane desc-div" id="new-card">
+								<div class="row">
+									<div class="col-md-2">
+										<div class="row"><h4>Name on Card</h4></div>
+										<div class="row"><h4>Card Number</h4></div>
+										<div class="row"><h4>Card Expiry</h4></div>
+										<div class="row"><h4>Card CVV</h4></div>
+									</div>
+
+									<div class="col-md-6 ">
+										<div class="form" name="new-card-form" id="new-card-form">
+											<div class="row">
+												<input type="text" class="form-control" name="cardHolder" placeholder="Card Holder Name">
+											</div>
+											<div class="row">
+												<input type="text" class="form-control" name="cardNumber" placeholder="Card Number">
+											</div>
+											<div class="row">
+												<input type="number" class="form-control" name="expMonth" placeholder="Month" min="1" max="12">
+												<input type="number" class="form-control" name="expYear" placeholder="Year" min="2017" max="2051">
+											</div>
+											<div class="row">
+												<input type="text" class="form-control" name="cardCVV" placeholder="CVV">
+											</div>
+											<!-- div class="row">
+												<input type="submit" class="btn btn-default" value="Add Card">												
+											</div --> 
+										</div>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane desc-div" id="other">
+								<div class="row">
+
+									<div class="col-md-12">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="row">
+													<div class="col-md-1" style="text-align:center;"><input type="checkbox" value=""></div>
+													<div class="col-md-6" style="text-align:center;">
+														<i class="fa fa-money" aria-hidden="true"></i>
+														Cash
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="row">
+													<div class="col-md-1" style="text-align:center;"><input type="checkbox" value=""></div>
+													<div class="col-md-6" style="text-align:center;">
+														<i class="fa fa-google-wallet" aria-hidden="true"></i>
+														Wallet
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>								
+							</div>
+						</div>
+					</div>
+					<!-- payment mode detail ends here -->					
+
+					<!-- promo code section starts from here -->
+					<br/><br/>
+					<div class="row">
+						<div class="form" name="promo-code-form" id="promo-code-form">
+							<div class="row">
+								<input type="text" class="form-control" name="expMonth" placeholder="Promo Code">
+								<input type="submit" class="btn btn-default" value="Apply Promo">												
+							</div>
+							<div class="row success">
+								Your promo code is successfully applied
+							</div>
+							<div class="row error">
+								Your promo code is invalid
+							</div>
+						</div>
+					</div>
+					<!-- promo code section end here -->
+
+					<!-- payment summary starts from here -->					
+					<br/>
+					<div class="row">
+						<div class="col-md-8" id="payment-summary">
+							<h3>Payment Summary</h3>
+							
+							<div class="row">
+								<div class="col-md-6 col-md-offset-1"><label>Total Price</label></div>
+								<div class="col-md-4 col-md-offset-1">$ 124.54</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 col-md-offset-1"><label>Promo Discount</label></div>
+								<div class="col-md-4 col-md-offset-1">$ 10</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 col-md-offset-1"><label>Net Price</label></div>
+								<div class="col-md-4 col-md-offset-1">$ 114.50</div>
+							</div>
+						</div>
+
+						<div class="col-md-4" id="payment-now">
+							<div class="row">
+								<div class="col-md-6 col-md-offset-3">
+									<input type="button" class="btn btn-default" value="Buy Now" />
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- payment summary ends here -->					
+					
+				</article>
+
+			</div>
+		</div>
+	</div>
+</div>

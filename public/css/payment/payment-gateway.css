@@ -1,0 +1,24 @@
+/* payment gateway stylesheet */
+.gateway { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;padding: 2rem 0 3rem;text-align: center;width: 100%; }
+.gateway h2 { font-size: 4rem;font-weight: bold;margin-bottom: 8rem; }
+.gateway h4 { font-size: 1.2rem;font-weight: 500;text-align: right; }
+.gateway i { font-size: 2rem;vertical-align: text-bottom; }
+.gateway p { font-size: 2rem; }
+.gateway label { font-size: 1.5rem;margin: 0 0 3px;padding: .5rem 1rem; }
+.gateway .row { margin: 0; }
+.gateway .desc-div { border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;border-right: 1px solid #ddd;
+					 border-radius: 1px 1px 4px 4px;box-sizing: border-box;padding: 1rem 3rem; }
+.gateway .desc-div .row .row { margin: 1rem 0;text-align: left;}
+.gateway input[type="number"] { display: inline-block;width: 30%;}
+
+#promo-code-form input { display: inline-block;vertical-align: middle; }
+#promo-code-form input[type="text"] { width: 30%; }
+#promo-code-form input[type="button"] { width: 30%; }
+#promo-code-form .error { color: #ff0000; }
+#promo-code-form .success { color: #32cd32; }
+
+#payment-summary { text-align: left; }
+#payment-summary h3 { text-align: center;text-decoration: underline; }
+
+#payment-now { margin-top: 6rem; }
+#payment-now input { padding: 2rem 6rem; }

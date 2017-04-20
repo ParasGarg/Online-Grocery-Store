@@ -21,7 +21,7 @@
 
 // importing required files and packages
 const bcrypt = require('bcrypt');
-const mongoDbCollection = require('../config/mongoDbCollection');
+const mongoDbCollection = require('../config/mongodb-collection');
 const credentials = mongoDbCollection.credentials;
 
 // function to hash normal user's password

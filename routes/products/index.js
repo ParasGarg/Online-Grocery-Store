@@ -10,6 +10,7 @@ const productsRouter = express.Router();
 
 /* */
 productsRouter.use("/confirmation", require('./cont/payment-confirmation'));
+productsRouter.use("/gateway", require('./cont/payment-gateway'));
 
 /* non existing page configuration */
 productsRouter.use("*", (req, res) => {

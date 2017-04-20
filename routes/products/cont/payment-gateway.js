@@ -32,8 +32,9 @@ function isLoggedIn(req, res, next) {
 
 //------------------------ route to render to create new user form
 router.get('/', (req, res) => {
-    res.render('payment/payment-confirmation', {
-		userName: "Paras",
+    res.render('payment/payment-gateway', {
+		mainTitle: "Payment Gateway",
+        userName: "Paras",
 		orderId: 4545232,
 		transactionId: 124542322343
 	});

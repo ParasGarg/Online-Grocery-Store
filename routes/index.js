@@ -1,6 +1,6 @@
 //const adminRoutes = require('./admin/index');
-const productsRoutes = require('./products/index');
-const usersRoutes = require('./users/index');
+const productsRoutes = require('./products');
+const usersRoutes = require('./users');
 
 const mainRoutes = (app) => {
 

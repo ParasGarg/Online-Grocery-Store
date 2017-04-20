@@ -20,7 +20,7 @@
 */
 
 // importing required files and packages
-const mongoDbCollection = require('../config/mongoDbCollection');
+const mongoDbCollection = require('../config/mongodb-collection');
 const users = mongoDbCollection.users;
 
 // exporting controllers apis
