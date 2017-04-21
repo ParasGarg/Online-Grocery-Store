@@ -100,45 +100,105 @@
 		</main>
 
 		<!--footer start from here-->
+		<link rel="stylesheet" href="/public/css/main/footer.css">	
 		<footer>
-				<div class="container">
-					<div class="row">
-					<div class="col-md-4 col-sm-6 footerleft ">
-						<h6>About Project</h6>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
-						<p><i class="fa fa-map-pin"></i>Stevens Institute of Technology, NJ</p>
-						<p><i class="fa fa-phone"></i>+1 (917) 861-6967</p>
-						<p><i class="fa fa-envelope"></i>pgagr2@stevens.edu</p>
+			<div class="container">		
+				<div class="row">
+					
+					<!-- about us starts from here -->
+					<div class="col-md-3">
+						<div class="row"><h6>About Project</h6></div>
+						<div class="row">
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
+							<p><i class="fa fa-map-pin"></i>Stevens Institute of Technology, NJ</p>
+							<p><i class="fa fa-envelope"></i>info@ogs.com</p>
+						</div>
 						
 					</div>
-					<div class="col-md-5 col-sm-6">
-						<h6>Contact Us</h6>
-						<ul class="footer-ul">
-						<li><a href="#"> Career</a></li>
-						<li><a href="#"> Privacy Policy</a></li>
-						<li><a href="#"> Terms & Conditions</a></li>
-						<li><a href="#"> Client Gateway</a></li>
-						<li><a href="#"> Ranking</a></li>
-						<li><a href="#"> Case Studies</a></li>
-						<li><a href="#"> Frequently Ask Questions</a></li>
-						</ul>
+					<!-- about us ends here -->
+					
+					<!-- contact us form starts from here -->
+					<div class="col-md-3 col-md-offset-1">
+						<div class="row"><h6>Contact Us</h6></div>
+						
+						<div class="row">
+							<form id="form-contact-us">
+								<div class="row">
+
+									<div class="col-md-12 inp-row-margin">
+										<div class="row">
+											<input type="text" name="name" class="form-control" placeholder="Full Name" />
+										</div>
+									</div>
+
+									<div class="col-md-12 inp-row-margin">
+										<div class="row">
+											<input type="text" name="eamil" class="form-control inp-equal-width" placeholder="Email Id" />
+											<input type="text" name="mobile" class="form-control inp-equal-width" placeholder="Contact Number" />
+										</div>
+									</div>
+
+									<div class="col-md-12 inp-row-margin">
+										<div class="row">
+											<textarea name="body" class="form-control" placeholder="Description"></textarea>
+										</div>
+									</div>
+
+									<div class="col-md-12 inp-row-margin">
+										<div class="row">
+											<div class="col-md-3" style="padding-left: 0;">
+												<input type="submit" class="btn btn-default" value="Send" />
+											</div>
+											<div class="col-md-9" style="padding-left: 0;">
+												<p class="error">
+													<i class="fa fa-close error"></i>
+													Invalid emaid id
+												</p>
+												<p class="success">
+													<i class="fa fa-check success"></i>													
+													Message sent successfully
+												</p>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</form>
+						</div>
 					</div>
-					<div class="col-md-3 col-sm-6">
-						<h6>Follow Us</h6>
-						<div data-href="https://github.com/ParasGarg/Online-Grocery-Store" data-tabs="repository" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-							<blockquote cite="https://github.com/ParasGarg/Online-Grocery-Store"><a href="https://github.com/ParasGarg/Online-Grocery-Store">GitHub</a></blockquote>
+					<!-- contact us form ends here -->
+
+					<!-- follow-us and subscription links starts from here -->
+					<div class="col-md-3 col-md-offset-1">
+						<div class="row"><h6>Follow Us</h6></div>
+						<div class="row">
+							<div data-href="https://github.com/ParasGarg/Online-Grocery-Store" data-tabs="repository" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+								<blockquote cite="https://github.com/ParasGarg/Online-Grocery-Store"><a href="https://github.com/ParasGarg/Online-Grocery-Store">GitHub</a></blockquote>
+							</div>
 						</div>
 
 						<br/>
-						<h6>Subscribe Us</h6>
-						<form>
-							<div>
-								<input type="text" class="form-control" placeholder="Emai Id">
+						<div class="row"><h6>Subscribe Us</h6></div>
+						<div class="row">
+							<form id="form-subscribe">
+								<input type="text" name="email" class="form-control" placeholder="Emai Id" />
+								<input type="submit" class="btn btn-default" value="Subscribe" />
+							</form>
+							<div class="inp-row-margin">
+								<p class="error">
+									<i class="fa fa-close error"></i>
+									Invalid emaid id
+								</p>
+								<p class="success">
+									<i class="fa fa-check success"></i>													
+									Message sent successfully
+								</p>
 							</div>
-							<button type="submit" class="btn btn-default">Submit</button>
-						</form>
+						</div>
 					</div>
-				</div>
+					<!-- follow-us and subscription links ends here -->	
+
+				</div>		
 			</div>
 		</footer>
 		<!--footer start from here-->

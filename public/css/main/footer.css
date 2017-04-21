@@ -1,0 +1,20 @@
+/* footer */
+footer { background-color:#0c1a1e; font-family: 'Open Sans', sans-serif; padding: 50px 0; }
+
+footer p { color:#fff;font-size: 1.3rem;text-align: justify; }
+footer p.error { color:#ff0000; }
+footer p.success { color:#32cd32; }
+
+footer i { color:#999; }
+footer i.error { color:#ff0000; }
+footer i.success { color:#32cd32; }
+
+footer .inp-row-margin { margin-top: 10px; }
+footer .inp-equal-width { display: inline-block;width: 48.8%; }
+footer .inp-equal-width:first-child { float: left; }
+footer .inp-equal-width:last-child { float: right; }
+
+footer blockquote { padding: 0 20px; }
+
+#form-subscribe input[type="text"] { display: inline-block;width: 60%; }
+#form-subscribe input[type="submit"] { display: inline-block;width: 35%; }

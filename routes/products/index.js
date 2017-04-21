@@ -8,10 +8,6 @@ const productsRouter = express.Router();
 //productsRouter.use("/update", require('./dao/update'));		// url: ~/product/update	description: update product info route
 //productsRouter.use("/delete", require('./dao/delete'));		// url: ~/product/delete	description: delete product route
 
-/* */
-productsRouter.use("/confirmation", require('./cont/payment-confirmation'));
-productsRouter.use("/gateway", require('./cont/payment-gateway'));
-
 /* non existing page configuration */
 productsRouter.use("*", (req, res) => {
 	res.render('alerts/error', {
