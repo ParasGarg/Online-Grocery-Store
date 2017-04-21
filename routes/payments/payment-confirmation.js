@@ -15,10 +15,10 @@
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
-const data = require('../../../data');
+const data = require('../../data');
 const usersData = data.users;
 const credentialsData = data.credentials;
-const passport = require('../../../config/passport-users');
+const passport = require('../../config/passport-users');
 
 
 // check user authenticity

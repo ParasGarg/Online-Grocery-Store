@@ -5,16 +5,3 @@
 h6 { margin-bottom: 2rem; font-size: 2rem; color: #fff; font-weight: 700; }
 i.fa { margin-right: 1rem }
 
-/* footer */
-footer { background-color:#0c1a1e; font-family: 'Open Sans', sans-serif; padding: 50px 0; }
-.footerleft { padding-right:5%;  text-align: justify; }
-.footerleft p { color:#fff; font-size:12px !important; font-family: 'Open Sans', sans-serif; margin-bottom:15px; }
-.footerleft p i { width:20px; color:#999; }
-
-.footer form input { outline: none; }
-
-.footer-ul { list-style-type:none;  padding-left:0px; margin-left:2px;}
-.footer-ul li { line-height:29px; font-size:12px;}
-.footer-ul li a { color:#a0a3a4; transition: color 0.2s linear 0s, background 0.2s linear 0s; }
-.footer-ul i { margin-right:10px;}
-.footer-ul li a:hover {transition: color 0.2s linear 0s, background 0.2s linear 0s; color:#ff670f; }

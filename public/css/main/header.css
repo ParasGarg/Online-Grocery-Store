@@ -1,0 +1,24 @@
+/* header */
+header { background-color: #337ab7;display: block;min-height: 50px; }
+header a { color: #fff;font-size: 1.5rem;letter-spacing: 1px;padding: 20px 0; }
+header i.fa { font-size: 1.8rem; }
+
+
+/* navbar */
+.navbar-default { background-color: #337ab7; }
+.navbar-default .navbar-brand { background-color: #337ab7;color: #fff; }
+.navbar-default .navbar-brand:hover { background-color: #eee;color: #337ab7; }
+.navbar-default .navbar-toggle .icon-bar { background-color: #fff; }
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:active, .navbar-default .navbar-toggle:focus { background-color: #fff; }
+.navbar-default .navbar-toggle:hover .icon-bar, .navbar-default .navbar-toggle:active .icon-bar, .navbar-default .navbar-toggle:focus .icon-bar { background-color: #337ab7; }
+
+header .navbar-form { width: 50%; }
+header .form-group { width: 85%; }
+header .navbar-form .form-control { width: 100%; }
+
+.dropdown-menu > li > a { padding: 9px 20px; }
+.dropdown-menu .divider { margin: 0; }
+
+@media only screen and (max-width: 480px) {
+	
+}
