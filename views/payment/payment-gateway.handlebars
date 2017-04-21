@@ -22,19 +22,19 @@
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs">
 							<li role="presentation" class="active">
-								<a href="#saved-card" aria-controls="Saved Cards" role="tab" data-toggle="tab">
+								<a href="#saved-card" aria-controls="saved-card" role="tab" data-toggle="tab">
 									<i class="fa fa-credit-card-alt" aria-hidden="true"></i>
 									Saved Cards
 								</a>
 							</li>
 							<li role="presentation">
-								<a href="#new-card" aria-controls="New Card" role="tab" data-toggle="tab">
+								<a href="#new-card" aria-controls="new-card" role="tab" data-toggle="tab">
 									<i class="fa fa-credit-card" aria-hidden="true"></i>
 									New Card
 								</a>
 							</li>
 							<li role="presentation">
-								<a href="#other" aria-controls="Other" role="tab" data-toggle="tab">
+								<a href="#other" aria-controls="other" role="tab" data-toggle="tab">
 									<i class="fa fa-google-wallet" aria-hidden="true"></i>
 									Other
 								</a>
@@ -76,7 +76,7 @@
 									</div>
 
 									<div class="col-md-6 ">
-										<div class="form" name="new-card-form" id="new-card-form">
+										<form class="form" name="new-card-form" id="new-card-form">
 											<div class="row">
 												<input type="text" class="form-control" name="cardHolder" placeholder="Card Holder Name">
 											</div>
@@ -93,7 +93,7 @@
 											<!-- div class="row">
 												<input type="submit" class="btn btn-default" value="Add Card">												
 											</div --> 
-										</div>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -105,7 +105,7 @@
 											<div class="col-md-6">
 												<div class="row">
 													<div class="col-md-1" style="text-align:center;"><input type="checkbox" value=""></div>
-													<div class="col-md-6" style="text-align:center;">
+													<div class="col-md-10" style="text-align:center;">
 														<i class="fa fa-money" aria-hidden="true"></i>
 														Cash
 													</div>
@@ -114,9 +114,9 @@
 											<div class="col-md-6">
 												<div class="row">
 													<div class="col-md-1" style="text-align:center;"><input type="checkbox" value=""></div>
-													<div class="col-md-6" style="text-align:center;">
+													<div class="col-md-10" style="text-align:center;">
 														<i class="fa fa-google-wallet" aria-hidden="true"></i>
-														Wallet
+														Wallet (Bal $ 51)
 													</div>
 												</div>
 											</div>
@@ -131,7 +131,7 @@
 					<!-- promo code section starts from here -->
 					<br/><br/>
 					<div class="row">
-						<div class="form" name="promo-code-form" id="promo-code-form">
+						<form class="form" name="promo-code-form" id="promo-code-form">
 							<div class="row">
 								<input type="text" class="form-control" name="expMonth" placeholder="Promo Code">
 								<input type="submit" class="btn btn-default" value="Apply Promo">												
@@ -142,7 +142,7 @@
 							<div class="row error">
 								Your promo code is invalid
 							</div>
-						</div>
+						</form>
 					</div>
 					<!-- promo code section end here -->
 

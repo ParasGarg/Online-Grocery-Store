@@ -14,6 +14,7 @@ usersRouter.use("/update", require('./dao/update-user-info'));	// url: ~/user/up
 /* non existing page configuration */
 usersRouter.use("*", (req, res) => {
 	res.render('alerts/error', {
+		mainTitle: "Page Not Found •",
 		code: 404,
 		message: `Page Not Found`,
 		url: req.originalUrl 

@@ -28,6 +28,7 @@ function isLoggedIn(req, res, next) {
     } else {
         // rendering error page
         res.render('alerts/error', {
+            mainTitle: "Unauthorized Access •",
             code: 401,
             message: `User is not allowed to access this page.`,
             url: req.originalUrl
@@ -48,6 +49,7 @@ router.get('/:email', isLoggedIn, (req, res) => {
             if (userJsonDocument != null) {
                 // rendering update page for user information update
                 res.render(`users/update/${req.params.email}`, {
+                    mainTitle: "Dashboard •",
                     code: 200,
                     url: req.originalUrl,
                     userEmail: req.user._id,
@@ -58,6 +60,7 @@ router.get('/:email', isLoggedIn, (req, res) => {
                 // this never would be the case as user authenticity and existance has been checked before
                 // rendering error page
                 res.render('alerts/error', {
+                    mainTitle: "Bad Request •",
                     code: 400,
                     message: `User with '${req.params.email}' email id does not exists.`,
                     url: req.originalUrl
@@ -67,6 +70,7 @@ router.get('/:email', isLoggedIn, (req, res) => {
         .catch((collectionError) => {
             // rendering error page
             res.render('alerts/error', {
+                mainTitle: "Server Error •",
                 code: 500,
                 message: collectionError,
                 url: req.originalUrl
@@ -76,6 +80,7 @@ router.get('/:email', isLoggedIn, (req, res) => {
     } else {
         // rendering error page if requested user and logged in user is not same
         res.render('alerts/error', {
+            mainTitle: "Unauthorized Access •",
             code: 401,
             message: `You are not allowed to access this page.`,
             url: req.originalUrl
@@ -95,6 +100,7 @@ router.put('/:email', isLoggedIn, (req, res) => {
         // check for empty json passed
         if (Object.keys(userUpdates).length === 0) {
             res.render(`users/update/${req.params.email}`, {
+                mainTitle: "Bad Request •",
                 code: 400,
                 message: `No data has been provided for update.`,
                 url: req.originalUrl
@@ -109,6 +115,7 @@ router.put('/:email', isLoggedIn, (req, res) => {
                     if (userJsonDocument == null || credentialJsonDocument == null) {
                         // rendering error page if user does not exists
                         res.render('alerts/error', {
+                            mainTitle: "Bad Request •",
                             code: 400,
                             message: `User and credentials with '${req.params.email}' email id does not exists.`,
                             url: req.originalUrl
@@ -117,10 +124,16 @@ router.put('/:email', isLoggedIn, (req, res) => {
 
                         // checking for user profile updates
                         if (userUpdates.name || userUpdates.mobile || userUpdates.image) {
+                            // adding path to image file
+                            if (userUpdates.image) {
+                                userUpdates.image = "/uploads/users-image/" + userUpdates.image
+                            }
+
                             // update new json document in users collection for user profile
                             usersData.updateUser(req.params.email, userUpdates).then((profileUpdates) => {
                                 // rendering update page with user updated information
                                 res.render(`users/update/${profileUpdates._id}`, {
+                                    mainTitle: "Dashboard •",
                                     code: 200,
                                     url: req.originalUrl,
                                     userEmail: req.user._id,
@@ -140,6 +153,7 @@ router.put('/:email', isLoggedIn, (req, res) => {
                             credentialsData.updateCredential(req.params.email, userUpdates.password).then(() => {
                                 // rendering update page with user updated information
                                 res.render(`users/update/${req.params.email}`, {
+                                    mainTitle: "Dashboard •",
                                     code: 200,
                                     url: req.originalUrl,
                                     message: "Password has been changed successfully"
@@ -148,7 +162,7 @@ router.put('/:email', isLoggedIn, (req, res) => {
                         }
 
                         // checking for user payment updates
-                        if (userUpdates.paymentMode || userUpdates.paymentInfo) {
+                        if (userUpdates.paymentInfo) {
 
                             /*
         **********************
@@ -163,6 +177,7 @@ router.put('/:email', isLoggedIn, (req, res) => {
                             usersData.updateUser(req.params.email, userUpdates).then((walletUpdates) => {
                                 // rendering update page with user updated information
                                 res.render(`users/update/${walletUpdates._id}`, {
+                                    mainTitle: "Dashboard •",
                                     code: 200,
                                     url: req.originalUrl,
                                     userEmail: req.user._id,
@@ -176,6 +191,7 @@ router.put('/:email', isLoggedIn, (req, res) => {
             .catch((collectionError) => {
                 // rendering error page
                 res.render('alerts/error', {
+                    mainTitle: "Server Error •",
                     code: 500,
                     message: collectionError,
                     url: req.originalUrl
@@ -186,6 +202,7 @@ router.put('/:email', isLoggedIn, (req, res) => {
     } else {
         // rendering error page if requested user and logged in user is not same
         res.render('alerts/error', {
+            mainTitle: "Unauthorized Access •",
             code: 401,
             message: `You are not allowed to access this page.`,
             url: req.originalUrl
