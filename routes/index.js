@@ -1,13 +1,27 @@
-//const adminRoutes = require('./admin/index');
+/* importing required files and packages */
+const passport = require('../config/passport-users');
 const paymentsRoutes = require('./payments');
 const productsRoutes = require('./products');
 const usersRoutes = require('./users');
+
+// check user authenticity
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+        res.redirect('/');
+    } else {
+        return next();
+    }
+}
 
 const mainRoutes = (app) => {
 
     /* home page routes */
     app.use("/$/", (req, res) => {
-        res.render('index');
+        res.render('index', {
+            mainTitle: "Welcome to",
+            loggedIn: true,
+            user: req.user
+        });
     });
 
     /* customized routes */

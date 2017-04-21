@@ -18,3 +18,23 @@ footer blockquote { padding: 0 20px; }
 
 #form-subscribe input[type="text"] { display: inline-block;width: 60%; }
 #form-subscribe input[type="submit"] { display: inline-block;width: 35%; }
+
+@media only screen and (max-width: 480px) {
+	footer h6 { text-align: center; }	
+	footer p { margin-top: 1rem;text-align: center; }	
+	footer blockquote { width: 50%;margin-left: 38%; }
+	
+	footer .row { margin: 0; }
+	footer .col-md-12 {	padding: 0; }
+	footer .btn-full { width: 50%;margin-left: 25%; }
+}
+
+@media (min-width: 481px) and (max-width: 991px) {
+	footer h6 { text-align: center; }	
+	footer p { margin-top: 1rem;text-align: center; }	
+	footer blockquote { width: 50%;margin-left: 43%; }
+	
+	footer .row { margin: 0; }
+	footer .col-md-12 {	padding: 0; }
+	footer .btn-full { width: 50%;margin-left: 25%; }
+}
