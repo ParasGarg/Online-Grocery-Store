@@ -25,6 +25,7 @@ function isLoggedIn(req, res, next) {
     } else {
         // rendering error page
         res.render('alerts/error', {
+            mainTitle: "Unauthorized Access •",
             code: 401,
             message: `User is not allowed to access this page.`,
             url: req.originalUrl
@@ -49,6 +50,7 @@ router.get('/:email', isLoggedIn, (req, res) => {
                 // this never would be the case as user authenticity and existance has been checked before
                 // rendering error page
                 res.render('alerts/error', {
+                    mainTitle: "Bad Request •",
                     code: 400,
                     message: `User with '${req.params.email}' email id is not a registered user.`,
                     url: req.originalUrl
@@ -57,7 +59,8 @@ router.get('/:email', isLoggedIn, (req, res) => {
         })
         .catch((collectionError) => {
             // rendering error page
-            res.render('alerts/error', { 
+            res.render('alerts/error', {
+                mainTitle: "Server Error •",
                 code: 500,
                 message: collectionError,
                 url: req.originalUrl
@@ -67,6 +70,7 @@ router.get('/:email', isLoggedIn, (req, res) => {
     } else {
         // rendering error page if inquired user and logged in user is not same
         res.render('alerts/error', {
+            mainTitle: "Unauthorized Access •",
             code: 401,
             message: `You are not allowed to access this page.`,
             url: req.originalUrl

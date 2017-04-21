@@ -9,13 +9,9 @@
         ====================================================================================
         |   1.  | getUserById       | Search infomation for a user from the collection     |
         ------------------------------------------------------------------------------------
-        |   2.  | getAllUsers       | Search information for all users from the collection |
+        |   2.  | createNewUser     | Create new user record in the collection             |
         ------------------------------------------------------------------------------------
-        |   3.  | createNewUser     | Create new user record in the collection             |
-        ------------------------------------------------------------------------------------
-        |   4.  | updateUser        | Update user information in the collection            |
-        ------------------------------------------------------------------------------------
-        |   5.  | deleteUser        | Delete the user from the collection                  |
+        |   3.  | updateUser        | Update user information in the collection            |
         ------------------------------------------------------------------------------------
 */
 
@@ -30,7 +26,7 @@ module.exports = usersControllers = {
     getUserById: (email) => {
         return users().then((usersCollection) => {
             // returning a found json document else returning null
-            return usersCollection.findOne({ _id:email }, { _id:1, name:1, mobile:1 });
+            return usersCollection.findOne({ _id:email }, { _id:1, name:1, mobile:1, cart:1, paymentInfo:1, wallet:1 });
         })
         .catch(() => {
             // returning a reject promise
@@ -38,12 +34,11 @@ module.exports = usersControllers = {
         });
     },
 
-
     //------------------------ fetch all users information
     getAllUsers: () => {
         return users().then((usersCollection) => {
             // returning a found json document else returning null
-            return usersCollection.find({ }, { _id:1, name:1, mobile:1 }).toArray();
+            return usersCollection.find({ }, { _id:1, name:1, mobile:1, cart:1, paymentInfo:1, wallet:1 }).toArray();
         })
         .catch(() => {
             // returning a reject promise
@@ -61,12 +56,12 @@ module.exports = usersControllers = {
                 _id: usrEmail,
                 name: usrName,
                 mobile: usrMobile,
-                image: usrImage,
+                image: "",
                 regDate: new Date("2010-06-09T15:20:00Z").toUTCString(),
-                paymentMode: null,
-                paymentInfo: null,
-                promoCode: null,
-                wallet: 0                
+                cart: [],
+                paymentInfo: [],
+                // promoCode: null,
+                wallet: 0
             }
 
             // adding a record in to the collection

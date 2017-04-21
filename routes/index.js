@@ -17,6 +17,7 @@ const mainRoutes = (app) => {
     /* non existing page configuration */
     app.use("*", (req, res) => {
         res.render('alerts/error', {
+            mainTitle: "404 | ",
             code: 404,
             message: `Page Not Found`,
             url: req.originalUrl

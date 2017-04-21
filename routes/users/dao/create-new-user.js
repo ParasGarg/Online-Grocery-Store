@@ -52,10 +52,6 @@ router.post('/', (req, res) => {
     } else if (!newUser.password) {
         res.status(400).json({ error: "Please provide your account password." });
         return;
-    } else if (!newUser.image) {
-        newUser.image = null;
-    } else if (newUser.image) {
-        newUser.image = "/uploads/users-image/" + newUser.image;
     }
 
     // searching for an existing user
@@ -65,12 +61,13 @@ router.post('/', (req, res) => {
         // if user does not exists then value we get will be null
         if (userJsonDocument == null) {
             // creating new json document in users collection 
-            usersData.createNewUser(newUser.name, newUser.email, newUser.mobile, newUser.image).then((createUserDocument) => {
+            usersData.createNewUser(newUser.name, newUser.email, newUser.mobile).then((createUserDocument) => {
 
                 // validating received user information
                 if (createUserDocument == null) {
                     // rendering error page
-                    res.render('alerts/error', { 
+                    res.render('alerts/error', {
+                        mainTitle: "Bad Request •",
                         code: 400,
                         message: `Invalid user input stream.`,
                         url: req.originalUrl
@@ -86,7 +83,8 @@ router.post('/', (req, res) => {
                             });
                         } else {
                             // rendering error page if credential already exists
-                            res.render('alerts/error', { 
+                            res.render('alerts/error', {
+                                mainTitle: "Bad Request •",
                                 code: 400,
                                 message: `Credential with '${newUser.email}' email id is already a registered.`,
                                 url: req.originalUrl
@@ -99,6 +97,7 @@ router.post('/', (req, res) => {
         } else {
             // rendering error page if user already exists
             res.render('users/new', {
+                mainTitle: "Bad Request •",
                 code: 400,
                 message: `User with '${newUser.email}' email id is already a registered.`,
                 url: req.originalUrl
@@ -108,6 +107,7 @@ router.post('/', (req, res) => {
     .catch((collectionError) => {
         // rendering error page
         res.render('alerts/error', {
+            mainTitle: "Server Error •",
             code: 500,
             message: collectionError,
             url: req.originalUrl
