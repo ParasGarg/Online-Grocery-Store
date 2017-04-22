@@ -123,7 +123,7 @@ module.exports = usersControllers = {
         });
     },
 
-    // delete a user record of specific id from users collection
+    //------------------------ delete a user record of specific id from users collection
     deleteUser: (id) => {
         return users().then((usersCollection) => {
             return usersCollection.removeOne({ _id:id })

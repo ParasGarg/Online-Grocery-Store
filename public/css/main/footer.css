@@ -17,7 +17,7 @@ footer .inp-equal-width:last-child { float: right; }
 footer blockquote { padding: 0 20px; }
 
 #form-subscribe input[type="text"] { display: inline-block;width: 60%; }
-#form-subscribe input[type="submit"] { display: inline-block;width: 35%; }
+#form-subscribe input[type="submit"] { display: inline-block;margin-top: -.3rem;width: 35%; }
 
 @media only screen and (max-width: 480px) {
 	footer h6 { text-align: center; }	

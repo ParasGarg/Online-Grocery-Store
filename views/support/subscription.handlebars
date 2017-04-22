@@ -1,0 +1,70 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/support/subscription.css">
+
+<!-- body -->
+<div class="subscription">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+
+				{{#if status}}
+					<article>
+						<h2>You are signed up for our newsletters!</h2>
+
+						<div class="row">
+							<p>
+								If you want to stop receiving our newsletters. 
+								Click <a href="#" onclick="javascript: unsubscribe()">Unsubscribe</a>. 
+							</p>
+						</div>
+
+					</article>
+				{{else if anonymous}}
+					<article>
+						<h2>You are signed up for our newsletters!</h2>
+
+						<div class="row">
+							<p>
+								Login if you want to stop receiving our newsletters. 
+							</p>
+						</div>
+
+					</article>
+				{{else}}
+					<article>
+						<h2>Oh! you are not subscribed to our newsletters.</h2>
+
+						<div class="row">
+							<p>
+								If you want to receiving our newsletters.
+								{{#if user}}
+									Click <a href="#" onclick="javascript: subscribe()">Subscribe</a>.
+								{{else}}
+									Click <a href="#">Subscribe</a>.
+								{{/if}}
+							</p>
+						</div>
+					</article>
+				{{/if}}
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{{#if status}}
+	<script>
+		function unsubscribe() {
+			document.getElementById("form-unsubscribe").submit();
+		}
+	</script>
+	<form method="post" action="/support/subscription/unsubscribe" id="form-unsubscribe"></form>
+{{else}}
+	<script>
+		function subscribe() {
+			document.getElementById("form-subscribe").submit();
+		}
+	</script>
+	<form method="post" action="/support/subscription/subscribe" id="form-subscribe"></form>
+{{/if}}
+
