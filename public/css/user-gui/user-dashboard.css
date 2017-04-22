@@ -1,0 +1,46 @@
+/* dashboard */
+.dashboard { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin: 0 auto;padding: 3rem 0 6rem;width: 100%;  }
+.dashboard h2 { font-size: 3rem;font-weight: 600;margin-bottom: 3rem;text-align: left; }
+.dashboard h4 { padding: 3rem; }
+.dashboard form .row { margin-bottom: 2rem; }
+
+/* account */
+.dashboard.account { width: 60%;  }
+.dashboard.account h2 { text-align: center; }
+.dashboard.account .panel-heading h4 { padding: 1.5rem 2rem; }
+
+
+/* payments */ 
+.dashboard.payments h2 { text-align: center; }
+.dashboard.payments .panel-heading h4 { padding: 1.5rem 2rem; }
+#saved-card-panel, #payment-transactions-panel { text-align: left; }
+#saved-card-panel .row, #payment-transactions-panel .row { font-size: 1.2rem;margin-bottom: 12px; }
+#saved-card-panel .row:first-child, #payment-transactions-panel .row:first-child { font-weight: bold; }
+#saved-card-panel p, #payment-transactions-panel p { font-size: 2rem;text-align: center; }
+
+/* wallet */
+.dashboard.wallet h2 { text-align: center; }
+.dashboard.wallet .panel-heading h4 { padding: 1.5rem 2rem; }
+#wallet-transaction-panel { text-align: left; }
+#wallet-transaction-panel .row { font-size: 1.2rem;margin-bottom: 12px; }
+#wallet-transaction-panel .row:first-child { font-weight: bold; }
+#wallet-transaction-panel p { font-size: 2rem;text-align: center; }
+
+/* other dashboard features*/
+.dashboard input[type="number"] { display: inline-block;width: 48%; }
+.dashboard input[type="number"]:first-child { float: left; }
+.dashboard input[type="number"]:last-child { float: right; }
+
+.dashboard select.btn-default { text-align: left;width: 100%; }
+
+/* accordin */
+.panel-group { margin-bottom: 0; }
+.panel-group .panel { margin-bottom: 4rem; }
+.panel-heading { padding: 0; }
+.panel-heading a { text-decoration: none; }
+panel-heading h4 { padding: 1.5rem 2rem; }
+panel-heading .panel-title { text-align: left; }
+
+
+
+

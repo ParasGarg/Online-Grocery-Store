@@ -1,25 +1,25 @@
-/* users collection controllers */
-
-/* 
+/* Users Collection
  * Users Controllers *
- * This controller file contains all backend operations on users collection
+ * Data Access Object *
+ * Users Controllers for DAO actions *
+
  * Controllers Index: 
-        ====================================================================================
-        | S.No. |   Function Call   |                      Description                     |
-        ====================================================================================
-        |   1.  | getUserById       | Search infomation for a user from the collection     |
-        ------------------------------------------------------------------------------------
-        |   2.  | createNewUser     | Create new user record in the collection             |
-        ------------------------------------------------------------------------------------
-        |   3.  | updateUser        | Update user information in the collection            |
-        ------------------------------------------------------------------------------------
+        =========================================================================
+        | S.No. |   Function Call   |                Description                |
+        =========================================================================
+        |   1.  | getUserById       | Search infomation for an existing user    |
+        -------------------------------------------------------------------------
+        |   2.  | createNewUser     | Create new user record in the collection  |
+        -------------------------------------------------------------------------
+        |   3.  | updateUser        | Update an existing user information       |
+        -------------------------------------------------------------------------
 */
 
-// importing required files and packages
+/* importing required files and packages */
 const mongoDbCollection = require('../config/mongodb-collection');
 const users = mongoDbCollection.users;
 
-// exporting controllers apis
+/* exporting controllers apis */
 module.exports = usersControllers = {
 
     //------------------------ fetch a user information by email id
@@ -92,10 +92,6 @@ module.exports = usersControllers = {
 
             if (userUpdates.mobile) {
                 userChanges['mobile'] = userUpdates.mobile;
-            }
-
-            if(userUpdates.paymentMode) {
-                userChanges['paymentMode'] = userUpdates.paymentMode;
             }
 
             if (userUpdates.paymentInfo) {

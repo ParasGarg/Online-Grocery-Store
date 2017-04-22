@@ -1,0 +1,115 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/user-gui/user-dashboard.css">
+
+<!-- dashboard starts from here -->
+<article class="dashboard">
+	<h2>Dashboard</h2>
+		
+	<!-- user account section starts from here -->
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	
+		<div class="row">
+
+			<!-- user profile section -->			
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="account-settings-panel">
+						<a href="/user/dashboard/account">
+							<h4 class="panel-title">
+								<i class="fa fa-cog" aria-hidden="true"></i>
+								Account Settings
+							</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- user payment section -->			
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="payment-details-panel">
+						<a href="/user/dashboard/payments">
+							<h4 class="panel-title">
+								<i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+								Payment Details
+							</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- user wallet section -->			
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="wallet-information-panel">
+						<a href="/user/dashboard/wallet">
+							<h4 class="panel-title">
+								<i class="fa fa-google-wallet" aria-hidden="true"></i>
+								Wallet Information
+							</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+
+			<!-- user wish list section -->			
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="wish-list-panel">
+						<a href="/user/dashboard/wish-list">
+							<h4 class="panel-title">
+								<i class="fa fa-heart" aria-hidden="true"></i>
+								Wish List
+							</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- user payment section -->			
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="order-history-panel">
+						<a href="/user/dashboard/order-history">
+							<h4 class="panel-title">
+								<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+								Order History
+							</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- user wallet section -->			
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="logout-panel">
+						<a onclick="javascript: logout()" href="#">
+							<h4 class="panel-title">
+								<i class="fa fa-power-off" aria-hidden="true"></i>
+								Logout
+							</h4>
+						</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+				
+
+	</div>
+	<!-- user account section ends here -->
+			
+</article>
+<!-- dashboard ends here -->
+
+<script>
+	function logout() {
+		document.getElementById("form-logout").submit();
+	}
+</script>
+<form method="post" action="/user/logout" id="form-logout"></form>

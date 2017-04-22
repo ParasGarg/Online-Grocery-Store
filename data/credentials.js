@@ -1,8 +1,8 @@
-/* credentials collection controllers */
-
-/* 
+/* Credentials Collection
  * Credentials Controllers *
- * This controller file contains all backend operations on credentials collection
+ * Data Access Object *
+ * Credentials Controllers for DAO actions *
+
  * Controllers Index: 
         ========================================================================================
         | S.No. |    Function Call    |                       Description                      |
@@ -19,17 +19,18 @@
         ----------------------------------------------------------------------------------------
 */
 
-// importing required files and packages
+/* importing required files and packages */
 const bcrypt = require('bcrypt');
 const mongoDbCollection = require('../config/mongodb-collection');
 const credentials = mongoDbCollection.credentials;
 
-// function to hash normal user's password
+/* local functions */
+//------ function to hash normal user's password
 function generateHashedPassword(password) {
 	return bcrypt.hashSync(password, 10);
 }
 
-// exporting controllers apis
+/* exporting controllers apis */
 module.exports = credentialsControllers = {
 
     //------------------------ fetch a credential information by email id

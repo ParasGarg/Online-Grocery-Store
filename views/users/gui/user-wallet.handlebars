@@ -1,0 +1,167 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/user-gui/user-dashboard.css">
+
+<!-- wallet dashboard starts from here -->
+<article class="dashboard wallet">
+	<h2>Wallet Information</h2>
+		
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		
+		<!-- left panel section starts from here -->
+		<div class="col-md-5">
+			<!-- wallet details section starts frome here -->
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="wallet-info">
+					<a role="button"  data-parent="#accordion" aria-expanded="true" aria-controls="wallet-info-panel">
+						<h4 class="panel-title">
+							Wallet Information
+						</h4>
+					</a>
+				</div>
+				<div id="wallet-info-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="wallet-info">
+					<div class="panel-body">
+
+						<div class="col-md-12">
+							<div class="row">
+
+								<!-- user wallet starts from here -->					
+								<div>
+									<!-- wallet amount section -->
+									<div class="row">
+										<div class="col-md-4">
+											<p id="wallet-amount">Amount</p>
+										</div>
+										<div class="col-md-6 col-md-offset-1">
+											<p id="wallet-amount">{{user.wallet}}</p>
+										</div>
+									</div>
+								
+								</div>
+								<!-- user wallet form ends here -->
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- wallet details sections ends here -->
+
+			<!-- add amount section starts frome here -->
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="wallet-add-amount">
+					<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="wallet-add-amount-panel">
+						<h4 class="panel-title">
+							Add Amount
+						</h4>
+					</a>
+				</div>
+				<div id="wallet-add-amount-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="wallet-add-amount">
+					<div class="panel-body">
+
+						<div class="col-md-12">
+							<div class="row">
+
+								<!-- add amount detail form starts from here -->
+								<form method="post" action="/user/update" id="form-add-wallet-details">
+								
+									<!-- amount section -->
+									<div class="row">
+										<div class="col-md-4">
+											<label for="card-name">Name On Card</label>
+										</div>
+										<div class="col-md-6 col-md-offset-1">
+											<input type="text" class="form-control" name="cardName" id="card-name" placeholder="Card Holder's Name"/>
+										</div>
+									</div>
+
+									<!-- amount submit form section -->
+									<input type="submit"class="btn btn-default" value="Add" />
+								
+								</form>
+								<!-- add amount detail form ends here -->
+
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+			<!-- add amount detail sections ends here -->
+		</div>
+		<!-- left panel section ends here -->
+		
+		<!-- right panel section starts from here -->
+		<div class="col-md-7">
+			<!-- wallet transactions section starts frome here -->
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="wallet-transaction">
+					<a role="button"  data-parent="#accordion" aria-expanded="true" aria-controls="wallet-transaction-panel">
+						<h4 class="panel-title">
+							Wallet Transactions
+						</h4>
+					</a>
+				</div>
+				<div id="wallet-transaction-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="wallet-transaction">
+					<div class="panel-body">
+
+							<div class="row">
+								<!-- order id -->
+								<div class="col-md-5">
+									Order Id
+								</div>
+
+								<!-- item -->
+								<div class="col-md-3">
+									Title
+								</div>
+
+								<!--price -->
+								<div class="col-md-2">
+									price
+								</div>
+
+								<!-- Date -->
+								<div class="col-md-2">
+									Date
+								</div>
+								
+							</div>
+
+							<div class="row">
+								<div class="col-md-5">
+									11edv-1f3g5-ju245667b65t-t4erty-1233
+								</div>
+
+								<div class="col-md-3">
+									Bath robe
+								</div>
+
+								<div class="col-md-2">
+									$7.56
+								</div>
+
+								<div class="col-md-2">
+									04/2017
+								</div>
+								
+							</div>
+
+							</div>
+							<div class="row">
+								<p>No wallet transactions</p>
+							</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- wallet transactions sections ends here -->
+		</div>
+		<!-- right panel section ends here -->
+			
+
+	</div>
+
+	
+</article>
+<!-- wallet dashboard ends here -->

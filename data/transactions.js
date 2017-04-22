@@ -1,8 +1,8 @@
-/* credentials collection controllers */
+/* Transactions Collection
+ * Transactions Controllers *
+ * Data Access Object *
+ * Transactions Controllers for DAO actions *
 
-/* 
- * Credentials Controllers *
- * This controller file contains all backend operations on credentials collection
  * Controllers Index: 
         ========================================================================================
         | S.No. |    Function Call    |                       Description                      |
