@@ -19,24 +19,25 @@ const contacts = mongoDbCollection.contacts;
 module.exports = contactsControllers = {
 
     //------------------------ insert/create a new contact record
-    addContact: (usrName, usrEmail, usrMobile, usrDescription) => {
+    addContact: (name, email, mobile, description) => {
         return contacts().then((contactsCollection) => {
 
             // new contact object
             let newContact = {
-                _id: uuid.v4,
-                name: usrName,
-				email: usrEmail,
-                mobile: usrMobile,
-                description: usrDescription,
-                contactedDate: new Date("2010-06-09T15:20:00Z").toUTCString(),
-				activeStatus: true
+                _id: uuid.v4(),
+                name: name,
+				email: email,
+                mobile: mobile,
+                description: description,
+                contactedDate: new Date("2010-06-09T15:20:00Z").toUTCString()
             }
 
             // adding a record in to the collection
             return contactsCollection.insertOne(newContact)
-                .then((newContactInformation) => {
+                .then(() => {
                     return true;
+                }, () => {
+                    return false;
                 })
         })
         .catch(() => {
