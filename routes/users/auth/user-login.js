@@ -24,7 +24,7 @@ const passport = require('../../../config/passport-users');
 // check user authenticity
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
-        res.redirect('/');
+        res.redirect('/user/dashboard');
     } else {
         return next();
     }
@@ -35,16 +35,16 @@ router.get('/', isLoggedIn, (req, res) => {
     req.flash('loginFlash');
 
 	if (req.session.flash["error"] === undefined) {
-        res.render('users/user-login', { error: req.session.flash.error });   
+        res.render('users/auth/user-login', { error: req.session.flash.error });   
     } else {
-        res.render('users/user-login', { error: req.session.flash.error.slice(-1)[0] });
+        res.render('users/auth/user-login', { error: req.session.flash.error.slice(-1)[0] });
     }
 });
 
 //------------------------ routing for login form submit
 router.post('/',
     passport.authenticate('user', { 
-        successRedirect: '/', 
+        successRedirect: '/user/dashboard', 
         failureRedirect: '/user/login', 
         failureFlash: true 
     })
