@@ -1,7 +1,8 @@
-/* contacts collection
- *
+/* Contacts Collection *
  * Contacts Controllers *
- * This controller file contains all backend operations for contact-us details
+ * Data Access Object *
+ * Contacts Controllers for DAO actions *
+
  * Controllers Index: 
         ====================================================================================
         | S.No. |   Function Call   |                      Description                     |
@@ -10,19 +11,19 @@
         ------------------------------------------------------------------------------------
 */
 
-// importing required files and packages
+/* importing required files and packages */
 const uuid = require('uuid');
 const mongoDbCollection = require('../config/mongodb-collection');
 const contacts = mongoDbCollection.contacts;
 
-// exporting controllers apis
+/* exporting controllers apis */
 module.exports = contactsControllers = {
 
-    //------------------------ insert/create a new contact record
+    //------------------------ insert a new contact record in to the contacts collection
     addContact: (name, email, mobile, description) => {
         return contacts().then((contactsCollection) => {
 
-            // new contact object
+            // new json object
             let newContact = {
                 _id: uuid.v4(),
                 name: name,

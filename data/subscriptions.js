@@ -1,26 +1,27 @@
-/* subscriptions collection
- *
+/* Subscriptions Collection *
  * Subscriptions Controllers *
- * This controller file contains all backend operations for subscriptions details
+ * Data Access Object *
+ * Subscriptions Controllers for DAO actions *
+
  * Controllers Index: 
-        ===========================================================
-        | S.No. |    Function Call    |          Actions          |
-        ===========================================================
-        |   1.  | getSubscriptionById | get/fetch record          |
-        -----------------------------------------------------------
-        |   2.  | addSubscription     | create/insert record      |
-        -----------------------------------------------------------
-        |   3.  | updateSubscription  | update/modify record      | 
-        -----------------------------------------------------------
-        |   4.  | removeSubscription  | deactive/update record    |
-        -----------------------------------------------------------
+        ======================================================================
+        | S.No. |    Function Call    |             Description              |
+        ======================================================================
+        |   1.  | getSubscriptionById | Search and fetch info using email id |
+        ----------------------------------------------------------------------
+        |   2.  | addSubscription     | Insert record in to the collection   |
+        ----------------------------------------------------------------------
+        |   3.  | updateSubscription  | Update the existing record           |
+        ----------------------------------------------------------------------
+        |   4.  | removeSubscription  | Deactive the existing record         |
+        ----------------------------------------------------------------------
 */
 
-// importing required files and packages
+/* importing required files and packages */
 const mongoDbCollection = require('../config/mongodb-collection');
 const subscriptions = mongoDbCollection.subscriptions;
 
-// exporting controllers apis
+/* exporting controllers apis */
 module.exports = subscriptionsControllers = {
 
     //------------------------ fetch a subscription information by email id
