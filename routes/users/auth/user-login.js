@@ -35,9 +35,9 @@ router.get('/', isLoggedIn, (req, res) => {
     req.flash('loginFlash');
 
 	if (req.session.flash["error"] === undefined) {
-        res.render('users/login', { error: req.session.flash.error });   
+        res.render('users/user-login', { error: req.session.flash.error });   
     } else {
-        res.render('users/login', { error: req.session.flash.error.slice(-1)[0] });
+        res.render('users/user-login', { error: req.session.flash.error.slice(-1)[0] });
     }
 });
 

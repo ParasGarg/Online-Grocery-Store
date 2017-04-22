@@ -21,6 +21,7 @@ header #form-logout { visibility: hidden; }
 .dropdown-menu > li > a { padding: 9px 20px; }
 .dropdown-menu .divider { margin: 0; }
 
-@media only screen and (max-width: 480px) {
-	
-}
+header a.cart-items-number { padding-top: 10px;padding-bottom: 13px;z-index: 0;  }
+header a.cart-items-number > span { background-color: #ff0000;border-radius: 1rem;font-size: 1.2rem;margin: 0 -1.5rem 0 0;padding: .2rem .4rem .2rem .5rem;z-index: 10;  }
+header a.cart-items-number > i { font-size: 2.5rem;position: relative;z-index: -1;transform: rotateY(180deg);
+								-webkit-transform: rotateY(180deg);-moz-transform: rotateY(180deg);-o-transform: rotateY(180deg);-ms-transform: rotateY(180deg); }

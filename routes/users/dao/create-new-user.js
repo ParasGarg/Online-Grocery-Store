@@ -32,7 +32,7 @@ function isLoggedIn(req, res, next) {
 
 //------------------------ route to render to create new user form
 router.get('/', isLoggedIn, (req, res) => {
-    res.render('users/new');
+    res.render('users/create-new-account');
 });
 
 //------------------------ route to create new user into database
@@ -96,7 +96,7 @@ router.post('/', (req, res) => {
 
         } else {
             // rendering error page if user already exists
-            res.render('users/new', {
+            res.render('users/create-new-account', {
                 mainTitle: "Bad Request •",
                 code: 400,
                 message: `User with '${newUser.email}' email id is already a registered.`,

@@ -94,10 +94,6 @@ module.exports = usersControllers = {
                 userChanges['mobile'] = userUpdates.mobile;
             }
 
-            if(userUpdates.paymentMode) {
-                userChanges['paymentMode'] = userUpdates.paymentMode;
-            }
-
             if (userUpdates.paymentInfo) {
                 userChanges['paymentInfo'] = userUpdates.paymentInfo;
             }
