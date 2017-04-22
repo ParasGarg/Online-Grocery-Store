@@ -1,0 +1,97 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/user-gui/user-auth.css">
+
+<!-- Create user starts from here -->
+<article class="auth create-new-user">
+  
+    
+  <!-- user account section starts from here -->
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  
+    <!-- user profile section starts frome here -->
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            Create a new Acccount
+          </h4>
+      </div>
+      <div id="profile-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+
+          <div class="col-md-12">
+            <div class="row">
+
+              <!-- user account form starts from here -->
+              <form method="post" action="/user/new" id="form-user-profile">
+
+                <!-- user name section -->
+                <div class="row">
+                  <div class="col-md-4 col-md-offset-1 text-left">
+                    <label for="name">Name</label>
+                  </div>
+                  <div class="col-md-6 ">
+                    <input type="text" class="form-control" name="name" id="name"  />
+                  </div>
+                </div>
+
+                <!-- user email id section -->
+                <div class="row">
+                  <div class="col-md-4 col-md-offset-1 text-left">
+                    <label for="email-id">Email Id</label>
+                  </div>
+                  <div class="col-md-6 ">
+                    <input type="text" class="form-control" name="email" id="email" />
+                  </div>
+                </div>
+
+                <!-- user mobile section -->
+                <div class="row">
+                  <div class="col-md-4 col-md-offset-1 text-left">
+                    <label for="mobile">Contact Number</label>
+                  </div>
+                  <div class="col-md-6 ">
+                    <input type="text" class="form-control" name="mobile" id="mobile" />
+                  </div>
+                </div>
+
+                <!-- user password section -->
+                <div class="row">
+                  <div class="col-md-4 col-md-offset-1 text-left">
+                    <label for="password">Password</label>
+                  </div>
+                  <div class="col-md-6 ">
+                    <input type="password" class="form-control" name="password" id="password"  />
+                  </div>
+                </div>
+
+                <!-- user confirm password section -->
+                <div class="row">
+                  <div class="col-md-4 text-left col-md-offset-1">
+                    <label for="password">Confirm Password</label>
+                  </div>
+                  <div class="col-md-6 ">
+                    <input type="password" class="form-control" id="confirm-password"  />
+                  </div>
+                </div>
+
+                <!-- user submit form section -->
+                <input type="submit"class="btn btn-default" value="Create Account" />
+              
+              </form>
+              <!-- user account form ends here -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- user profile sections ends here -->
+
+
+
+  </div>
+  <!-- user account section ends here -->
+      
+</article>
+<!-- Create user ends here -->

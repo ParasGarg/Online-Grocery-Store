@@ -24,7 +24,7 @@ const passport = require('../../../config/passport-users');
 // check user authenticity
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
-        res.redirect('/');
+        res.redirect('/user/dashboard');
     } else {
         return next();
     }
@@ -32,7 +32,7 @@ function isLoggedIn(req, res, next) {
 
 //------------------------ route to render to create new user form
 router.get('/', isLoggedIn, (req, res) => {
-    res.render('users/create-new-account');
+    res.render('users/auth/create-new-account');
 });
 
 //------------------------ route to create new user into database
@@ -72,6 +72,7 @@ router.post('/', (req, res) => {
                         message: `Invalid user input stream.`,
                         url: req.originalUrl
                     });
+                    
                 } else {
                      // searching for an existing credential
                     credentialsData.getCredentialById(newUser.email).then((credentialJsonDocument) => {
@@ -79,7 +80,18 @@ router.post('/', (req, res) => {
                         if (credentialJsonDocument == null) {
                             // creating new json document in credentials collection 
                             credentialsData.createNewCredential(newUser.email, newUser.password).then((userCredential) => {
-                                res.status(200).json(userCredential);
+
+                                // a "user" object
+                                let user = {
+                                    email: newUser.email,
+                                    password: newUser.password
+                                }
+
+                                // authenticating user
+                                passport.authenticate('user')(req, res, function () {
+                                    res.redirect('/user/dashboard');
+                                });                           
+                                
                             });
                         } else {
                             // rendering error page if credential already exists
@@ -96,7 +108,7 @@ router.post('/', (req, res) => {
 
         } else {
             // rendering error page if user already exists
-            res.render('users/create-new-account', {
+            res.render('users/auth/create-new-account', {
                 mainTitle: "Bad Request •",
                 code: 400,
                 message: `User with '${newUser.email}' email id is already a registered.`,
