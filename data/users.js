@@ -46,17 +46,15 @@ module.exports = usersControllers = {
         });
     },
 
-
     //------------------------ insert/create a new user record
-    createNewUser: (usrName, usrEmail, usrMobile, usrImage) => {
+    createNewUser: (name, email, mobile) => {
         return users().then((usersCollection) => {
 
             // new user object
             let newUser = {
-                _id: usrEmail,
-                name: usrName,
-                mobile: usrMobile,
-                image: "",
+                _id: email,
+                name: name,
+                mobile: mobile,
                 regDate: new Date("2010-06-09T15:20:00Z").toUTCString(),
                 cart: [],
                 paymentInfo: [],
@@ -81,7 +79,7 @@ module.exports = usersControllers = {
     },
 
     //------------------------  update an existing user information
-    updateUser: (userEmail, userUpdates) => {
+    updateUser: (email, userUpdates) => {
         return users().then((usersCollection) => {
             
             // update user object (empty)
@@ -94,10 +92,6 @@ module.exports = usersControllers = {
 
             if (userUpdates.mobile) {
                 userChanges['mobile'] = userUpdates.mobile;
-            }
-
-            if (userUpdates.image) {
-                userChanges['image'] = userUpdates.image;
             }
 
             if(userUpdates.paymentMode) {
@@ -113,8 +107,8 @@ module.exports = usersControllers = {
             }
 
             // updating user information into the collection
-            return usersCollection.updateOne( { _id:userEmail }, { $set:userChanges } ).then(() => { 
-                return usersControllers.getUserById(userEmail); 
+            return usersCollection.updateOne( { _id:email }, { $set:userChanges } ).then(() => { 
+                return usersControllers.getUserById(email); 
             });
         })
         .catch(() => {
@@ -123,13 +117,13 @@ module.exports = usersControllers = {
         });
     },
 
-    // delete a user record of specific id from users collection
-    deleteUser: (id) => {
+    //------------------------ delete a user record of specific id from users collection
+    deleteUser: (email) => {
         return users().then((usersCollection) => {
-            return usersCollection.removeOne({ _id:id })
+            return usersCollection.removeOne({ _id:email })
                 .then((deletedUserInformation) => {
                     if (deletedUserInformation.deletedCount === 0) {
-                        return Promise.reject(`No result having id ${id} from users collection`);
+                        return Promise.reject(`No result having id ${email} from users collection`);
                     }
                 });
         }, () => {

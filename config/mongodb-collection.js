@@ -19,9 +19,11 @@ let getCollectionFn = (collection) => {
 
 /* listing collections here: */
 module.exports = {
+    contacts: getCollectionFn("contacts"),
     credentials: getCollectionFn("credentials"),
     orders: getCollectionFn("orders"),
     products: getCollectionFn("products"),
+    subscriptions: getCollectionFn("subscriptions"),
     transactions: getCollectionFn("transactions"),
     users: getCollectionFn("users"),
     wishes: getCollectionFn("wishes")

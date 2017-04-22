@@ -2,6 +2,7 @@
 const passport = require('../config/passport-users');
 const paymentsRoutes = require('./payments');
 const productsRoutes = require('./products');
+const supportsRoutes = require('./supports');
 const usersRoutes = require('./users');
 
 // check user authenticity
@@ -19,7 +20,6 @@ const mainRoutes = (app) => {
     app.use("/$/", (req, res) => {
         res.render('index', {
             mainTitle: "Welcome to",
-            loggedIn: true,
             user: req.user
         });
     });
@@ -27,6 +27,7 @@ const mainRoutes = (app) => {
     /* customized routes */
     app.use("/payment", paymentsRoutes);    // payments routes
     app.use("/product", productsRoutes);    // products routes
+    app.use("/support", supportsRoutes);    // supports routes
     app.use("/user", usersRoutes);          // user routes
 
     /* non existing page configuration */

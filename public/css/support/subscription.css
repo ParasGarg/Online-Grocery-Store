@@ -1,0 +1,4 @@
+/* payment confirmation stylesheet */
+.subscription { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;padding: 3rem 0 6rem;text-align: center;width: 100%; }
+.subscription h2 { font-size: 4rem;font-weight: bold; }
+.subscription p { font-size: 1.3rem;margin-top: 6rem; }
