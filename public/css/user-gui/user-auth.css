@@ -1,5 +1,5 @@
 /*auth */
-.auth { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin: 0 auto;padding: 3rem 0 6rem;width: 100%;  }
+.auth { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin: 0 auto;padding: 3rem 0 6rem;width: 100%; }
 .auth h2 { font-size: 3rem;font-weight: 600;margin-bottom: 3rem;text-align: left; }
 .auth h4 { padding: 3rem; }
 .auth form .row { margin-bottom: 2rem; }
@@ -19,6 +19,3 @@
 .panel-group .panel { margin-top: 3rem; }
 .panel-heading { padding: 0; }
 .panel-heading a { text-decoration: none; }
-
-
-

@@ -1,7 +1,9 @@
 <!-- stylesheet -->
 <link rel="stylesheet" href="/public/css/user-gui/user-dashboard.css">
+<!-- script -->
+<script src="/public/js/user/user-gui-account.js"></script>
 
-<!-- dashboard starts from here -->
+<!-- user account starts from here -->
 <article class="dashboard account">
 	<h2>Account Settings</h2>
 		
@@ -10,21 +12,35 @@
 	
 		<!-- user profile section starts frome here -->
 		<div class="panel panel-default">
-			<div class="panel-heading" role="tab" id="headingOne">
+			<div class="panel-heading" role="tab" id="profile-head">
 				<a role="button"  data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
 					<h4 class="panel-title">
 						Profile Information
 					</h4>
 				</a>
 			</div>
-			<div id="profile-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+			<div id="profile-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="profile-head">
 				<div class="panel-body">
 
 					<div class="col-md-12">
 						<div class="row">
 
 							<!-- user account form starts from here -->
-							<form method="post" action="/user/update" id="form-user-profile">
+							<form id="form-user-profile" >
+
+								<!-- alert notification -->
+								<div class="row">
+									<div class="col-md-12">
+										<div id="error-profile" class="alert alert-danger hidden">
+											<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+											<strong id="error-profile-message"></strong> 
+										</div>
+										<div id="success-profile" class="alert alert-success hidden">
+											<i class="fa fa-check success"></i>
+											<strong>Changes saved successfully</strong> 
+										</div>
+									</div>
+								</div>
 							
 								<!-- user email id section -->
 								<div class="row">
@@ -57,14 +73,13 @@
 								</div>
 
 								<!-- user submit form section -->
-								<input type="submit"class="btn btn-default" value="Save" />
+								<input type="button" id="btn-user-profile" class="btn btn-default" onclick="updateProfile()" value="Save" />
 							
 							</form>
 							<!-- user account form ends here -->
 
 						</div>
 					</div>
-
 
 				</div>
 			</div>
@@ -87,7 +102,21 @@
 						<div class="row">
 
 							<!-- user privacy form starts from here -->
-							<form method="post" action="/user/update" id="form-user-privacy">
+							<form id="form-user-privacy">
+
+								<!-- alert notification -->
+								<div class="row">
+									<div class="col-md-12">
+										<div id="error-privacy" class="alert alert-danger hidden">
+											<i class="fa fa-close error "></i>
+											<strong id="error-privacy-message"></strong> 
+										</div>
+										<div id="success-privacy" class="alert alert-success hidden">
+											<i class="fa fa-check success"></i>
+											<strong>Changes saved successfully</strong> 
+										</div>
+									</div>
+								</div>
 							
 								<!-- user new password section -->
 								<div class="row">
@@ -110,7 +139,7 @@
 								</div>
 
 								<!-- user submit form section -->
-								<input type="submit"class="btn btn-default" value="Save" />
+								<input type="button" id="btn-user-privacy" class="btn btn-default" onclick="updatePrivacy()" value="Save" />
 							
 							</form>
 							<!-- user privacy form ends here -->
@@ -129,4 +158,4 @@
 	<!-- user account section ends here -->
 			
 </article>
-<!-- dashboard ends here -->
+<!-- user account ends here -->

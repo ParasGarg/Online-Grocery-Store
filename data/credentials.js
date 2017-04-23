@@ -21,6 +21,7 @@
 
 /* importing required files and packages */
 const bcrypt = require('bcrypt');
+const randomString = require("randomstring");
 const mongoDbCollection = require('../config/mongodb-collection');
 const credentials = mongoDbCollection.credentials;
 
@@ -68,6 +69,25 @@ module.exports = credentialsControllers = {
         });
 	},
 
+    //------------------------ generate new credential (for forget password)
+    generateCredential: ((email) => {
+        return credentials().then((credentialsCollection) => {
+            
+            let genPassword = randomString.generate(6);     // generating random string
+            
+            // update new credential object (empty)
+            let credentialChanges = { };
+                credentialChanges['password'] = generateHashedPassword(genPassword);
+
+            // updating credential information into the collection
+            credentialsCollection.updateOne( { _id:email }, { $set:credentialChanges });
+            return genPassword;     // returning created password
+        })
+        .catch(() => {
+            // returning a reject promise
+            return Promise.reject("Server issue with 'credentials' collection.");
+        });
+    }),
 
     //------------------------ insert/create a new credential record
     createNewCredential: (email, password) => {

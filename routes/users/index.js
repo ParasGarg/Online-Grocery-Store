@@ -5,6 +5,7 @@ const usersRouter = express.Router();
 /* users authentication */
 usersRouter.use("/login", require('./auth/user-login'));					// url: ~/user/login
 usersRouter.use("/logout", require('./auth/user-logout'));					// url: ~/user/logout
+usersRouter.use("/forget-password", require('./auth/user-forget'));			// url: ~/user/forget-password
 
 /* users data access objects */
 usersRouter.use("/info", require('./dao/get-user-info'));					// url: ~/user/info
@@ -16,7 +17,6 @@ usersRouter.use("/dashboard", require('./gui/user-dashboard'));				// url: ~/use
 usersRouter.use("/dashboard/account", require('./gui/user-account'));		// url: ~/user/dashboard/account
 usersRouter.use("/dashboard/payments", require('./gui/user-payment-info'));	// url: ~/user/dashboard/payment-details
 usersRouter.use("/dashboard/wallet", require('./gui/user-wallet'));			// url: ~/user/dashboard/wallet
-
 
 /* non existing page configuration */
 usersRouter.use("*", (req, res) => {
