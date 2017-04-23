@@ -29,14 +29,18 @@ $(document).ready(function() {
 			$("#error-profile").removeClass("hidden");
 			$("#error-profile-message").html("The fields cannot be blank");
 		}
+
+		setTimeout(() => {
+			$("#error-profile").addClass("hidden");
+			$("#success-profile").addClass("hidden");
+		},3000);
     });
 
-
-	// click on user profile form button
+	// click on user privacy form button
     $("#btn-user-privacy").on('click', function() {
 		const password = $("#new-password").val();
 		const confirm = $("#confirm-password").val();
-		const form = $("#form-user-profile");
+		const form = $("#form-user-privacy");
 
 		if (password.length > 0 && confirm.length > 0) {
 			if (password === confirm) {
@@ -65,5 +69,15 @@ $(document).ready(function() {
 			$("#error-privacy").removeClass("hidden");
 			$("#error-privacy-message").html("The fields cannot be blank");
 		}
+
+		setTimeout(() => {
+			$("#error-privacy").addClass("hidden");
+			$("#success-privacy").addClass("hidden");
+		},3000)
     });
+
+	// click on user login form button
+    $("#btn-error-close").on('click', function() {
+		$("#error-login").addClass("hidden");
+	});
 });

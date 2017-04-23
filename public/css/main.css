@@ -5,5 +5,9 @@ html { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 h6 { margin-bottom: 2rem; font-size: 2rem; color: #fff; font-weight: 700; }
 i.fa { margin-right: 1rem }
 
+
+/* error pop-ups */
+.alert i:hover { cursor: pointer; }
 .hidden { visibility: hidden; }
 .show { visibility: visible; }
+

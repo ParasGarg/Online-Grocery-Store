@@ -66,14 +66,14 @@ router.post('/', isLoggedIn, (req, res) => {
 
                 // checking for user profile updates
                 if (userUpdates.name || userUpdates.mobile) {
-                    usersData.updateUser(email, userUpdates).then((profileUpdates) => {
+                    usersData.updateProfile(email, xss(userUpdates.name), xss(userUpdates.mobile)).then(() => {
                         res.json({ success: true });
                     });
                 }
                 
                 // checking for user security updates
                 if (userUpdates.password) {
-                    credentialsData.updateCredential(email, userUpdates.password).then(() => {
+                    credentialsData.updateCredential(email, xss(userUpdates.password)).then(() => {
                         res.json({ success: true })
                     });
                 }
@@ -93,7 +93,7 @@ router.post('/', isLoggedIn, (req, res) => {
 
                 // checking for user wallet updates
                 if (userUpdates.wallet) {
-                    usersData.updateUser(email, userUpdates).then((walletUpdates) => {
+                    usersData.updateUser(email, userUpdates).then(() => {
                         res.json({ success: true })
                     });
                 }

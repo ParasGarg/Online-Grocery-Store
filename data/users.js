@@ -78,7 +78,32 @@ module.exports = usersControllers = {
         });        
     },
 
-    //------------------------  update an existing user information
+    //------------------------  update an existing user profile information
+    updateProfile: (email, name, mobile) => {
+        return users().then((usersCollection) => {
+            
+            let userChanges = { };
+
+            // checking for values to update
+            if (name) {
+                userChanges['name'] = name;
+            }
+
+            if (mobile) {
+                userChanges['mobile'] = mobile;
+            }
+
+            // updating user information into the collection
+            return usersCollection.updateOne({ _id:email }, { $set:userChanges }).then(() => { 
+                return usersControllers.getUserById(email); 
+            });
+        })
+        .catch(() => {
+            // returning a reject promise
+            return Promise.reject("Server issue with 'users' collection.");
+        });
+    }, 
+    
     updateUser: (email, userUpdates) => {
         return users().then((usersCollection) => {
             
