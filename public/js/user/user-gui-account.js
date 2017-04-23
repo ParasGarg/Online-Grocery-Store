@@ -78,6 +78,6 @@ $(document).ready(function() {
 
 	// click on user login form button
     $("#btn-error-close").on('click', function() {
-		$("#error-login").addClass("hidden");
+		$("#error-privacy").addClass("hidden");
 	});
 });

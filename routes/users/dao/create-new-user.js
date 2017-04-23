@@ -93,7 +93,7 @@ router.post('/', (req, res) => {
                     }
 
                     passport.authenticate('user')(req, res, function () {   //authenticate user
-                        res.redirect('/user/dashboard');
+                        res.json({ success: true });
                     });
                     
                 });
