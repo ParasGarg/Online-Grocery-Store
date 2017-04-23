@@ -5,7 +5,7 @@ const usersRouter = express.Router();
 /* users authentication */
 usersRouter.use("/login", require('./auth/user-login'));					// url: ~/user/login
 usersRouter.use("/logout", require('./auth/user-logout'));					// url: ~/user/logout
-//usersRouter.use("/forgot-password", require('./auth/user-forgot'));			// url: ~/user/forgot-password
+usersRouter.use("/forget-password", require('./auth/user-forget'));			// url: ~/user/forget-password
 
 /* users data access objects */
 usersRouter.use("/info", require('./dao/get-user-info'));					// url: ~/user/info

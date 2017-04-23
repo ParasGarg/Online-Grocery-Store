@@ -5,16 +5,16 @@
 
 <!-- user login panel starts from here -->
 <article class="auth login">
-    
+
   <!-- user login section starts from here -->
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  
+
     <!-- login section starts frome here -->
     <div class="panel panel-default">
       <div class="panel-heading" role="tab" id="login-head">
-          <h4 class="panel-title">
-            User Dashoard Login
-          </h4>
+        <h4 class="panel-title">
+          User Dashoard Login
+        </h4>
       </div>
       <div id="login-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="login-head">
         <div class="panel-body">
@@ -24,26 +24,26 @@
 
               <!-- user login form starts from here -->
               <form id="form-user-login">
-              
+
                 <!-- alert notification -->
-								<div class="row">
-									<div class="col-md-12">
-										<div id="error-login" class="alert alert-danger hidden">
-											<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
-											<strong id="error-login-message"></strong> 
-										</div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div id="error-login" class="alert alert-danger hidden">
+                      <i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+                      <strong id="error-login-message"></strong>
+                    </div>
                     <div id="success-login" class="alert alert-success hidden">
-											<i class="fa fa-check success"></i>
-											<strong>You're successfully logged in!</strong> 
-										</div>
+                      <i class="fa fa-check success"></i>
+                      <strong>You're successfully logged in!</strong>
+                    </div>
                     {{#if error}}
-                      <div id="err-login" class="alert alert-danger">
-                        <i class="fa fa-close error" id="btn-err-close" onclick="close()"></i>
-                        <strong>{{error}}</strong> 
-                      </div>
+                    <div id="err-login" class="alert alert-danger">
+                      <i class="fa fa-close error" id="btn-err-close" onclick="close()"></i>
+                      <strong>{{error}}</strong>
+                    </div>
                     {{/if}}
-									</div>
-								</div>
+                  </div>
+                </div>
 
                 <!-- user email id section -->
                 <div class="row">
@@ -71,9 +71,9 @@
                     <input type="button" id="btn-user-login" class="btn btn-default" onclick="login()" value="Login" />
                   </div>
                   <div class="col-md-3">
-                  <input type="button"class="btn btn-default" value="Forget Password" />
+                    <input type="button" id="btn-user-forget" class="btn btn-default" onclick="forgetPassword()" value="Forget Password" />
                   </div>
-              </div>
+                </div>
 
               </form>
               <!-- user login form ends here -->
@@ -88,6 +88,6 @@
 
   </div>
   <!-- user login section ends here -->
-      
+
 </article>
 <!-- user login panel ends here -->

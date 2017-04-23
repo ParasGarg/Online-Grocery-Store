@@ -32,7 +32,7 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-//------
+//------ user email verification
 function isRegistered(req, res, next) {
     credentialsData.getCredentialById(xss(req.body.email)).then((userCredentials) => {
         if (userCredentials == null) {  // no user document found, then sending 404 status
