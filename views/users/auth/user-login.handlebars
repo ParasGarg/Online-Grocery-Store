@@ -23,6 +23,17 @@
               <!-- user account form starts from here -->
               <form method="post" action="/user/login" id="form-user-profile">
               
+                <!-- alert notification -->
+                <div class="row">
+                  <div class="col-md-12">
+                    {{#if error}}
+                      <div class="alert alert-danger">
+                        <i class="fa fa-close error "></i>
+                        <strong>{{error}}</strong> 
+                      </div>
+                    {{/if}}
+                  </div>
+
                 <!-- user email id section -->
                 <div class="row">
                   <div class="col-md-4">

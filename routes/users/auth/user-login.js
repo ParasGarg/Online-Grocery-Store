@@ -1,7 +1,8 @@
 /* 
- * Users Routers * Users Authentication *
+ * Users Routers * 
+ * Users Authentication *
  * Users Login *
- * This route file contains apis to check authenticity of a user
+
  * Functionalities Index: 
         =============================================================================================================
         | S.No. |  Type  |        URL        |   Function Call   |  Controller |       Description                  |
@@ -20,8 +21,8 @@ const usersData = data.users;
 const credentialsData = data.credentials;
 const passport = require('../../../config/passport-users');
 
-
-// check user authenticity
+/* local function */
+//------ user authentication validation
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
         res.redirect('/user/dashboard');

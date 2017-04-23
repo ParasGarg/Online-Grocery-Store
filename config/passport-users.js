@@ -2,6 +2,7 @@
 // authentication using passport
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const xss = require('xss');
 // data modules
 const data = require('../data');
 const usersData = data.users;
@@ -9,28 +10,20 @@ const credentialsData = data.credentials;
 
 // passport configuration
 passport.use('user', new LocalStrategy({ usernameField:"email", passwordField:"password" }, (email, password, done) => {
-    credentialsData.getCredentialById(email).then((userCredentials) => {
+    credentialsData.getCredentialById(xss(email)).then((userCredentials) => {
 
-        // validating received user information
-        if (userCredentials != null) {
-            // comparing provided email and password
-            credentialsData.compareCredential(email, password).then(() => {
-                // returning success results
-                return done(null, userCredentials);
+        if (userCredentials != null) {      // validating received document whether user exist or not
+            credentialsData.compareCredential(xss(email), xss(password)).then(() => {
+                return done(null, userCredentials);     // returning success results
             }) 
-            .catch((passwordError) => {
-                // returning incorrect password error
+            .catch((passwordError) => {     // returning incorrect password error
                 return done(null, false, { message: passwordError });
             });
-
-      } else {
-          // returning unregistered user error
-          return done(null, false, { message: "User is not registered." });
+      } else {  // returning unregistered user error
+          return done(null, false, { message: "This email Id is not registered." });
       }
-
     })
-    .catch((serverError) => {
-        // returning server error
+    .catch((serverError) => {   // returning server error
         return done(null, false, { message: serverError });
     });
 }));
@@ -44,8 +37,8 @@ passport.deserializeUser(function(userId, done) {           // getting user id f
     usersData.getUserById(userId).then((user) => {
         done(null, user);
     }) 
-    .catch((err) => {      
-        done(null, false, { message: err });
+    .catch((error) => {      
+        done(null, false, { message: error });
    });
 });
 

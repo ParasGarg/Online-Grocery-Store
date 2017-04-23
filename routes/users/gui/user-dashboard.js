@@ -2,7 +2,6 @@
  * Users Routers * 
  * Users GUI *
  * Users Dashboard *
- * Users Routers for GUI/Dashboard actions *
 
  * Functionalities Index: 
         ==========================================================================================================
@@ -19,8 +18,8 @@ const data = require('../../../data');
 const usersData = data.users;
 const passport = require('../../../config/passport-users');
 
-/* local scoped functions */
-//------ check user authenticity
+/* local function */
+//------ user authentication validation
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();
