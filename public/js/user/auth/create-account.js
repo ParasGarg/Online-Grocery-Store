@@ -35,6 +35,14 @@ $(document).ready(function() {
 								window.location.href =" /user/dashboard";
 							}, 2500);
 						},
+						error: function (xhr, ajaxOptions, thrownError) {
+							$("#success-create").addClass("hidden");
+							$("#error-create").removeClass("hidden");
+							
+							if(xhr.status === 400) {	// receiving 400 status code
+								$("#error-create-message").html("This email id is already registered");
+							}
+						},
 						contentType: "application/json"
 					});
 				} else {

@@ -20,9 +20,10 @@ $(document).ready(function() {
 					dataType: "json",
 					data: JSON.stringify(formData),
 					success: function(data) {
-						alert("New password for '" + data.email + "' is " + data.password);
-						$("#error-forget").addClass("hidden")						
+						$("#error-forget").addClass("hidden");
 						$("#success-forget").removeClass("hidden");
+						$("#email").val("");
+						alert("New password for '" + data.email + "' is " + data.password);						
 					},
 					error: function (xhr, ajaxOptions, thrownError) {
 						$("#success-forget").addClass("hidden");
@@ -52,6 +53,11 @@ $(document).ready(function() {
 	// click on user forget form button
     $("#btn-error-close").on('click', function() {
 		$("#error-forget").addClass("hidden");
+	});
+
+	// click on user login form button
+    $("#btn-err-close").on('click', function() {
+		$("#err-forget").addClass("hidden");
 	});
 
 	// click on user login form button

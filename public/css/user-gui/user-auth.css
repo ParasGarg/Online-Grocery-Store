@@ -1,7 +1,7 @@
 /*auth */
 .auth { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin: 0 auto;padding: 3rem 0 6rem;width: 100%; }
+.auth h1 { padding: 1rem; }
 .auth h2 { font-size: 3rem;font-weight: 600;margin-bottom: 3rem;text-align: left; }
-.auth h4 { padding: 3rem; }
 .auth form .row { margin-bottom: 2rem; }
 
 /* create-new-user */
@@ -9,9 +9,9 @@
 .auth.create-new-user h2, .auth.login h2 { text-align: center; }
 .auth.create-new-user .panel-heading h4, .auth.login .panel-heading h4 { padding: 1.5rem 2rem; }
 
-/* create-new-user */
+/* forget-password */
 .auth.forget-password { width: 60%;  }
-.auth.forget-password h2 { text-align: center; }
+.auth.forget-password h1 { text-align: center; }
 .auth.forget-password .panel-heading h4 { padding: 1.5rem 2rem; }
 
 /* accordin */

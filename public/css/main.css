@@ -7,6 +7,8 @@ i.fa { margin-right: 1rem }
 
 
 /* error pop-ups */
+.error { color: #a94442; }
+.success { color: #3c763d; }
 .alert i:hover { cursor: pointer; }
 .hidden { visibility: hidden; }
 .show { visibility: visible; }

@@ -1,7 +1,8 @@
 /* 
- * Users Routers * Users Authentication *
+ * Users Routers * 
+ * Users Authentication *
  * Users Logout *
- * This route file contains apis to discard authenticity of a user
+
  * Functionalities Index: 
         =============================================================================================================
         | S.No. |  Type  |        URL        |   Function Call   |  Controller |       Description                  |
@@ -18,8 +19,8 @@ const router = express.Router();
 const passport = require('../../../config/passport-users');
 const passportLogout = require('express-passport-logout');
 
-
-// check user authenticity
+/* local scoped function */
+//------ check user authenticity
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
         res.redirect('/');
@@ -28,6 +29,7 @@ function isLoggedIn(req, res, next) {
     }
 }
 
+/* global scoped function */
 //------------------------ route to fetch user information by id
 router.get('/', isLoggedIn, (req, res) => {
 	res.redirect('/user/login');	

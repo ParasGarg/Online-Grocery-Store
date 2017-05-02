@@ -22,6 +22,7 @@ const data = require('../../../data');
 const usersData = data.users;
 const credentialsData = data.credentials;
 const passport = require('../../../config/passport-users');
+const emailToLowerCase = require('../comp/email-case-converter').emailToLowerCase;
 
 /* local function */
 //------ user authentication validation
@@ -43,27 +44,32 @@ router.get('/', isLoggedIn, (req, res) => {
 //------------------------ route to create new user into database
 router.post('/', (req, res) => {
     let newUser = req.body;
+    
+    let name = xss(newUser.name);
+    let email = emailToLowerCase(xss(newUser.email));
+    let mobile = xss(newUser.mobile);
+    let password = xss(newUser.password);
 
     // checking null values
-    if(!newUser.name) {
+    if(!name) {
         res.render('users/auth/create-new-account', { 
             mainTitle: "Create an Account •",
             error: "Please provide your name." 
         });
         return;
-    } else if (!newUser.email) {
+    } else if (!email) {
         res.render('users/auth/create-new-account', {
             mainTitle: "Create an Account •",
             error: "Please provide your email id."
         });
         return;
-    } else if (!newUser.mobile) {
+    } else if (!mobile) {
         res.render('users/auth/create-new-account', {
             mainTitle: "Create an Account •",
             error: "Please provide your contact number."
         });
         return;
-    } else if (!newUser.password) {
+    } else if (!password) {
         res.render('users/auth/create-new-account', {
             mainTitle: "Create an Account •",
             error: "Please provide your account password." 
@@ -72,24 +78,21 @@ router.post('/', (req, res) => {
     }
 
     // validating email syntax
-    if (!validator.isEmail(newUser.email)) {
-        res.render('users/auth/create-new-account', {
-            mainTitle: "Create an Account •",
-            error: "Invalid email id format."
-        });
+    if (!validator.isEmail(email)) {
+        res.status(404).send({ error: "Invalid email id format." });
         return;
     }
 
     // searching for an existing user
-    usersData.getUserById(xss(newUser.email)).then((userJsonDocument) => {
+    usersData.getUserById(email).then((userJsonDocument) => {
 
         if (userJsonDocument == null) {     // validating received document whether user exist or not
-            usersData.createNewUser(xss(newUser.name), xss(newUser.email), xss(newUser.mobile)).then((createUserDocument) => {
-                credentialsData.createNewCredential(xss(newUser.email), xss(newUser.password)).then((userCredential) => {
+            usersData.createNewUser(name, email, mobile).then((createUserDocument) => {
+                credentialsData.createNewCredential(email, password).then((userCredential) => {
                             
                     let user = {    // create 'user' object
-                        email: newUser.email,
-                        password: newUser.password
+                        email: email,
+                        password: password
                     }
 
                     passport.authenticate('user')(req, res, function () {   //authenticate user
@@ -99,10 +102,7 @@ router.post('/', (req, res) => {
                 });
             });
         } else {    // rendering error page if user already exists
-            res.render('users/auth/create-new-account', {
-                mainTitle: "Create an Account •",
-                error: "This email id is already registered."
-            });
+            res.status(400).send({ error: "This email id is already registered." });
         }       
     })
     .catch((error) => {   // rendering error page
