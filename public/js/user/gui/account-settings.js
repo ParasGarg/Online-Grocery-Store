@@ -56,6 +56,8 @@ $(document).ready(function() {
 					success: function() {
 						$("#error-privacy").addClass("hidden");
 						$("#success-privacy").removeClass("hidden");
+						$("#new-password").val("");
+						$("#confirm-password").val("");
 					},
 					contentType: "application/json"
 				});

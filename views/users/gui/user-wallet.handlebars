@@ -1,9 +1,11 @@
 <!-- stylesheet -->
 <link rel="stylesheet" href="/public/css/user-gui/user-dashboard.css">
+<!-- script -->
+<script src="/public/js/user/gui/wallet-settings.js"></script>
 
 <!-- wallet dashboard starts from here -->
 <article class="dashboard wallet">
-	<h2>Wallet Information</h2>
+	<h1>Wallet Information</h1>
 		
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		
@@ -13,9 +15,9 @@
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="wallet-info">
 					<a role="button"  data-parent="#accordion" aria-expanded="true" aria-controls="wallet-info-panel">
-						<h4 class="panel-title">
-							Wallet Information
-						</h4>
+						<h2 class="panel-title">
+							Available Cash 
+						</h2>
 					</a>
 				</div>
 				<div id="wallet-info-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="wallet-info">
@@ -28,11 +30,14 @@
 								<div>
 									<!-- wallet amount section -->
 									<div class="row">
-										<div class="col-md-4">
-											<p id="wallet-amount">Amount</p>
+										<div class="col-md-4 col-md-offset-1">
+											<p id="wallet-amount-label">Amount</p>
 										</div>
 										<div class="col-md-6 col-md-offset-1">
-											<p id="wallet-amount">{{user.wallet}}</p>
+											<p id="wallet-amount">
+												<i class="fa fa-dollar"></i>
+												{{user.wallet}}
+											</p>
 										</div>
 									</div>
 								
@@ -50,9 +55,9 @@
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="wallet-add-amount">
 					<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="wallet-add-amount-panel">
-						<h4 class="panel-title">
-							Add Amount
-						</h4>
+						<h2 class="panel-title">
+							Add Cash
+						</h2>
 					</a>
 				</div>
 				<div id="wallet-add-amount-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="wallet-add-amount">
@@ -62,20 +67,35 @@
 							<div class="row">
 
 								<!-- add amount detail form starts from here -->
-								<form method="post" action="/user/update" id="form-add-wallet-details">
+								<form id="form-user-wallet">
 								
+									<!-- alert notification -->
+									<div class="row">
+										<div class="col-md-12">
+											<div id="error-wallet" class="alert alert-danger hidden">
+												<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+												<strong id="error-wallet-message"></strong> 
+											</div>
+											<div id="success-wallet" class="alert alert-success hidden">
+												<i class="fa fa-check success"></i>
+												<strong>Amount has been added successfully</strong> 
+											</div>
+										</div>
+									</div>
+
 									<!-- amount section -->
 									<div class="row">
 										<div class="col-md-4">
-											<label for="card-name">Name On Card</label>
+											<label for="amount">Enter Amount</label>
 										</div>
 										<div class="col-md-6 col-md-offset-1">
-											<input type="text" class="form-control" name="cardName" id="card-name" placeholder="Card Holder's Name"/>
+											<i class="fa fa-dollar add-amount"></i>
+											<input type="text" class="form-control add-amount" name="amount" id="amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter amount to add"/>
 										</div>
 									</div>
 
 									<!-- amount submit form section -->
-									<input type="submit"class="btn btn-default" value="Add" />
+									<input type="button" id="btn-user-wallet" class="btn btn-default" onclick="updateWallet()" value="Add" />
 								
 								</form>
 								<!-- add amount detail form ends here -->
@@ -97,9 +117,9 @@
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="wallet-transaction">
 					<a role="button"  data-parent="#accordion" aria-expanded="true" aria-controls="wallet-transaction-panel">
-						<h4 class="panel-title">
+						<h2 class="panel-title">
 							Wallet Transactions
-						</h4>
+						</h2>
 					</a>
 				</div>
 				<div id="wallet-transaction-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="wallet-transaction">

@@ -26,24 +26,24 @@ module.exports = usersControllers = {
     getUserById: (email) => {
         return users().then((usersCollection) => {
             // returning a found json document else returning null
-            return usersCollection.findOne({ _id:email }, { _id:1, name:1, mobile:1, cart:1, paymentInfo:1, wallet:1 });
+            return usersCollection.findOne({ _id: email }, { _id: 1, name: 1, mobile: 1, cart: 1, paymentInfo: 1, wallet: 1 });
         })
-        .catch(() => {
-            // returning a reject promise
-            return Promise.reject("Server issue with 'users' collection.");
-        });
+            .catch(() => {
+                // returning a reject promise
+                return Promise.reject("Server issue with 'users' collection.");
+            });
     },
 
     //------------------------ fetch all users information
     getAllUsers: () => {
         return users().then((usersCollection) => {
             // returning a found json document else returning null
-            return usersCollection.find({ }, { _id:1, name:1, mobile:1, cart:1, paymentInfo:1, wallet:1 }).toArray();
+            return usersCollection.find({}, { _id: 1, name: 1, mobile: 1, cart: 1, paymentInfo: 1, wallet: 1 }).toArray();
         })
-        .catch(() => {
-            // returning a reject promise
-            return Promise.reject("Server issue with 'users' collection.");
-        });
+            .catch(() => {
+                // returning a reject promise
+                return Promise.reject("Server issue with 'users' collection.");
+            });
     },
 
     //------------------------ insert/create a new user record
@@ -72,17 +72,17 @@ module.exports = usersControllers = {
                     return usersControllers.getUserById(newUserId);
                 })
         })
-        .catch(() => {
-            // returning a reject promise
-            return Promise.reject("Server issue with 'users' collection.");
-        });        
+            .catch(() => {
+                // returning a reject promise
+                return Promise.reject("Server issue with 'users' collection.");
+            });
     },
 
     //------------------------  update an existing user profile information
     updateProfile: (email, name, mobile) => {
         return users().then((usersCollection) => {
-            
-            let userChanges = { };
+
+            let userChanges = {};
 
             // checking for values to update
             if (name) {
@@ -94,54 +94,76 @@ module.exports = usersControllers = {
             }
 
             // updating user information into the collection
-            return usersCollection.updateOne({ _id:email }, { $set:userChanges }).then(() => { 
-                return usersControllers.getUserById(email); 
+            return usersCollection.updateOne({ _id: email }, { $set: userChanges }).then(() => {
+                return usersControllers.getUserById(email);
             });
         })
-        .catch(() => {
-            // returning a reject promise
-            return Promise.reject("Server issue with 'users' collection.");
-        });
-    }, 
-    
-    updateUser: (email, userUpdates) => {
+            .catch(() => {
+                // returning a reject promise
+                return Promise.reject("Server issue with 'users' collection.");
+            });
+    },
+
+    //------------------------  update an existing user wallet information
+    updateWallet: (email, newCash, availableCash) => {
         return users().then((usersCollection) => {
-            
-            // update user object (empty)
-            let userChanges = { };
+
+            let userChanges = {};
 
             // checking for values to update
-            if(userUpdates.name) {
-                userChanges['name'] = userUpdates.name;
-            }
-
-            if (userUpdates.mobile) {
-                userChanges['mobile'] = userUpdates.mobile;
-            }
-
-            if (userUpdates.paymentInfo) {
-                userChanges['paymentInfo'] = userUpdates.paymentInfo;
-            }
-
-            if (userUpdates.wallet) {
-                userChanges['wallet'] = userUpdates.wallet;
+            if (newCash) {
+                userChanges['wallet'] = newCash + availableCash;
             }
 
             // updating user information into the collection
-            return usersCollection.updateOne( { _id:email }, { $set:userChanges } ).then(() => { 
-                return usersControllers.getUserById(email); 
+            return usersCollection.updateOne({ _id: email }, { $set: userChanges }).then(() => {
+                return usersControllers.getUserById(email);
             });
         })
+        .catch(() => {
+    // returning a reject promise
+    return Promise.reject("Server issue with 'users' collection.");
+});
+    },
+    
+updateUser: (email, userUpdates) => {
+    return users().then((usersCollection) => {
+
+        // update user object (empty)
+        let userChanges = {};
+
+        // checking for values to update
+        if (userUpdates.name) {
+            userChanges['name'] = userUpdates.name;
+        }
+
+        if (userUpdates.mobile) {
+            userChanges['mobile'] = userUpdates.mobile;
+        }
+
+        if (userUpdates.paymentInfo) {
+            userChanges['paymentInfo'] = userUpdates.paymentInfo;
+        }
+
+        if (userUpdates.wallet) {
+            userChanges['wallet'] = userUpdates.wallet;
+        }
+
+        // updating user information into the collection
+        return usersCollection.updateOne({ _id: email }, { $set: userChanges }).then(() => {
+            return usersControllers.getUserById(email);
+        });
+    })
         .catch(() => {
             // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
         });
-    },
+},
 
     //------------------------ delete a user record of specific id from users collection
     deleteUser: (email) => {
         return users().then((usersCollection) => {
-            return usersCollection.removeOne({ _id:email })
+            return usersCollection.removeOne({ _id: email })
                 .then((deletedUserInformation) => {
                     if (deletedUserInformation.deletedCount === 0) {
                         return Promise.reject(`No result having id ${email} from users collection`);

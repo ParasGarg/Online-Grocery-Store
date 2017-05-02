@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 						setTimeout(() => {
 							window.location.href =" /user/dashboard";
-						}, 1000);
+						}, 600);
 					},
 					error: function (xhr, ajaxOptions, thrownError) {
 						$("#success-login").addClass("hidden");
