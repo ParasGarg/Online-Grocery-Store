@@ -3,14 +3,13 @@ const express = require('express');
 const usersRouter = express.Router();
 
 /* users authentication */
-usersRouter.use("/login", require('./auth/user-login'));					// url: ~/user/login
-usersRouter.use("/logout", require('./auth/user-logout'));					// url: ~/user/logout
-usersRouter.use("/forget-password", require('./auth/user-forget'));			// url: ~/user/forget-password
+usersRouter.use("/login", require('./auth/user-login-account'));					// url: ~/user/login
+usersRouter.use("/logout", require('./auth/user-logout-account'));					// url: ~/user/logout
+usersRouter.use("/forget-password", require('./auth/user-forget-password'));		// url: ~/user/forget-password
 
 /* users data access objects */
-usersRouter.use("/info", require('./dao/get-user-info'));					// url: ~/user/info
-usersRouter.use("/new", require('./dao/create-new-user'));					// url: ~/user/new
-usersRouter.use("/update", require('./dao/update-user-info'));				// url: ~/user/update
+usersRouter.use("/new", require('./dao/create-new-user'));							// url: ~/user/new
+usersRouter.use("/update", require('./dao/update-user-info'));						// url: ~/user/update
 
 /* users personal settings */
 usersRouter.use("/dashboard", require('./gui/user-dashboard'));				// url: ~/user/dashboard

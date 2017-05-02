@@ -143,27 +143,27 @@
 
 									<div class="col-md-12 inp-row-margin">
 										<div class="row">
-											<input type="text" name="name" class="form-control" placeholder="Full Name" />
+											<input type="text" name="name" id="contact-name" class="form-control" placeholder="Full Name" />
 										</div>
 									</div>
 
 									<div class="col-md-12 inp-row-margin">
 										<div class="row">
-											<input type="text" name="email" class="form-control inp-equal-width" placeholder="Email Id" />
-											<input type="text" name="mobile" class="form-control inp-equal-width" placeholder="Contact Number" />
+											<input type="text" name="email" id="contact-email" class="form-control inp-equal-width" placeholder="Email Id" />
+											<input type="text" name="mobile" id="contact-mobile" class="form-control inp-equal-width" placeholder="Contact Number" />
 										</div>
 									</div>
 
 									<div class="col-md-12 inp-row-margin">
 										<div class="row">
-											<textarea name="description" class="form-control" placeholder="Description"></textarea>
+											<textarea name="description" class="form-control" id="contact-description" placeholder="Description"></textarea>
 										</div>
 									</div>
 
 									<div class="col-md-12 inp-row-margin">
 										<div class="row">
 											<div class="col-md-3" style="padding-left: 0;">
-												<input type="submit" class="btn btn-default btn-full" value="Send" />
+												<input type="submit" id="btn-submit" class="btn btn-default btn-full" value="Send" />
 											</div>
 											<div class="col-md-9" style="padding-left: 0;">
 												<p class="error">
@@ -194,22 +194,28 @@
 						</div>
 
 						<br/>
+						<script src="/public/js/support/subscription-form-validation.js"></script>
 						<div class="row"><h6>Subscribe Us</h6></div>
 						<div class="row">
-							<form method="post" action="/support/subscription/subscribe" id="form-subscribe">
-								<input type="text" name="email" class="form-control" placeholder="Emai Id" />
-								<input type="submit" class="btn btn-default" value="Subscribe" />
+							<form method="post" id="form-subscribe">
+								<input type="text" name="email" id="subscribe-email" class="form-control" placeholder="Emai Id" />
+								<input type="button" id="btn-subscribe" class="btn btn-default" value="Subscribe" />
+
+								<!-- alert notification -->
+								<div class="row inp-row-margin">
+									<div class="col-md-12">
+										<div id="error-subscribe" class="alert error hidden">
+										<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+										<strong id="error-subscribe-message"></strong>
+										</div>
+										<div id="success-subscribe" class="alert success hidden">
+										<i class="fa fa-spinner fa-pulse fa-fw success"></i>
+										<strong>You have successfully subscribed for our notifications.</strong>
+										</div>
+									</div>
+								</div>
+
 							</form>
-							<div class="inp-row-margin">
-								<p class="error">
-									<i class="fa fa-close error"></i>
-									Invalid email id
-								</p>
-								<p class="success">
-									<i class="fa fa-check success"></i>													
-									Message sent successfully
-								</p>
-							</div>
 						</div>
 					</div>
 					<!-- follow-us and subscription links ends here -->	

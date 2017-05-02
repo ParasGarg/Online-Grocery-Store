@@ -17,12 +17,14 @@
 const express = require('express');
 const router = express.Router();
 const xss = require('xss');
+const validator = require('validator');
 const data = require('../../../data');
 const usersData = data.users;
 const credentialsData = data.credentials;
 const passport = require('../../../config/passport-users');
+const emailToLowerCase = require('../comp/email-case-converter').emailToLowerCase;
 
-/* local function */
+/* local scoped function */
 //------ user authentication validation
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
@@ -32,38 +34,60 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-//------ user email verification
-function isRegistered(req, res, next) {
-    credentialsData.getCredentialById(xss(req.body.email)).then((userCredentials) => {
-        if (userCredentials == null) {  // no user document found, then sending 404 status
+//------ user email validation
+function isValid(req, res, next) {
+    let email = emailToLowerCase(xss(req.body.email));
+    let password = xss(req.body.password);
+
+    if (email.length == 0) {
+        res.status(404).send({ error: "No email id provided" });
+    } else if (password.length == 0) {
+        res.status(404).send({ error: "No password provided" });
+    }
+
+    // validating email syntax
+    if (!validator.isEmail(email)) {
+        res.status(404).send({ error: "Invalid email id format." });
+        return;
+    }
+
+    credentialsData.getCredentialById(email).then((userCredentials) => {
+        if (userCredentials == null) {      // no user document found
             res.status(404).send({ error: "This email id is not registered" });
         } else {    // document found and comparing credentials
-            credentialsData.compareCredential(xss(req.body.email), xss(req.body.password))
+            credentialsData.compareCredential(email, password)
                 .then(() => {
-                    next(); // sent for authentication
+                    next();     // sent for user authentication
                 })
-                .catch((error) => { // credentials mismatched, then sending 400 status
+                .catch((error) => {     // credentials mismatched error
                     res.status(400).send({ error: "Incorrect password" });
                 });
         }
-    })
+    });
 }
 
+/* global scoped function */
 //------------------------ route to fetch user information by email id
 router.get('/', isLoggedIn, (req, res) => {
     req.flash('loginFlash');
 
 	if (req.session.flash["error"] === undefined) {
-        res.render('users/auth/user-login', { error: req.session.flash.error });   
+        res.render('users/auth/user-login-account', { 
+            mainTitle: "Dashboard Login •",
+            error: req.session.flash.error 
+        });   
     } else {
-        res.render('users/auth/user-login', { error: req.session.flash.error.slice(-1)[0] });
+        res.render('users/auth/user-login-account', { 
+            mainTitle: "Dashboard Login •",
+            error: req.session.flash.error.slice(-1)[0] 
+        });
     }
 });
 
 //------------------------ routing for login form submit
-router.post('/', isRegistered, (req, res) => {
+router.post('/', isValid, (req, res) => {
     let user = {    // create 'user' object
-        email: xss(req.body.email),
+        email: emailToLowerCase(xss(req.body.email)),
         password: xss(req.body.password)
     }
 

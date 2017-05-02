@@ -93,8 +93,9 @@ router.post('/', isLoggedIn, (req, res) => {
 
                 // checking for user wallet updates
                 if (userUpdates.wallet) {
-                    usersData.updateUser(email, userUpdates).then(() => {
-                        res.json({ success: true })
+                    usersData.updateWallet(email, JSON.parse(userUpdates.wallet), req.user.wallet).then((userInfo) => {
+                        req.user.wallet = userInfo.wallet;
+                        res.json(req.user.wallet);
                     });
                 }
             });

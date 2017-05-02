@@ -1,26 +1,29 @@
 /* dashboard */
 .dashboard { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin: 0 auto;padding: 3rem 0 6rem;width: 100%;  }
-.dashboard h2 { font-size: 3rem;font-weight: 600;margin-bottom: 3rem;text-align: left; }
-.dashboard h4 { padding: 3rem; }
+.dashboard h1 { font-size: 3rem;font-weight: 600;margin-bottom: 3rem;text-align: left; }
+.dashboard h2 { padding: 3rem; }
 .dashboard form .row { margin-bottom: 2rem; }
+.dashboard .panel-default > .panel-heading { background-color: #fff; }
 
 /* account */
 .dashboard.account { width: 60%;  }
-.dashboard.account h2 { text-align: center; }
-.dashboard.account .panel-heading h4 { padding: 1.5rem 2rem; }
-
+.dashboard.account h1 { text-align: center; }
+.dashboard.account .panel-heading h2 { padding: 1.5rem 2rem; }
 
 /* payments */ 
-.dashboard.payments h2 { text-align: center; }
-.dashboard.payments .panel-heading h4 { padding: 1.5rem 2rem; }
+.dashboard.payments h1 { text-align: center; }
+.dashboard.payments .panel-heading h2 { padding: 1.5rem 2rem; }
 #saved-card-panel, #payment-transactions-panel { text-align: left; }
 #saved-card-panel .row, #payment-transactions-panel .row { font-size: 1.2rem;margin-bottom: 12px; }
 #saved-card-panel .row:first-child, #payment-transactions-panel .row:first-child { font-weight: bold; }
 #saved-card-panel p, #payment-transactions-panel p { font-size: 2rem;text-align: center; }
 
 /* wallet */
-.dashboard.wallet h2 { text-align: center; }
-.dashboard.wallet .panel-heading h4 { padding: 1.5rem 2rem; }
+.dashboard.wallet h1 { text-align: center; }
+.dashboard.wallet .panel-heading h2 { padding: 1.5rem 2rem; }
+.dashboard.wallet .panel:first-child { margin-bottom: 3rem; }
+.dashboard.wallet i.add-amount { position: absolute;margin-top: 1rem;margin-left: -8.5rem; }
+.dashboard.wallet input.add-amount { text-indent: 1rem;color: #333; }
 #wallet-transaction-panel { text-align: left; }
 #wallet-transaction-panel .row { font-size: 1.2rem;margin-bottom: 12px; }
 #wallet-transaction-panel .row:first-child { font-weight: bold; }
@@ -38,7 +41,7 @@
 .panel-group .panel { margin-bottom: 4rem; }
 .panel-heading { padding: 0; }
 .panel-heading a { text-decoration: none; }
-panel-heading h4 { padding: 1.5rem 2rem; }
+panel-heading h2 { padding: 1.5rem 2rem; }
 panel-heading .panel-title { text-align: left; }
 
 
