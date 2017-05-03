@@ -7,6 +7,9 @@ $(document).ready(function() {
 		const contact = $("#mobile").val();
 		const form = $("#form-user-profile");
 
+		$("#error-profile").addClass("hidden");
+		$("#success-profile").addClass("hidden");
+
 		if (username.length > 0 && contact.length > 0) {
 			const formData = {
 				name: username,
@@ -14,7 +17,7 @@ $(document).ready(function() {
 			}
 
 			$.ajax({
-				url: "/user/update",
+				url: "/user/update/info",
 				type: "POST",
 				dataType: "json",
 				data: JSON.stringify(formData),
@@ -33,7 +36,7 @@ $(document).ready(function() {
 		setTimeout(() => {
 			$("#error-profile").addClass("hidden");
 			$("#success-profile").addClass("hidden");
-		},3000);
+		},6000);
     });
 
 	// click on user privacy form button
@@ -42,6 +45,9 @@ $(document).ready(function() {
 		const confirm = $("#confirm-password").val();
 		const form = $("#form-user-privacy");
 
+		$("#error-privacy").addClass("hidden");
+		$("#success-privacy").addClass("hidden");
+
 		if (password.length > 0 && confirm.length > 0) {
 			if (password === confirm) {
 				const formData = {
@@ -49,7 +55,7 @@ $(document).ready(function() {
 				}
 
 				$.ajax({
-					url: "/user/update",
+					url: "/user/update/info",
 					type: "POST",
 					dataType: "json",
 					data: JSON.stringify(formData),
@@ -75,7 +81,7 @@ $(document).ready(function() {
 		setTimeout(() => {
 			$("#error-privacy").addClass("hidden");
 			$("#success-privacy").addClass("hidden");
-		},3000)
+		},6000)
     });
 
 	// click on user login form button

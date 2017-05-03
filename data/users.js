@@ -11,7 +11,9 @@
         -------------------------------------------------------------------------
         |   2.  | createNewUser     | Create new user record in the collection  |
         -------------------------------------------------------------------------
-        |   3.  | updateUser        | Update an existing user information       |
+        |   3.  | updateProfile     | Update an existing user information       |
+        -------------------------------------------------------------------------
+        |   4.  | updateWallet      | Update existing user wallet amount        |
         -------------------------------------------------------------------------
 */
 
@@ -24,32 +26,18 @@ module.exports = usersControllers = {
 
     //------------------------ fetch a user information by email id
     getUserById: (email) => {
-        return users().then((usersCollection) => {
-            // returning a found json document else returning null
-            return usersCollection.findOne({ _id: email }, { _id: 1, name: 1, mobile: 1, cart: 1, paymentInfo: 1, wallet: 1 });
+        return users().then((usersCollection) => {  // returning a found json document else returning null
+            return usersCollection.findOne({ _id: email }, { _id: 1, name: 1, mobile: 1, cart: 1, card: 1, wish:1, wallet: 1 });
         })
-            .catch(() => {
-                // returning a reject promise
-                return Promise.reject("Server issue with 'users' collection.");
-            });
-    },
-
-    //------------------------ fetch all users information
-    getAllUsers: () => {
-        return users().then((usersCollection) => {
-            // returning a found json document else returning null
-            return usersCollection.find({}, { _id: 1, name: 1, mobile: 1, cart: 1, paymentInfo: 1, wallet: 1 }).toArray();
-        })
-            .catch(() => {
-                // returning a reject promise
-                return Promise.reject("Server issue with 'users' collection.");
-            });
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'users' collection.");
+        });
     },
 
     //------------------------ insert/create a new user record
     createNewUser: (name, email, mobile) => {
         return users().then((usersCollection) => {
-
+            
             // new user object
             let newUser = {
                 _id: email,
@@ -57,8 +45,8 @@ module.exports = usersControllers = {
                 mobile: mobile,
                 regDate: new Date("2010-06-09T15:20:00Z").toUTCString(),
                 cart: [],
-                paymentInfo: [],
-                // promoCode: null,
+                card: [],
+                wish: [],
                 wallet: 0
             }
 
@@ -67,15 +55,13 @@ module.exports = usersControllers = {
                 .then((newUserInformation) => {
                     return newUserInformation.insertedId;
                 })
-                .then((newUserId) => {
-                    // returning created user document
+                .then((newUserId) => {  // returning created user document
                     return usersControllers.getUserById(newUserId);
                 })
         })
-            .catch(() => {
-                // returning a reject promise
-                return Promise.reject("Server issue with 'users' collection.");
-            });
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'users' collection.");
+        });
     },
 
     //------------------------  update an existing user profile information
@@ -98,10 +84,9 @@ module.exports = usersControllers = {
                 return usersControllers.getUserById(email);
             });
         })
-            .catch(() => {
-                // returning a reject promise
-                return Promise.reject("Server issue with 'users' collection.");
-            });
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'users' collection.");
+        });
     },
 
     //------------------------  update an existing user wallet information
@@ -120,45 +105,10 @@ module.exports = usersControllers = {
                 return usersControllers.getUserById(email);
             });
         })
-        .catch(() => {
-    // returning a reject promise
-    return Promise.reject("Server issue with 'users' collection.");
-});
-    },
-    
-updateUser: (email, userUpdates) => {
-    return users().then((usersCollection) => {
-
-        // update user object (empty)
-        let userChanges = {};
-
-        // checking for values to update
-        if (userUpdates.name) {
-            userChanges['name'] = userUpdates.name;
-        }
-
-        if (userUpdates.mobile) {
-            userChanges['mobile'] = userUpdates.mobile;
-        }
-
-        if (userUpdates.paymentInfo) {
-            userChanges['paymentInfo'] = userUpdates.paymentInfo;
-        }
-
-        if (userUpdates.wallet) {
-            userChanges['wallet'] = userUpdates.wallet;
-        }
-
-        // updating user information into the collection
-        return usersCollection.updateOne({ _id: email }, { $set: userChanges }).then(() => {
-            return usersControllers.getUserById(email);
-        });
-    })
-        .catch(() => {
-            // returning a reject promise
+        .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
         });
-},
+    },
 
     //------------------------ delete a user record of specific id from users collection
     deleteUser: (email) => {
@@ -169,7 +119,8 @@ updateUser: (email, userUpdates) => {
                         return Promise.reject(`No result having id ${email} from users collection`);
                     }
                 });
-        }, () => {
+        })
+        .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
         });
     }
