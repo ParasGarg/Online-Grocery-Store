@@ -37,7 +37,7 @@ module.exports = cardController = {
     //------------------------ fetch a all card information for a user
     getAllCard: (email) => {
         return users().then((usersCollection) => {  // returning all found json document else returning null
-            return usersCollection.find({ _id:email }, { _id:0, card:1 }).toArray();
+            return usersCollection.findOne({ _id:email }, { _id:0, card:1 });
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
@@ -46,8 +46,8 @@ module.exports = cardController = {
 
     //------------------------ add a card information
     addCard: (email, newCardData) => {
-        return users().then((usersCollection) => {
-            return usersCollection.findOne({ _id:email }).then(() => {
+        users().then((usersCollection) => {
+            usersCollection.findOne({ _id:email }).then(() => {
 
                // new card object
                 let addCard = { };
@@ -57,8 +57,8 @@ module.exports = cardController = {
                     addCard['_id'] = xss(newCardData.number);
                 }
 
-                if (newCardData.user) {
-                    addCard['name'] = xss(newCardData.user);
+                if (newCardData.username) {
+                    addCard['name'] = xss(newCardData.username);
                 }
 
                 if (newCardData.type) {
@@ -78,9 +78,7 @@ module.exports = cardController = {
                 }
 
                 // updating user collection
-                return usersCollection.update({ _id:email }, { $push: { card: addCard } }).then(() => {
-                    return addCard;
-                });
+                usersCollection.update({ _id:email }, { $push: { card: addCard } });
             })
         })
         .catch(() => {  // returning a reject promise
@@ -89,11 +87,11 @@ module.exports = cardController = {
     },
 
     //------------------------ delete a card information
-    deleteCard: (cardId) => {
+    deleteCard: (email, cardId) => {
         return users().then((usersCollection) => {
-            return usersCollection.update({ "card._id":cardId }, { $pull: { card: { _id:cardId } } }).then((deletedCardInfo) => {
+            return usersCollection.update({ _id:email }, { $pull: { card: { _id:cardId } } }).then((deletedCardInfo) => {
                 if (deletedCardInfo.deletedCount === 0) {
-                    return res.status(500).json({ error: `No card having ${id} could not be deleted` });
+                    return "deleted";
                 }
             })
         })

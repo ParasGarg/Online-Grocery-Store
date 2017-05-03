@@ -24,7 +24,7 @@ $(document).ready(function() {
 
 						const formData = {
 							number: cardNumber,
-							user: cardName,
+							username: cardName,
 							type: cardType,
 							issuer: cardIssuer,
 							exp: `${expiryMonth}/${expiryYear}`,
@@ -41,11 +41,21 @@ $(document).ready(function() {
 								$("#success-add-card").removeClass("hidden");
 							},
 							error: function (xhr, ajaxOptions, thrownError) {
-								$("#success-add-card").addClass("hidden");
-								$("#error-add-card").removeClass("hidden");
-								
-								if(xhr.status === 400) {	// receiving 400 status code
-									$("#error-add-card-message").html("This card is already registered");
+								if (xhr.status === 200) {	// receiving 200 status code
+									$("#error-add-card").addClass("hidden")						
+									$("#success-add-card").removeClass("hidden");
+									$("#saved-card-panel").load(location.href + " #saved-card-panel");
+									$("#card-name").val("");
+									$("#card-number").val("");
+									$("#card-type").val("");
+									$("#card-month").val("");
+									$("#card-year").val("");
+									$("#card-brand").val("");
+									$("#card-cvv").val("");
+								} else if (xhr.status === 400) {	// receiving 400 status code
+									$("#success-add-card").addClass("hidden");
+									$("#error-add-card").removeClass("hidden");
+									$("#error-add-card-message").html("This card is already saved");
 								}
 							},
 							contentType: "application/json"
@@ -75,7 +85,7 @@ $(document).ready(function() {
 		setTimeout(() => {
 			$("#error-add-card").addClass("hidden");
 			$("#success-add-card").addClass("hidden");
-		},6000)
+		},6000);
     });
 
 	// click on add card form button
@@ -83,4 +93,27 @@ $(document).ready(function() {
 		$("#error-add-card").addClass("hidden");
 	});
 });
+
+function deleteCard(cardNumber) {
+
+	data = {
+		cardNumber: cardNumber
+	}
+
+	$.ajax({
+		url: "/user/update/card",
+		type: "DELETE",
+		dataType: "json",
+		data: JSON.stringify(data),
+		success: function(result) {
+			$("#success-card-list").removeClass("hidden");
+			$("#saved-card-list").load(location.href + " #saved-card-list");
+			setTimeout(() => {
+				$("#error-add-card").addClass("hidden");
+				$("#success-add-card").addClass("hidden");
+			},6000);
+		},
+		contentType: "application/json"
+	});
+}
 

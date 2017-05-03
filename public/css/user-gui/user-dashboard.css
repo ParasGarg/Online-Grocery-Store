@@ -15,9 +15,9 @@
 
 /* payments */
 .dashboard.payments p.msg { font-size: 1.5rem;font-weight: 500;margin-top: 1rem; }
-.dashboard.payments .card-show.heading { font-size: 1.5rem;font-weight: 500;padding: .5rem 0; }
-.dashboard.payments .card-show.cards { font-size: 1.5rem;font-weight: none;padding:  0 0 .5rem; }
-.dashboard.payments .card-show.cards i { color: #a94442; }
+.dashboard.payments .card-show.heading { font-size: 1.5rem;font-weight: 500;padding: 1rem 0; }
+.dashboard.payments .card-show.cards { font-size: 1.5rem;font-weight: none;padding:  0 0 1.2rem; }
+.dashboard.payments .card-show.cards i { color: #a94442;cursor: pointer; }
 
 /* wallet */
 .dashboard.wallet h1 { text-align: center; }

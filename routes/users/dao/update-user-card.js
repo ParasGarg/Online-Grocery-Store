@@ -49,31 +49,59 @@ router.post('/', isLoggedIn, (req, res) => {
                         url: req.originalUrl
                 });
 
-        } else if (!userUpdates.cardName) {
+        } else if (!userUpdates.username) {
                 res.status(400).json({ error: "No card holder's name provided" });
-        } else if (!userUpdates.cardNumber) {
+        } else if (!userUpdates.number) {
                 res.status(400).json({ error: "No card number provided" });
-        } else if (!userUpdates.cardType) {
+        } else if (!userUpdates.type) {
                 res.status(400).json({ error: "No card type provided" });
-        } else if (!userUpdates.cardIssuer) {
+        } else if (!userUpdates.issuer) {
                 res.status(400).json({ error: "No card issuer provided" });
-        } else if (!userUpdates.expiry) {
+        } else if (!userUpdates.exp) {
                 res.status(400).json({ error: "No card expiry provided" });
         } else if (!userUpdates.cvv) {
                 res.status(400).json({ error: "No card cvv provided" });
         }
         
-        usersCardData.getCardById(xss(userUpdates.cardNumber)).then((cardInfo) => {
-                
-                if (cardInfo == null) {
-                        usersCardData.addCard(email, userUpdates).then((newCardInfo) => {
-                                res.json(newCardInfo);
-                                return;
-                        });
-                } else {
-                        res.status(400).json({ error: "This card is already registered" });
+        usersCardData.getAllCard(email).then((cardInfo) => {
+
+                var len = cardInfo.card.length;
+                var exist = false; 
+
+                for (var i = 0; i < len; i++) {
+                        if (cardInfo.card[i]._id === xss(userUpdates.number)) {
+                                exist = true;
+                                break;
+                        }
                 }
 
+                if (exist == false) {
+                        usersCardData.addCard(email, userUpdates).then(() => {
+                                res.status(200).json({ success: true });
+                        });
+                } else {
+                        res.status(400).json({ error: "This card is already saved" });
+                }
+
+        })
+        .catch((error) => {     // rendering error page
+                res.render('alerts/error', {
+                        mainTitle: "Server Error •",
+                        code: 500,
+                        message: error,
+                        url: req.originalUrl
+                });
+        });
+});
+
+//------------------------ route to delete user information by id
+router.delete('/', isLoggedIn, (req, res) => {
+
+        let cardId = xss(req.body.cardNumber);
+        let email = xss(req.user._id);
+
+        usersCardData.deleteCard(email, cardId).then(() => {
+                res.json({success: true})
         })
         .catch((error) => {     // rendering error page
                 res.render('alerts/error', {

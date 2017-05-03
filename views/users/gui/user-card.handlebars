@@ -20,67 +20,75 @@
 		<div id="saved-card-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="head-saved-card">
 			<div class="panel-body">
 
-				{{#if user.card}}
-					<div class="row card-show heading">
-						<!-- card number -->
-						<div class="col-md-3">
-							Card Number
-						</div>
-
-						<!-- card name -->
-						<div class="col-md-3">
-							Card Holder
-						</div>
-
-						<!-- card expiry -->
-						<div class="col-md-2">
-							Card Expiry
-						</div>
-
-						<!-- card type -->
-						<div class="col-md-3">
-							Card Type
+				<!-- alert notification -->
+				<div class="row">
+					<div class="col-md-12">
+						<div id="success-card-list" class="alert alert-success hidden">
+							<i class="fa fa-check success"></i>
+							<strong>Card deleted successfully</strong> 
 						</div>
 					</div>
-					{{#each user.card}}
-						<div class="row card-show cards">
+				</div>
+
+				<div id="saved-card-list"> 
+					{{#if user.card}}
+						<div class="row card-show heading">
 							<!-- card number -->
 							<div class="col-md-3">
-								{{_id}}
+								Card Number
 							</div>
 
 							<!-- card name -->
 							<div class="col-md-3">
-								{{name}}
+								Card Holder
 							</div>
 
 							<!-- card expiry -->
 							<div class="col-md-2">
-								{{expiry}}
+								Card Expiry
 							</div>
 
-							<!-- card expiry -->
+							<!-- card type -->
 							<div class="col-md-3">
-								{{type}}
-							</div>
-
-							<!-- card delete -->
-							<div class="col-md-1" id="{{_id}}">
-								<a href="">
-									<i class="fa fa-trash"></i>
-								</a>
+								Card Type
 							</div>
 						</div>
-					{{/each}}
-				{{else}}
-					<div class="row">
-						<p class="msg">No saved cards</p>
-					</div>
-				{{/if}}
-				
+						{{#each user.card}}
+							<div class="row card-show cards">
+								<!-- card number -->
+								<div class="col-md-3">
+									{{_id}}
+								</div>
 
-				
+								<!-- card name -->
+								<div class="col-md-3">
+									{{name}}
+								</div>
 
+								<!-- card expiry -->
+								<div class="col-md-2">
+									{{expiry}}
+								</div>
+
+								<!-- card expiry -->
+								<div class="col-md-3">
+									{{type}}
+								</div>
+
+								<!-- card delete -->
+								<div class="col-md-1">
+									<i class="fa fa-trash" onclick="deleteCard({{_id}});" title="Delete"></i> 
+									<!--i class="fa fa-trash" data-toggle="modal" data-target="#delete-alert" title="Delete"></i -->
+								</div>
+							</div>
+						{{/each}}
+					{{else}}
+						<div class="row">
+							<p class="msg">No saved cards</p>
+						</div>
+					{{/if}}
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -90,16 +98,6 @@
 	<div class="panel panel-default">
 		<div class="panel-heading" role="tab" id="add-card-head">
 			<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="add-card-panel">
-
-				<!-- alert notification -->
-				<div class="row">
-					<div class="col-md-12">
-						<div id="success-add-card" class="alert alert-success hidden">
-							<i class="fa fa-check success"></i>
-							<strong>Card deleted successfully</strong> 
-						</div>
-					</div>
-				</div>
 
 				<h2 class="panel-title">
 					Add Card
@@ -215,3 +213,24 @@
 
 </article>
 <!-- payment dashboard ends here -->
+
+<!-- delete alert modal -->
+<div class="modal fade" id="delete-alert">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Alert</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do you want to delete it?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="deleteCard(33333333);" >Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
