@@ -1,22 +1,23 @@
 /* dashboard */
 .dashboard { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin: 0 auto;padding: 3rem 0 6rem;width: 100%;  }
-.dashboard h1 { font-size: 3rem;font-weight: 600;margin-bottom: 3rem;text-align: left; }
-.dashboard h2 { padding: 3rem; }
+.dashboard h1 { font-size: 2rem;font-weight: 600;margin-bottom: 3rem;text-align: center;text-transform: uppercase }
+.dashboard h2 { padding: 1.5rem 2rem; }
 .dashboard form .row { margin-bottom: 2rem; }
-.dashboard .panel-default > .panel-heading { background-color: #fff; }
+.dashboard .panel-default { margin-bottom: 3rem; }
+.dashboard .panel-heading { background-color: #eee;padding: 1.5rem 2rem;text-align: center; }
+.dashboard .panel-heading a { text-decoration: none; }
+.dashboard .panel-title { color: #23527f; }
 
-/* account */
-.dashboard.account { width: 60%;  }
-.dashboard.account h1 { text-align: center; }
-.dashboard.account .panel-heading h2 { padding: 1.5rem 2rem; }
+/* account */ /* payments */
+.dashboard.account, .dashboard.payments { width: 60%; }
+.dashboard.account h2, .dashboard.payments h2 { padding: 0; }
+.dashboard.account .panel-title, .dashboard.payments .panel-title { cursor: text; }
 
-/* payments */ 
-.dashboard.payments h1 { text-align: center; }
-.dashboard.payments .panel-heading h2 { padding: 1.5rem 2rem; }
-#saved-card-panel, #payment-transactions-panel { text-align: left; }
-#saved-card-panel .row, #payment-transactions-panel .row { font-size: 1.2rem;margin-bottom: 12px; }
-#saved-card-panel .row:first-child, #payment-transactions-panel .row:first-child { font-weight: bold; }
-#saved-card-panel p, #payment-transactions-panel p { font-size: 2rem;text-align: center; }
+/* payments */
+.dashboard.payments p.msg { font-size: 1.5rem;font-weight: 500;margin-top: 1rem; }
+.dashboard.payments .card-show.heading { font-size: 1.5rem;font-weight: 500;padding: .5rem 0; }
+.dashboard.payments .card-show.cards { font-size: 1.5rem;font-weight: none;padding:  0 0 .5rem; }
+.dashboard.payments .card-show.cards i { color: #a94442; }
 
 /* wallet */
 .dashboard.wallet h1 { text-align: center; }
@@ -35,14 +36,6 @@
 .dashboard input[type="number"]:last-child { float: right; }
 
 .dashboard select.btn-default { text-align: left;width: 100%; }
-
-/* accordin */
-.panel-group { margin-bottom: 0; }
-.panel-group .panel { margin-bottom: 4rem; }
-.panel-heading { padding: 0; }
-.panel-heading a { text-decoration: none; }
-panel-heading h2 { padding: 1.5rem 2rem; }
-panel-heading .panel-title { text-align: left; }
 
 
 

@@ -15,7 +15,7 @@ $(document).ready(function() {
 				}
 
 				$.ajax({
-					url: "/user/update",
+					url: "/user/update/info",
 					type: "POST",
 					dataType: "json",
 					data: JSON.stringify(formData),

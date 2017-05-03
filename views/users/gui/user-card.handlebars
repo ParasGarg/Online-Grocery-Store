@@ -1,0 +1,217 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/user-gui/user-dashboard.css">
+<!-- script -->
+<script src="/public/js/user/gui/card-settings.js"></script>
+
+<!-- payment dashboard starts from here -->
+<article class="dashboard payments">
+	<h1>Payment Settings</h1>
+
+	<!-- user saved card section starts frome here -->
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="head-saved-card">
+			<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="saved-card-panel">
+				<h2 class="panel-title">
+					Saved Cards
+				</h2>
+			</a>
+		</div>
+
+		<div id="saved-card-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="head-saved-card">
+			<div class="panel-body">
+
+				{{#if user.card}}
+					<div class="row card-show heading">
+						<!-- card number -->
+						<div class="col-md-3">
+							Card Number
+						</div>
+
+						<!-- card name -->
+						<div class="col-md-3">
+							Card Holder
+						</div>
+
+						<!-- card expiry -->
+						<div class="col-md-2">
+							Card Expiry
+						</div>
+
+						<!-- card type -->
+						<div class="col-md-3">
+							Card Type
+						</div>
+					</div>
+					{{#each user.card}}
+						<div class="row card-show cards">
+							<!-- card number -->
+							<div class="col-md-3">
+								{{_id}}
+							</div>
+
+							<!-- card name -->
+							<div class="col-md-3">
+								{{name}}
+							</div>
+
+							<!-- card expiry -->
+							<div class="col-md-2">
+								{{expiry}}
+							</div>
+
+							<!-- card expiry -->
+							<div class="col-md-3">
+								{{type}}
+							</div>
+
+							<!-- card delete -->
+							<div class="col-md-1" id="{{_id}}">
+								<a href="">
+									<i class="fa fa-trash"></i>
+								</a>
+							</div>
+						</div>
+					{{/each}}
+				{{else}}
+					<div class="row">
+						<p class="msg">No saved cards</p>
+					</div>
+				{{/if}}
+				
+
+				
+
+			</div>
+		</div>
+	</div>
+	<!-- user saved card sections ends here -->
+
+	<!-- user add card section starts frome here -->
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="add-card-head">
+			<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="add-card-panel">
+
+				<!-- alert notification -->
+				<div class="row">
+					<div class="col-md-12">
+						<div id="success-add-card" class="alert alert-success hidden">
+							<i class="fa fa-check success"></i>
+							<strong>Card deleted successfully</strong> 
+						</div>
+					</div>
+				</div>
+
+				<h2 class="panel-title">
+					Add Card
+				</h2>
+			</a>
+		</div>
+
+		<div id="add-card-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="add-card-head">
+			<div class="panel-body">
+
+				<div class="col-md-12">
+					<div class="row">
+
+						<!-- user add payment detail form starts from here -->
+						<form id="form-add-card">
+
+							<!-- alert notification -->
+							<div class="row">
+								<div class="col-md-12">
+									<div id="error-add-card" class="alert alert-danger hidden">
+										<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+										<strong id="error-add-card-message"></strong> 
+									</div>
+									<div id="success-add-card" class="alert alert-success hidden">
+										<i class="fa fa-check success"></i>
+										<strong>Card added successfully</strong> 
+									</div>
+								</div>
+							</div>
+
+							<!-- name on card section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-name">Name On Card</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<input type="text" class="form-control" name="cardName" id="card-name" placeholder="Card Holder's Name" />
+								</div>
+							</div>
+
+							<!-- card number section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-number">Card Number</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<input type="text" class="form-control" name="cardNumber" id="card-number" maxlength="16"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"  placeholder="Card Number" />
+								</div>
+							</div>
+
+							<!-- card type section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-type">Card Type</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<select class="btn btn-default" name="cardType" id="card-type">
+										<option selected disabled>Card Type</option>
+										<option value="Credit Card">Credit Card</option>
+										<option value="Debit Card">Debit Card</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- card expiry section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-month">Card Expiry</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<input type="number" class="form-control" name="cardMonth" id="card-month" min="1" max="12" maxlength="2" placeholder="Month" />
+									<input type="number" class="form-control" name="cardYear" id="card-year" min="2017" max="2051" maxlength="4" placeholder="Year" />
+								</div>
+							</div>
+
+							<!-- card brand section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-brand">Card Issuer</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<select class="btn btn-default" name="cardType" id="card-brand">
+										<option selected disabled>Card Brand</option>
+										<option value="AmEx">American Express</option>
+										<option value="Master">Master</option>
+										<option value="Visa">Visa</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- card cvv section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-cvv">CVV</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<input type="password" class="form-control" name="cardCVV" id="card-cvv" placeholder="CVV Number" maxlength="4" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+								</div>
+							</div>
+
+							<!-- user submit form section -->
+							<input type="button" id="btn-add-card" class="btn btn-default" onclick="addCard()" value="Add" />
+
+						</form>
+						<!-- user add payment detail form ends here -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- user add card sections ends here -->
+
+</article>
+<!-- payment dashboard ends here -->

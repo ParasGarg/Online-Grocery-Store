@@ -8,7 +8,7 @@
         ======================================================================================================
         |   1.  | Get    | /user/update/:email  | updateUser        | ***        | Page for update user form |
         ------------------------------------------------------------------------------------------------------
-        |   2.  | Put    | /user/update/        | updateUser        | users      | Update user profile info  |
+        |   2.  | Post   | /user/update/        | updateUser        | users      | Update user profile info  |
         ------------------------------------------------------------------------------------------------------
 */
 
@@ -22,7 +22,7 @@ const usersData = data.users;
 const credentialsData = data.credentials;
 const passport = require('../../../config/passport-users');
 
-/* local function */
+/* local scoped function */
 //------ user authentication validation
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
@@ -37,6 +37,7 @@ function isLoggedIn(req, res, next) {
     }
 }
 
+/* global scoped function */
 //------------------------ route to update user information by id
 router.post('/', isLoggedIn, (req, res) => {
 
@@ -74,21 +75,8 @@ router.post('/', isLoggedIn, (req, res) => {
                 // checking for user security updates
                 if (userUpdates.password) {
                     credentialsData.updateCredential(email, xss(userUpdates.password)).then(() => {
-                        res.json({ success: true })
+                        res.json({ success: true });
                     });
-                }
-
-                // checking for user payment updates
-                if (userUpdates.paymentInfo) {
-
-                    /*
-**********************
-**********************  INSERT CODE FOR UPDATE OF USER PAYMENT OPTIONS
-**********************
-                    */
-
-                        res.redirect("/user/dashboard/payments");
-                    
                 }
 
                 // checking for user wallet updates

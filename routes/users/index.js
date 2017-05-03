@@ -9,13 +9,14 @@ usersRouter.use("/forget-password", require('./auth/user-forget-password'));		//
 
 /* users data access objects */
 usersRouter.use("/new", require('./dao/create-new-user'));							// url: ~/user/new
-usersRouter.use("/update", require('./dao/update-user-info'));						// url: ~/user/update
+usersRouter.use("/update/info", require('./dao/update-user-info'));					// url: ~/user/update/info
+usersRouter.use("/update/card", require('./dao/update-user-card'));					// url: ~/user/update/card
 
 /* users personal settings */
-usersRouter.use("/dashboard", require('./gui/user-dashboard'));				// url: ~/user/dashboard
-usersRouter.use("/dashboard/account", require('./gui/user-account'));		// url: ~/user/dashboard/account
-usersRouter.use("/dashboard/payments", require('./gui/user-payment-info'));	// url: ~/user/dashboard/payment-details
-usersRouter.use("/dashboard/wallet", require('./gui/user-wallet'));			// url: ~/user/dashboard/wallet
+usersRouter.use("/dashboard", require('./gui/user-dashboard'));						// url: ~/user/dashboard
+usersRouter.use("/dashboard/account", require('./gui/user-account'));				// url: ~/user/dashboard/account
+usersRouter.use("/dashboard/payments", require('./gui/user-card'));					// url: ~/user/dashboard/payment
+usersRouter.use("/dashboard/wallet", require('./gui/user-wallet'));					// url: ~/user/dashboard/wallet
 
 /* non existing page configuration */
 usersRouter.use("*", (req, res) => {

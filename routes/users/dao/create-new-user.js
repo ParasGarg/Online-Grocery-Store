@@ -24,7 +24,7 @@ const credentialsData = data.credentials;
 const passport = require('../../../config/passport-users');
 const emailToLowerCase = require('../comp/email-case-converter').emailToLowerCase;
 
-/* local function */
+/* local scoped function */
 //------ user authentication validation
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
@@ -34,6 +34,7 @@ function isLoggedIn(req, res, next) {
     }
 }
 
+/* global scoped function */
 //------------------------ route to render to create new user form
 router.get('/', isLoggedIn, (req, res) => {
     res.render('users/auth/create-new-account', {
