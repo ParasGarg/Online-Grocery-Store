@@ -45,7 +45,7 @@ router.post('/', isLoggedIn, (req, res) => {
     let email = xss(req.user._id);
 
     if (Object.keys(userUpdates).length === 0 || userUpdates == undefined) {    // check for empty json passed
-        res.render("users/dashboard/user-account", {
+        res.render("users/gui/user-account", {
             mainTitle: "Bad Request •",
             code: 400,
             message: `No data has been provided for update.`,
@@ -78,14 +78,7 @@ router.post('/', isLoggedIn, (req, res) => {
                         res.json({ success: true });
                     });
                 }
-
-                // checking for user wallet updates
-                if (userUpdates.wallet) {
-                    usersData.updateWallet(email, JSON.parse(userUpdates.wallet), req.user.wallet).then((userInfo) => {
-                        req.user.wallet = userInfo.wallet;
-                        res.json(req.user.wallet);
-                    });
-                }
+                
             });
         })
         .catch((error) => {     // rendering error page

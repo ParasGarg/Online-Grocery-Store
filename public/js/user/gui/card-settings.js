@@ -44,13 +44,13 @@ $(document).ready(function() {
 								if (xhr.status === 200) {	// receiving 200 status code
 									$("#error-add-card").addClass("hidden")						
 									$("#success-add-card").removeClass("hidden");
-									$("#saved-card-panel").load(location.href + " #saved-card-panel");
+									$("#saved-card-list").load(location.href + " #saved-card-list");
 									$("#card-name").val("");
 									$("#card-number").val("");
-									$("#card-type").val("");
+									$("#card-type").val("Card Type");
 									$("#card-month").val("");
 									$("#card-year").val("");
-									$("#card-brand").val("");
+									$("#card-brand").val("Card Brand");
 									$("#card-cvv").val("");
 								} else if (xhr.status === 400) {	// receiving 400 status code
 									$("#success-add-card").addClass("hidden");

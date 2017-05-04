@@ -35,6 +35,8 @@
     "express-passport": "^0.1.0",
     "express-passport-logout": "^0.1.0",
     "express-session": "^1.15.2",
+    "handlebars-intl": "^1.1.2",
+    "handlebars-paginate": "^0.1.0",
     "mongodb": "^2.2.26",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

@@ -2,47 +2,89 @@
 $(document).ready(function() {
 
 	// click on user wallet form button
-    $("#btn-user-wallet").on('click', function() {
-		const regex = /^[A-Za-z]+$/; 
+    $("#btn-user-quick-add").on('click', function() {
+
+		const regex = /^[A-Za-z]+$/;
 		const amount = $("#amount").val();
+		const card = $("#pay-card").val();
 		const form = $("#form-user-wallet");
 
-		if (amount.length > 0) {
-			if (!regex.test(amount)) {
+		if (amount.length > 0 && card != null) {
+			if (amount > 0) {
+				if (!regex.test(amount)) {
 
-				const formData = {
-					wallet: amount
+					const formData = {
+						amount: amount,
+						action: "Credit",
+						description: "Added cash in wallet",
+						cardUsed: card
+					}
+
+					$.ajax({
+						url: "/user/update/wallet",
+						type: "PUT",
+						dataType: "json",
+						data: JSON.stringify(formData),
+						success: function(data) {
+							$("#error-wallet").addClass("hidden");
+							$("#success-wallet").removeClass("hidden");
+							$("#wallet-amount").html(`<i class="fa fa-dollar"></i> ` + data.amount);
+							$("#wallet-transaction-panel").load(location.href + " #wallet-transaction-panel");
+							$("#amount").val("");
+							$("#pay-card").val("Select card to pay");
+						},
+						contentType: "application/json"
+					});
+				} else {
+					$("#success-wallet").addClass("hidden");
+					$("#error-wallet").removeClass("hidden");
+					$("#amount").val("");
+					$("#error-wallet-message").html("Only numeric value is allowed");
 				}
-
-				$.ajax({
-					url: "/user/update/info",
-					type: "POST",
-					dataType: "json",
-					data: JSON.stringify(formData),
-					success: function(data) {
-						$("#error-wallet").addClass("hidden");
-						$("#success-wallet").removeClass("hidden");
-						$("#wallet-amount").html(`<i class="fa fa-dollar"></i> ` + data);
-						$("#amount").val("");
-					},
-					contentType: "application/json"
-				});
 			} else {
 				$("#success-wallet").addClass("hidden");
 				$("#error-wallet").removeClass("hidden");
-				$("#amount").val("");
-				$("#error-wallet-message").html("Only numeric value is allowed");
+				$("#error-wallet-message").html("Invalid Amount");
 			}
 		} else {
 			$("#success-wallet").addClass("hidden");
 			$("#error-wallet").removeClass("hidden");
-			$("#error-wallet-message").html("The fields cannot be blank");
+			$("#error-wallet-message").html("Fields cannot be blank for Quick Add");
 		}
 
 		setTimeout(() => {
 			$("#error-wallet").addClass("hidden");
 			$("#success-wallet").addClass("hidden");
 		},3000);
+    });
+
+	// click on user wallet form button
+    $("#btn-user-add").on('click', function() {
+		const regex = /^[A-Za-z]+$/;
+		const amount = $("#amount").val();
+
+		if (amount.length > 0) {
+			if (amount > 0) {
+				if (!regex.test(amount)) {
+
+					$("#form-user-wallet").submit();
+					
+				} else {
+					$("#success-wallet").addClass("hidden");
+					$("#error-wallet").removeClass("hidden");
+					$("#amount").val("");
+					$("#error-wallet-message").html("Only numeric value is allowed");
+				}
+			} else {
+				$("#success-wallet").addClass("hidden");
+				$("#error-wallet").removeClass("hidden");
+				$("#error-wallet-message").html("Invalid Amount");
+			}
+		} else {
+			$("#success-wallet").addClass("hidden");
+			$("#error-wallet").removeClass("hidden");
+			$("#error-wallet-message").html("Please enter Amount to add");
+		}
     });
 
 	// click on user wallet form button
@@ -61,6 +103,16 @@ $(document).ready(function() {
             e.preventDefault();
         }
 	});
+
+	// on selecting dropdown
+	$("#pay-card").on('change', function() {
+		var addCard = $("#pay-card option:selected").val();
+
+        if (addCard === "redirect") {
+            location = "/user/dashboard/payments#add-card-head"
+        }   
+
+    });
 
 	// click on user login form button
     $("#btn-error-close").on('click', function() {

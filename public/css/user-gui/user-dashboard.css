@@ -8,23 +8,27 @@
 .dashboard .panel-heading a { text-decoration: none; }
 .dashboard .panel-title { color: #23527f; }
 
+.dashboard .positive { color: #3c763d; }
+.dashboard .negative { color: #a94442; }
+.dashboard p.msg { font-size: 1.5rem;font-weight: 500;margin-top: 1rem; }
+.dashboard p.msg.banner { font-size: 1.5rem;font-style: italic;font-weight: 400;margin-top: 0; }
+
 /* account */ /* payments */
 .dashboard.account, .dashboard.payments { width: 60%; }
-.dashboard.account h2, .dashboard.payments h2 { padding: 0; }
+.dashboard.account h2, .dashboard.payments h2, .dashboard.wallet h2 { padding: 0; }
 .dashboard.account .panel-title, .dashboard.payments .panel-title { cursor: text; }
 
 /* payments */
-.dashboard.payments p.msg { font-size: 1.5rem;font-weight: 500;margin-top: 1rem; }
 .dashboard.payments .card-show.heading { font-size: 1.5rem;font-weight: 500;padding: 1rem 0; }
 .dashboard.payments .card-show.cards { font-size: 1.5rem;font-weight: none;padding:  0 0 1.2rem; }
 .dashboard.payments .card-show.cards i { color: #a94442;cursor: pointer; }
 
 /* wallet */
-.dashboard.wallet h1 { text-align: center; }
-.dashboard.wallet .panel-heading h2 { padding: 1.5rem 2rem; }
 .dashboard.wallet .panel:first-child { margin-bottom: 3rem; }
-.dashboard.wallet i.add-amount { position: absolute;margin-top: 1rem;margin-left: -8.5rem; }
+.dashboard.wallet i.add-amount { position: absolute;margin-top: 1.1rem;margin-left: -7.6rem; }
 .dashboard.wallet input.add-amount { text-indent: 1rem;color: #333; }
+.dashboard.wallet .panel-body { font-weight: 500;text-align: center; }
+
 #wallet-transaction-panel { text-align: left; }
 #wallet-transaction-panel .row { font-size: 1.2rem;margin-bottom: 12px; }
 #wallet-transaction-panel .row:first-child { font-weight: bold; }
