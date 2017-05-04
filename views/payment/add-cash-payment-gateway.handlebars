@@ -1,0 +1,217 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/user-gui/user-dashboard.css">
+<link rel="stylesheet" href="/public/css/payment/payment-gateway.css">
+<!-- script -->
+<script src="/public/js/payment/add-cash-payment-settings.js"></script>
+<script>
+	(function(window, location) {
+		history.replaceState(null, document.title, location.pathname+"#!/history");
+		history.pushState(null, document.title, location.pathname);
+
+		window.addEventListener("popstate", function() {
+			if(location.hash === "#!/history") {
+				history.replaceState(null, document.title, location.pathname);
+				setTimeout( () => {
+					location.reload();
+				},0);
+			}
+		}, false);
+	}(window, location));
+</script>
+
+
+<!-- add cash starts from here -->
+<article class="gateway add-cash">
+	<h1>Pay and you're done!</h1>
+		
+	<p class="msg banner">(Do not refresh the page)</p>
+	<!-- add cash section starts from here -->
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	
+		<!-- payment summary section starts frome here -->
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="summary-head">
+				<a role="button"  data-parent="#accordion" aria-expanded="true" aria-controls="summary-panel">
+					<h2 class="panel-title">
+						Payment Summary
+					</h2>
+				</a>
+			</div>
+			<div id="summary-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="summary-head">
+				<div class="panel-body">
+
+					<div class="col-md-12">
+						<div class="row">
+							
+							<!-- amount section -->
+							<div class="row">
+								<div class="col-md-4 col-md-offset-1">
+									<label>Total Price</label>
+								</div>
+								<div class="col-md-4 col-md-offset-1">
+									<i class="fa fa-dollar"></i> 
+									{{amount}}
+								</div>
+							</div>
+
+							<!-- discount section -->
+							<div class="row">
+								<div class="col-md-4 col-md-offset-1">
+									<label>Discounts</label>
+								</div>
+								<div class="col-md-4 col-md-offset-1">
+									<i class="fa fa-dollar"></i> 
+									{{discount}}
+								</div>
+							</div>
+
+							<!-- taxes section -->
+							<div class="row">
+								<div class="col-md-4 col-md-offset-1">
+									<label>Taxes</label>
+								</div>
+								<div class="col-md-4 col-md-offset-1">
+									<i class="fa fa-dollar"></i> 
+									{{taxes}}
+								</div>
+							</div>
+
+							<!-- net amount section -->
+							<div class="row">
+								<div class="col-md-4 col-md-offset-1">
+									<label>Net Amount</label>
+								</div>
+								<div class="col-md-4 col-md-offset-1">
+									<i class="fa fa-dollar"></i> 
+									{{net}}
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- payment summary sections ends here -->
+
+		<!-- card details section starts frome here -->
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="headingOne">
+				<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="cash-panel">
+					<h2 class="panel-title">
+						Payment Details
+					</h2>
+				</a>
+			</div>
+			<div id="cash-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				<div class="panel-body">
+
+					<div class="col-md-12">
+						<div class="row">
+
+						<!-- add payment detail form starts from here -->
+						<form id="form-payment-detail" method="post" action="/user/update/wallet" enctype='application/json'>
+
+							<!-- alert notification -->
+							<div class="row">
+								<div class="col-md-12">
+									<div id="error-add-cash" class="alert alert-danger hidden">
+										<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+										<strong id="error-add-cash-message"></strong> 
+									</div>
+								</div>
+							</div>
+
+							<!-- name on card section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-name">Name On Card</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<input type="text" class="form-control" name="cardName" id="card-name" placeholder="Card Holder's Name" />
+								</div>
+							</div>
+
+							<!-- card number section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-number">Card Number</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<input type="text" class="form-control" name="cardNumber" id="card-number" maxlength="16"  onkeypress="return event.charCode >= 48 && event.charCode <= 57"  placeholder="Card Number" />
+								</div>
+							</div>
+
+							<!-- card type section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-type">Card Type</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<select class="btn btn-default" name="cardType" id="card-type">
+										<option selected disabled>Card Type</option>
+										<option value="Credit Card">Credit Card</option>
+										<option value="Debit Card">Debit Card</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- card expiry section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-month">Card Expiry</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<input type="number" class="form-control" name="cardMonth" id="card-month" min="1" max="12" maxlength="2" placeholder="Month" />
+									<input type="number" class="form-control" name="cardYear" id="card-year" min="2017" max="2051" maxlength="4" placeholder="Year" />
+								</div>
+							</div>
+
+							<!-- card brand section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-brand">Card Issuer</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<select class="btn btn-default" name="cardBrand" id="card-brand">
+										<option selected disabled>Card Brand</option>
+										<option value="AmEx">American Express</option>
+										<option value="Master">Master</option>
+										<option value="Visa">Visa</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- card cvv section -->
+							<div class="row">
+								<div class="col-md-4">
+									<label for="card-cvv">CVV</label>
+								</div>
+								<div class="col-md-6 col-md-offset-1">
+									<input type="password" class="form-control" name="cardCVV" id="card-cvv" placeholder="CVV Number" maxlength="4" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+								</div>
+							</div>
+
+							<!-- amount section hidden -->
+							<input type="text" name="amount" value="{{amount}}" style="visibility: hidden;" />
+
+							<!-- user submit form section -->
+							<input type="button" id="btn-add-cash" class="btn btn-default" onclick="pay()" value="Pay" />
+
+						</form>
+						<!-- add payment detail form ends here -->
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- card details sections ends here -->
+
+	</div>
+	<!-- add cash section ends here -->
+			
+</article>
+<!-- add cash ends here -->

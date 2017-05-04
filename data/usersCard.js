@@ -9,11 +9,13 @@
         =========================================================================
         |   1.  | getCardById       | Search infomation for an existing card    |
         -------------------------------------------------------------------------
-        |   2.  | getAllCard        | Fetch all card infomation for a user      |
+        |   2.  | getCardByIds      | Search infomation a card and user combine |
         -------------------------------------------------------------------------
-        |   3.  | createNewCard     | Create new card record in the collection  |
+        |   3.  | getAllCard        | Fetch all card infomation for a user      |
         -------------------------------------------------------------------------
-        |   4.  | deleteCard        | delete an existing card information       |
+        |   4.  | createNewCard     | Create new card record in the collection  |
+        -------------------------------------------------------------------------
+        |   5.  | deleteCard        | delete an existing card information       |
         -------------------------------------------------------------------------
 */
 
@@ -24,10 +26,49 @@ const users = mongoDbCollection.users;
 
 module.exports = cardControllers = {
 
-    //------------------------ fetch a card information by id
+    //------------------------ fetch a card information by card id/number
     getCardById: (id) => {
         return users().then((usersCollection) => {  // returning a found json document else returning null
-            return usersCollection.findOne({ "card._id":id });
+            return usersCollection.findOne({ _id:email, "card._id":id }, { "card._id":1, "card.name":1, "card.type":1, "card.issuer":1, "card.expiry":1, "card.cvv":1 });
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'users card' collection.");
+        });
+    },
+
+    //------------------------ fetch a card information by user id and card id/number
+    getCardByIds: (email, id) => {
+        return users().then((usersCollection) => {  // returning a found json document else returning null
+            return usersCollection.findOne({ _id:email, "card._id":id }, { _id:0, card:1 }).then((cardList) => {
+
+                    cardList = cardList.card;
+
+                    if (!cardList) { 
+                        return Promise.reject("No card is saved");
+                    }
+
+                    // finding comment location in comment array
+                    var loc = 0;
+                    while (loc < cardList.length) {
+                        if (cardList[loc]._id === id.toString()) {
+                            break;
+                        }
+
+                        loc++;
+                    }
+
+                    // creating json variable
+                    let cardDetails = {
+                        _id: id,
+                        name: cardList[loc].name,
+                        type: cardList[loc].type,
+                        issuer: cardList[loc].issuer,
+                        expiry: cardList[loc].expiry,
+                        cvv: cardList[loc].cvv
+                    };
+
+                    return cardDetails;
+            });
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users card' collection.");

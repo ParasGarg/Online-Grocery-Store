@@ -78,14 +78,7 @@ router.post('/', isLoggedIn, (req, res) => {
                         res.json({ success: true });
                     });
                 }
-
-                // checking for user wallet updates
-                if (userUpdates.wallet) {
-                    usersData.updateWallet(email, JSON.parse(userUpdates.wallet), req.user.wallet).then((userInfo) => {
-                        req.user.wallet = userInfo.wallet;
-                        res.json(req.user.wallet);
-                    });
-                }
+                
             });
         })
         .catch((error) => {     // rendering error page

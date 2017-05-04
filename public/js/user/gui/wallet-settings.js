@@ -2,13 +2,14 @@
 $(document).ready(function() {
 
 	// click on user wallet form button
-    $("#btn-user-wallet").on('click', function() {
+    $("#btn-user-quick-add").on('click', function() {
+
 		const regex = /^[A-Za-z]+$/;
 		const amount = $("#amount").val();
 		const card = $("#pay-card").val();
 		const form = $("#form-user-wallet");
 
-		if (amount.length > 0 && card.length > 0) {
+		if (amount.length > 0 && card != null) {
 			if (amount > 0) {
 				if (!regex.test(amount)) {
 
@@ -21,7 +22,7 @@ $(document).ready(function() {
 
 					$.ajax({
 						url: "/user/update/wallet",
-						type: "POST",
+						type: "PUT",
 						dataType: "json",
 						data: JSON.stringify(formData),
 						success: function(data) {
@@ -48,13 +49,42 @@ $(document).ready(function() {
 		} else {
 			$("#success-wallet").addClass("hidden");
 			$("#error-wallet").removeClass("hidden");
-			$("#error-wallet-message").html("The fields cannot be blank");
+			$("#error-wallet-message").html("Fields cannot be blank for Quick Add");
 		}
 
 		setTimeout(() => {
 			$("#error-wallet").addClass("hidden");
 			$("#success-wallet").addClass("hidden");
 		},3000);
+    });
+
+	// click on user wallet form button
+    $("#btn-user-add").on('click', function() {
+		const regex = /^[A-Za-z]+$/;
+		const amount = $("#amount").val();
+
+		if (amount.length > 0) {
+			if (amount > 0) {
+				if (!regex.test(amount)) {
+
+					$("#form-user-wallet").submit();
+					
+				} else {
+					$("#success-wallet").addClass("hidden");
+					$("#error-wallet").removeClass("hidden");
+					$("#amount").val("");
+					$("#error-wallet-message").html("Only numeric value is allowed");
+				}
+			} else {
+				$("#success-wallet").addClass("hidden");
+				$("#error-wallet").removeClass("hidden");
+				$("#error-wallet-message").html("Invalid Amount");
+			}
+		} else {
+			$("#success-wallet").addClass("hidden");
+			$("#error-wallet").removeClass("hidden");
+			$("#error-wallet-message").html("Please enter Amount to add");
+		}
     });
 
 	// click on user wallet form button

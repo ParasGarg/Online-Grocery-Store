@@ -25,7 +25,7 @@ const mainRoutes = (app) => {
     });
 
     /* customized routes */
-    app.use("/payment", paymentsRoutes);    // payments routes
+    //app.use("/payment", paymentsRoutes);    // payments routes
     app.use("/product", productsRoutes);    // products routes
     app.use("/support", supportsRoutes);    // supports routes
     app.use("/user", usersRoutes);          // user routes

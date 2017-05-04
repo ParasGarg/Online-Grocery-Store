@@ -44,7 +44,7 @@ module.exports = walletTransactionsControllers = {
     },
 
     //------------------------ insert/create a new user record
-    logTransaction: (email, amount, cardUsed, status, remark) => {
+    logTransaction: (email, amount, cardData, status, remark) => {
         return walletTransaction().then((walletTransactionCollection) => {
             
             let creditCheck = false;
@@ -58,7 +58,7 @@ module.exports = walletTransactionsControllers = {
                 _id: uuid.v4(),
 				user: email,
 				amount: amount,				
-				card: cardUsed,
+				cardDetails: cardData,
                 date: new Date("2010-06-09T15:20:00Z").toUTCString(),
 				status: status,
                 isCredited: creditCheck,

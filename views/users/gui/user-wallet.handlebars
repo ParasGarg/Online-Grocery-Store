@@ -64,7 +64,7 @@
 							<div class="row">
 
 								<!-- add amount detail form starts from here -->
-								<form id="form-user-wallet">
+								<form id="form-user-wallet" method="post" action="/user/dashboard/wallet" enctype='application/json'>
 								
 									<!-- alert notification -->
 									<div class="row">
@@ -105,14 +105,15 @@
 														<option value="{{_id}}">{{_id}}</option>
 													{{/each}}
 											{{/if}}
-												<option value="redirect">Add a card</option>
+												<option value="redirect">Save new card</option>
 
 											</select>
 										</div>
 									</div>
 
 									<!-- amount submit form section -->
-									<input type="button" id="btn-user-wallet" class="btn btn-default" onclick="updateWallet()" value="Add" />
+									<input type="button" id="btn-user-quick-add" class="btn btn-default" onclick="updateWallet()" value="Quick Add" />
+									<input type="button" id="btn-user-add" class="btn btn-default" onclick="addCash()" value="Add" />
 								
 								</form>
 								<!-- add amount detail form ends here -->
@@ -182,7 +183,7 @@
 										</div>
 
 										<div class="col-md-2">
-											{{card}}
+											{{cardDetails.number}}
 										</div>
 
 										<div class="col-md-2">

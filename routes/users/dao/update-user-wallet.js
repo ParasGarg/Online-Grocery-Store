@@ -4,11 +4,14 @@
  * User Wallet *
 
  * Functionalities Index: 
-        ======================================================================================================
-        | S.No. |  Type  |         URL         |   Function Call   | Controller |         Description        |
-        ======================================================================================================
-        |   1.  | Post   | /user/update/wallet | addCash           | usersCard  | Insert new card record     |
-        ------------------------------------------------------------------------------------------------------
+        ========================================================================================================================
+        | S.No. |  Type  |         URL         |   Function Call   | Controller |                  Description                 |
+        ========================================================================================================================
+        |   1.  | Put    | /user/update/wallet | addCash           | usersCard  | Update wallet amount without payment gateway |     |
+        ------------------------------------------------------------------------------------------------------------------------
+		|   2.  | Post   | /user/update/wallet | addCash           | usersCard  | Update wallet amount with payment gateway    |
+        ------------------------------------------------------------------------------------------------------------------------
+        
 */
 
 /* importing required files and packages */
@@ -17,6 +20,7 @@ const router = express.Router();
 const xss = require('xss');
 const data = require('../../../data');
 const usersData = data.users;
+const usersCardData = data.usersCard;
 const usersWalletData = data.usersWallet;
 const walletTransaction = data.transactionWallet;
 const passport = require('../../../config/passport-users');
@@ -37,8 +41,8 @@ function isLoggedIn(req, res, next) {
 }
 
 /* global scoped function */
-//------------------------ route to update user information by id
-router.post('/', isLoggedIn, (req, res) => {
+//------------------------ route to quickly update wallet amount by user id without payment gatewaty
+router.put('/', isLoggedIn, (req, res) => {
 
 	let email = xss(req.user._id);
 	let amount = xss(req.body.amount);
@@ -55,22 +59,103 @@ router.post('/', isLoggedIn, (req, res) => {
 		});
 	} else if (!amount) {
 		res.status(400).json({ error: "No amount provided" });
+	} else if (!cardUsed) {
+		res.status(400).json({ error: "No card details provided" });
+	} else if (!status || !remark) {
+		res.status(400).json({ error: "Something went wrong. Please try again" });
+	}
+
+	// checking for user wallet updates
+	usersCardData.getCardByIds(email, cardUsed).then((cardInfo) => {
+
+		let cardData = {
+			name: cardInfo.name,
+			number: cardInfo._id,
+			type: cardInfo.type,
+			expiry: cardInfo.expiry,
+			issuer: cardInfo.issuer,
+			cvv: cardInfo.cvv
+		}
+
+		usersWalletData.addCash(email, JSON.parse(amount)).then((walletInfo) => {
+			walletTransaction.logTransaction(email, amount, cardData, status, remark).then((transactions) => {		// logging transaction
+				
+				req.user.wallet = walletInfo.wallet;
+				let transactionsList = transactions.reverse();
+
+				let data = {
+					amount: walletInfo.wallet,
+					transactions: transactionsList
+				}
+
+				res.json(data);
+			});
+		});
+	})		
+	.catch((error) => {     // rendering error page
+		res.render('alerts/error', {
+			mainTitle: "Server Error •",
+			code: 500,
+			message: error,
+			url: req.originalUrl
+		});
+	});
+});
+
+//------------------------ route to quickly update wallet amount by user id with payment gatewaty
+router.post('/', isLoggedIn, (req, res) => {
+
+	let email = xss(req.user._id);
+	let amount = xss(req.body.amount);
+	let cardData = {
+		name: xss(req.body.cardName),
+		number: xss(req.body.cardNumber),
+		type: xss(req.body.cardType),
+		expiry: `${xss(req.body.cardMonth)}/${xss(req.body.cardYear)}`,
+		issuer: xss(req.body.cardBrand),
+		cvv: xss(req.body.cardCVV)
+	};
+	let status = "Credit";
+	let remark = "Added cash in wallet";
+
+	if (Object.keys(amount).length === 0 || amount == undefined) {    // check for empty json passed
+		res.render("users/gui/user-wallet", {
+			mainTitle: "Bad Request •",
+			code: 400,
+			message: `No data has been provided for update.`,
+			url: req.originalUrl
+		});
+	} else if (!amount) {
+		res.status(400).json({ error: "No amount provided" });
+	} else if (!cardData.name) {
+		res.status(400).json({ error: "No card name provided" });
+	} else if (!cardData.number) {
+		res.status(400).json({ error: "No card number provided" });
+	} else if (!cardData.type) {
+		res.status(400).json({ error: "No card type provided" });
+	} else if (!cardData.expiry) {
+		res.status(400).json({ error: "No expiry provided" });
+	} else if (!cardData.issuer) {
+		res.status(400).json({ error: "No card issuer provided" });
+	} else if (!cardData.cvv) {
+		res.status(400).json({ error: "No card CVV provided" });
 	} 
 
 	// checking for user wallet updates
 	usersWalletData.addCash(email, JSON.parse(amount)).then((walletInfo) => {
-		walletTransaction.logTransaction(email, amount, cardUsed, status, remark).then((transactions) => {		// logging transaction
+		walletTransaction.logTransaction(email, amount, cardData, status, remark).then((transactions) => {		// logging transaction
 			
 			req.user.wallet = walletInfo.wallet;
 			let transactionsList = transactions.reverse();
+			let transId = transactionsList[0]._id;
 
-			let data = {
-				amount: walletInfo.wallet,
-				transactions: transactionsList
-			}
-
-			res.json(data);
-		
+			res.render('payment/payment-confirmation', {
+				mainTitle: "Payment Successful •",
+				user: req.user,
+				redirectURL: "/user/dashboard/wallet",
+				amount: amount,
+				transactionId: transId
+			});
 		});
 	})
 	.catch((error) => {     // rendering error page
