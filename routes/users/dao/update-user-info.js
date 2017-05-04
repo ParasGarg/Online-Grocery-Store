@@ -45,7 +45,7 @@ router.post('/', isLoggedIn, (req, res) => {
     let email = xss(req.user._id);
 
     if (Object.keys(userUpdates).length === 0 || userUpdates == undefined) {    // check for empty json passed
-        res.render("users/dashboard/user-account", {
+        res.render("users/gui/user-account", {
             mainTitle: "Bad Request •",
             code: 400,
             message: `No data has been provided for update.`,

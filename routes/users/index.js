@@ -11,6 +11,7 @@ usersRouter.use("/forget-password", require('./auth/user-forget-password'));		//
 usersRouter.use("/new", require('./dao/create-new-user'));							// url: ~/user/new
 usersRouter.use("/update/info", require('./dao/update-user-info'));					// url: ~/user/update/info
 usersRouter.use("/update/card", require('./dao/update-user-card'));					// url: ~/user/update/card
+usersRouter.use("/update/wallet", require('./dao/update-user-wallet'));				// url: ~/user/update/wallet
 
 /* users personal settings */
 usersRouter.use("/dashboard", require('./gui/user-dashboard'));						// url: ~/user/dashboard

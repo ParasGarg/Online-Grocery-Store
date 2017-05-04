@@ -22,7 +22,7 @@ const xss = require('xss');
 const mongoDbCollection = require('../config/mongodb-collection');
 const users = mongoDbCollection.users;
 
-module.exports = cardController = {
+module.exports = cardControllers = {
 
     //------------------------ fetch a card information by id
     getCardById: (id) => {
@@ -30,7 +30,7 @@ module.exports = cardController = {
             return usersCollection.findOne({ "card._id":id });
         })
         .catch(() => {  // returning a reject promise
-            return Promise.reject("Server issue with 'users' collection.");
+            return Promise.reject("Server issue with 'users card' collection.");
         });
     },
 
@@ -40,7 +40,7 @@ module.exports = cardController = {
             return usersCollection.findOne({ _id:email }, { _id:0, card:1 });
         })
         .catch(() => {  // returning a reject promise
-            return Promise.reject("Server issue with 'users' collection.");
+            return Promise.reject("Server issue with 'users card' collection.");
         });
     },
 
@@ -82,7 +82,7 @@ module.exports = cardController = {
             })
         })
         .catch(() => {  // returning a reject promise
-            return Promise.reject("Server issue with 'users' collection.");
+            return Promise.reject("Server issue with 'users card' collection.");
         });
     },
 
@@ -96,7 +96,7 @@ module.exports = cardController = {
             })
         })
         .catch(() => {  // returning a reject promise
-            return Promise.reject("Server issue with 'users' collection.");
+            return Promise.reject("Server issue with 'users card' collection.");
         });
     }
 };

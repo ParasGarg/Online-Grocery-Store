@@ -3,19 +3,21 @@ $(document).ready(function() {
 
 	// click on user wallet form button
     $("#btn-user-wallet").on('click', function() {
-		const regex = /^[A-Za-z]+$/; 
+		const regex = /^[A-Za-z]+$/;
 		const amount = $("#amount").val();
+		const card = $("#pay-card").val();
 		const form = $("#form-user-wallet");
 
-		if (amount.length > 0) {
+		if (amount.length > 0 && card.length > 0) {
 			if (!regex.test(amount)) {
 
 				const formData = {
-					wallet: amount
+					amount: amount,
+					card: card
 				}
 
 				$.ajax({
-					url: "/user/update/info",
+					url: "/user/update/wallet",
 					type: "POST",
 					dataType: "json",
 					data: JSON.stringify(formData),
@@ -24,6 +26,7 @@ $(document).ready(function() {
 						$("#success-wallet").removeClass("hidden");
 						$("#wallet-amount").html(`<i class="fa fa-dollar"></i> ` + data);
 						$("#amount").val("");
+						$("#pay-card").val("Select card to pay");
 					},
 					contentType: "application/json"
 				});
@@ -61,6 +64,16 @@ $(document).ready(function() {
             e.preventDefault();
         }
 	});
+
+	// on selecting dropdown
+	$("#pay-card").on('change', function() {
+		var addCard = $("#pay-card option:selected").val();
+
+        if (addCard === "redirect") {
+            location = "/user/dashboard/payments#add-card-head"
+        }   
+
+    });
 
 	// click on user login form button
     $("#btn-error-close").on('click', function() {

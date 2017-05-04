@@ -10,7 +10,7 @@
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		
 		<!-- left panel section starts from here -->
-		<div class="col-md-5">
+		<div class="col-md-4">
 			<!-- wallet details section starts frome here -->
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="wallet-info">
@@ -30,10 +30,7 @@
 								<div>
 									<!-- wallet amount section -->
 									<div class="row">
-										<div class="col-md-4 col-md-offset-1">
-											<p id="wallet-amount-label">Amount</p>
-										</div>
-										<div class="col-md-6 col-md-offset-1">
+										<div class="col-md-8 col-md-offset-2">
 											<p id="wallet-amount">
 												<i class="fa fa-dollar"></i>
 												{{user.wallet}}
@@ -85,12 +82,32 @@
 
 									<!-- amount section -->
 									<div class="row">
-										<div class="col-md-4">
+										<div class="col-md-5">
 											<label for="amount">Enter Amount</label>
 										</div>
-										<div class="col-md-6 col-md-offset-1">
+										<div class="col-md-7">
 											<i class="fa fa-dollar add-amount"></i>
 											<input type="text" class="form-control add-amount" name="amount" id="amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter amount to add"/>
+										</div>
+									</div>
+
+									<!-- card select section -->
+									<div class="row">
+										<div class="col-md-5">
+											<label for="pay-card">Select Card</label>
+										</div>
+										<div class="col-md-7">
+											<select class="btn btn-default" name="payCard" id="pay-card">
+												<option selected disabled>Select card to pay</option>
+											
+											{{#if user.card}}
+													{{#each user.card}}
+														<option value="{{_id}}">{{_id}}</option>
+													{{/each}}
+											{{/if}}
+												<option value="redirect">Add a card</option>
+
+											</select>
 										</div>
 									</div>
 
@@ -112,7 +129,7 @@
 		<!-- left panel section ends here -->
 		
 		<!-- right panel section starts from here -->
-		<div class="col-md-7">
+		<div class="col-md-8">
 			<!-- wallet transactions section starts frome here -->
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="wallet-transaction">

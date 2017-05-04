@@ -3,6 +3,7 @@ const credentialsData = require('./credentials');
 const subscriptionsData = require('./subscriptions');
 const usersData = require('./users');
 const usersCardData = require('./usersCard');
+const usersWalletData = require('./usersWallet');
 
 let dataMethod = (app) => {
     app.use("/contacts-us", contactsData);
@@ -16,5 +17,6 @@ module.exports = {
     credentials: require('./credentials'),
     subscriptions: require('./subscriptions'),
     users: require('./users'),
-    usersCard: require('./usersCard')
+    usersCard: require('./usersCard'),
+    usersWallet: require('./usersWallet')
 };

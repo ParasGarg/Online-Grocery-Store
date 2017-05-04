@@ -10,7 +10,7 @@
 
 /* account */ /* payments */
 .dashboard.account, .dashboard.payments { width: 60%; }
-.dashboard.account h2, .dashboard.payments h2 { padding: 0; }
+.dashboard.account h2, .dashboard.payments h2, .dashboard.wallet h2 { padding: 0; }
 .dashboard.account .panel-title, .dashboard.payments .panel-title { cursor: text; }
 
 /* payments */
@@ -20,10 +20,8 @@
 .dashboard.payments .card-show.cards i { color: #a94442;cursor: pointer; }
 
 /* wallet */
-.dashboard.wallet h1 { text-align: center; }
-.dashboard.wallet .panel-heading h2 { padding: 1.5rem 2rem; }
 .dashboard.wallet .panel:first-child { margin-bottom: 3rem; }
-.dashboard.wallet i.add-amount { position: absolute;margin-top: 1rem;margin-left: -8.5rem; }
+.dashboard.wallet i.add-amount { position: absolute;margin-top: 1.1rem;margin-left: -7.6rem; }
 .dashboard.wallet input.add-amount { text-indent: 1rem;color: #333; }
 #wallet-transaction-panel { text-align: left; }
 #wallet-transaction-panel .row { font-size: 1.2rem;margin-bottom: 12px; }

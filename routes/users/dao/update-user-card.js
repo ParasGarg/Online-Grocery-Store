@@ -4,11 +4,13 @@
  * User Card *
 
  * Functionalities Index: 
-        ====================================================================================================
-        | S.No. |  Type  |         URL         |   Function Call   | Controller |        Description       |
-        ====================================================================================================
-        |   1.  | Post   | /user/update/card   | createNewCard     | usersCard  | Insert new card record   |
-        ----------------------------------------------------------------------------------------------------
+        ======================================================================================================
+        | S.No. |  Type  |         URL         |   Function Call   | Controller |         Description        |
+        ======================================================================================================
+        |   1.  | Post   | /user/update/card   | addCard           | usersCard  | Insert new card record     |
+        ------------------------------------------------------------------------------------------------------
+        |   2.  | Delete | /user/update/card   | deleteCard        | usersCard  | Delete a saved card record |
+        ------------------------------------------------------------------------------------------------------
 */
 /* importing required files and packages */
 const express = require('express');
@@ -42,7 +44,7 @@ router.post('/', isLoggedIn, (req, res) => {
         let email = xss(req.user._id);
 
         if (Object.keys(userUpdates).length === 0 || userUpdates == undefined) {    // check for empty json passed
-                res.render("users/dashboard/user-account", {
+                res.render("users/gui/user-card", {
                         mainTitle: "Bad Request •",
                         code: 400,
                         message: `No data has been provided for update.`,
