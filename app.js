@@ -4,6 +4,9 @@ const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const exphbs = require('express-handlebars');
 const express = require('express');
+const handlebars = require('handlebars');
+const handlebarsIntl = require('handlebars-intl');
+const handlebarsPaginate = require('handlebars-paginate');
 const flash = require('connect-flash');
 const passport = require('passport');
 
@@ -33,6 +36,8 @@ const static = express.static(__dirname + '/public');
 app.use("/public", static);
 
 /* view or handlebars configuration */
+handlebarsIntl.registerWith(handlebars);    // handlebars formatting
+handlebars.registerHelper('paginate', handlebarsPaginate);  // paging
 app.engine('handlebars', exphbs({ defaultLayout:'main' }));
 app.set('view engine', 'handlebars');
 

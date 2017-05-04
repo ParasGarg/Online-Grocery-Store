@@ -18,6 +18,7 @@ const xss = require('xss');
 const data = require('../../../data');
 const usersData = data.users;
 const usersWalletData = data.usersWallet;
+const walletTransaction = data.transactionWallet;
 const passport = require('../../../config/passport-users');
 
 /* local scoped function */
@@ -39,24 +40,38 @@ function isLoggedIn(req, res, next) {
 //------------------------ route to update user information by id
 router.post('/', isLoggedIn, (req, res) => {
 
-	let wallet = xss(req.body.amount);
 	let email = xss(req.user._id);
+	let amount = xss(req.body.amount);
+	let cardUsed = xss(req.body.cardUsed);
+	let status = xss(req.body.action);
+	let remark = xss(req.body.description);
 
-	if (Object.keys(wallet).length === 0 || wallet == undefined) {    // check for empty json passed
+	if (Object.keys(amount).length === 0 || amount == undefined) {    // check for empty json passed
 		res.render("users/gui/user-wallet", {
 			mainTitle: "Bad Request •",
 			code: 400,
 			message: `No data has been provided for update.`,
 			url: req.originalUrl
 		});
-	} else if (!wallet) {
+	} else if (!amount) {
 		res.status(400).json({ error: "No amount provided" });
 	} 
 
 	// checking for user wallet updates
-	usersWalletData.addCash(email, JSON.parse(wallet)).then((walletInfo) => {
-		req.user.wallet = walletInfo.wallet;
-		res.json(req.user.wallet);
+	usersWalletData.addCash(email, JSON.parse(amount)).then((walletInfo) => {
+		walletTransaction.logTransaction(email, amount, cardUsed, status, remark).then((transactions) => {		// logging transaction
+			
+			req.user.wallet = walletInfo.wallet;
+			let transactionsList = transactions.reverse();
+
+			let data = {
+				amount: walletInfo.wallet,
+				transactions: transactionsList
+			}
+
+			res.json(data);
+		
+		});
 	})
 	.catch((error) => {     // rendering error page
 		res.render('alerts/error', {

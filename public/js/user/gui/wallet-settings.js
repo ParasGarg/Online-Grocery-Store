@@ -9,32 +9,41 @@ $(document).ready(function() {
 		const form = $("#form-user-wallet");
 
 		if (amount.length > 0 && card.length > 0) {
-			if (!regex.test(amount)) {
+			if (amount > 0) {
+				if (!regex.test(amount)) {
 
-				const formData = {
-					amount: amount,
-					card: card
+					const formData = {
+						amount: amount,
+						action: "Credit",
+						description: "Added cash in wallet",
+						cardUsed: card
+					}
+
+					$.ajax({
+						url: "/user/update/wallet",
+						type: "POST",
+						dataType: "json",
+						data: JSON.stringify(formData),
+						success: function(data) {
+							$("#error-wallet").addClass("hidden");
+							$("#success-wallet").removeClass("hidden");
+							$("#wallet-amount").html(`<i class="fa fa-dollar"></i> ` + data.amount);
+							$("#wallet-transaction-panel").load(location.href + " #wallet-transaction-panel");
+							$("#amount").val("");
+							$("#pay-card").val("Select card to pay");
+						},
+						contentType: "application/json"
+					});
+				} else {
+					$("#success-wallet").addClass("hidden");
+					$("#error-wallet").removeClass("hidden");
+					$("#amount").val("");
+					$("#error-wallet-message").html("Only numeric value is allowed");
 				}
-
-				$.ajax({
-					url: "/user/update/wallet",
-					type: "POST",
-					dataType: "json",
-					data: JSON.stringify(formData),
-					success: function(data) {
-						$("#error-wallet").addClass("hidden");
-						$("#success-wallet").removeClass("hidden");
-						$("#wallet-amount").html(`<i class="fa fa-dollar"></i> ` + data);
-						$("#amount").val("");
-						$("#pay-card").val("Select card to pay");
-					},
-					contentType: "application/json"
-				});
 			} else {
 				$("#success-wallet").addClass("hidden");
 				$("#error-wallet").removeClass("hidden");
-				$("#amount").val("");
-				$("#error-wallet-message").html("Only numeric value is allowed");
+				$("#error-wallet-message").html("Invalid Amount");
 			}
 		} else {
 			$("#success-wallet").addClass("hidden");

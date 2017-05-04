@@ -142,63 +142,97 @@
 				<div id="wallet-transaction-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="wallet-transaction">
 					<div class="panel-body">
 
+						{{#if transactions}}
 							<div class="row">
 								<!-- order id -->
-								<div class="col-md-5">
-									Order Id
-								</div>
-
-								<!-- item -->
 								<div class="col-md-3">
-									Title
+									Transaction Id
 								</div>
 
 								<!--price -->
 								<div class="col-md-2">
-									price
+									Amount
+								</div>
+
+								<div class="col-md-2">
+									Card Used
 								</div>
 
 								<!-- Date -->
 								<div class="col-md-2">
 									Date
 								</div>
-								
-							</div>
 
-							<div class="row">
-								<div class="col-md-5">
-									11edv-1f3g5-ju245667b65t-t4erty-1233
-								</div>
-
+								<!-- description -->
 								<div class="col-md-3">
-									Bath robe
+									Description
 								</div>
-
-								<div class="col-md-2">
-									$7.56
-								</div>
-
-								<div class="col-md-2">
-									04/2017
-								</div>
-								
 							</div>
 
-							</div>
+							{{#each transactions}}
+								{{#if isCredited}}
+									<div class="row positive">
+										<div class="col-md-3">
+											{{_id}}
+										</div>
+
+										<div class="col-md-2">
+											<i class="fa fa-dollar"></i>
+											{{amount}}
+										</div>
+
+										<div class="col-md-2">
+											{{card}}
+										</div>
+
+										<div class="col-md-2">
+											{{formatDate date day="numeric" month="long" year="numeric"}}
+										</div>
+
+										<div class="col-md-3">
+											{{remark}}
+										</div>
+									</div>
+								{{else}}
+									<div class="row negative">
+										<div class="col-md-5">
+											{{_id}}
+										</div>
+
+										<div class="col-md-2">
+											<i class="fa fa-dollar"></i>
+											{{amount}}
+										</div>
+
+										<div class="col-md-2">
+											{{card}}
+										</div>
+
+										<div class="col-md-2">
+											{{formatDate date day="numeric" month="long" year="numeric"}}
+										</div>
+
+										<div class="col-md-3">
+											{{remark}}
+										</div>
+									</div>
+								{{/if}}
+							{{/each}}
+						{{else}}
 							<div class="row">
-								<p>No wallet transactions</p>
+								<p class="msg">No wallet transactions</p>
 							</div>
+						{{/if}}
 
 					</div>
 				</div>
+			
+			<p class="msg banner">(Showing recent 10 activities)</p>
 			</div>
 			<!-- wallet transactions sections ends here -->
 		</div>
 		<!-- right panel section ends here -->
-			
 
-	</div>
-
-	
+	</div>	
 </article>
 <!-- wallet dashboard ends here -->

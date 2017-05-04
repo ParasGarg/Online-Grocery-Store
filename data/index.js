@@ -1,6 +1,7 @@
 const contactsData = require('./contacts');
 const credentialsData = require('./credentials');
 const subscriptionsData = require('./subscriptions');
+const transactionWallet = require('./transactionWallet');
 const usersData = require('./users');
 const usersCardData = require('./usersCard');
 const usersWalletData = require('./usersWallet');
@@ -16,6 +17,7 @@ module.exports = {
     contacts: require('./contacts'),
     credentials: require('./credentials'),
     subscriptions: require('./subscriptions'),
+    transactionWallet: require('./transactionWallet'),
     users: require('./users'),
     usersCard: require('./usersCard'),
     usersWallet: require('./usersWallet')
