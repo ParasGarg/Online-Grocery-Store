@@ -31,7 +31,8 @@ function isLoggedIn(req, res, next) {
                         mainTitle: "Bad Request •",
                         code: 400,
                         message: "Unauthorized Request Attempt",
-                        url: req.originalUrl
+                        url: req.originalUrl,
+                        user: req.user
                 });
         }
 }
@@ -48,7 +49,8 @@ router.post('/', isLoggedIn, (req, res) => {
                         mainTitle: "Bad Request •",
                         code: 400,
                         message: `No data has been provided for update.`,
-                        url: req.originalUrl
+                        url: req.originalUrl,
+                        user: req.user
                 });
 
         } else if (!userUpdates.username) {
@@ -91,7 +93,8 @@ router.post('/', isLoggedIn, (req, res) => {
                         mainTitle: "Server Error •",
                         code: 500,
                         message: error,
-                        url: req.originalUrl
+                        url: req.originalUrl,
+                        user: req.user
                 });
         });
 });
@@ -110,7 +113,8 @@ router.delete('/', isLoggedIn, (req, res) => {
                         mainTitle: "Server Error •",
                         code: 500,
                         message: error,
-                        url: req.originalUrl
+                        url: req.originalUrl,
+                        user: req.user
                 });
         });
 });

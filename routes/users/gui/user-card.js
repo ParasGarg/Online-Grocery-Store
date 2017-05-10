@@ -29,7 +29,8 @@ function isLoggedIn(req, res, next) {
             mainTitle: "Page Not Found •",
 		    code: 404,
 		    message: "Page Not Found",
-            url: req.originalUrl
+            url: req.originalUrl,
+            user: req.user
         });
     }
 }

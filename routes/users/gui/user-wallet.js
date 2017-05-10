@@ -34,7 +34,8 @@ function isLoggedIn(req, res, next) {
             mainTitle: "Page Not Found •",
 		    code: 404,
 		    message: "Page Not Found",
-            url: req.originalUrl
+            url: req.originalUrl,
+			user: req.user
         });
     }
 }
@@ -63,7 +64,8 @@ router.post('/', isLoggedIn, (req, res) => {
 			mainTitle: "Bad Request •",
 			code: 400,
 			message: `No data has been provided for update.`,
-			url: req.originalUrl
+			url: req.originalUrl,
+			user: req.user
 		});
 	} else if (!amount) {
 		res.status(400).json({ error: "No amount provided" });
