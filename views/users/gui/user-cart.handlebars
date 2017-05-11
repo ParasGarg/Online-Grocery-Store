@@ -1,0 +1,98 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/user-gui/user-dashboard.css">
+<!-- script -->
+<script src="/public/js/user/gui/cart-settings.js"></script>
+
+<!-- payment dashboard starts from here -->
+<article class="dashboard cart">
+	<h1>Cart Review</h1>
+
+	<!-- user saved cart item section starts frome here -->
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" id="head-saved-cart">
+			<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="saved-cart-panel">
+				<h2 class="panel-title">
+					Item Details
+				</h2>
+			</a>
+		</div>
+
+		<div id="saved-cart-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="head-saved-cart">
+			<div class="panel-body">
+
+				<!-- alert notification -->
+				<div class="row">
+					<div class="col-md-12">
+						<div id="success-cart-list" class="alert alert-success hidden">
+							<i class="fa fa-check success"></i>
+							<strong>Item has been deleted successfully</strong> 
+						</div>
+					</div>
+				</div>
+
+				<div id="saved-cart-list"> 
+					{{#if user.cart}}
+						<div class="row cart-show heading">
+							<!-- cart number -->
+							<div class="col-md-3">
+								cart Number
+							</div>
+
+							<!-- cart name -->
+							<div class="col-md-3">
+								cart Holder
+							</div>
+
+							<!-- cart expiry -->
+							<div class="col-md-2">
+								cart Expiry
+							</div>
+
+							<!-- cart type -->
+							<div class="col-md-3">
+								cart Type
+							</div>
+						</div>
+						{{#each user.cart}}
+							<div class="row cart-show carts">
+								<!-- cart number -->
+								<div class="col-md-3">
+									{{_id}}
+								</div>
+
+								<!-- cart name -->
+								<div class="col-md-3">
+									{{name}}
+								</div>
+
+								<!-- cart expiry -->
+								<div class="col-md-2">
+									{{expiry}}
+								</div>
+
+								<!-- cart expiry -->
+								<div class="col-md-3">
+									{{type}}
+								</div>
+
+								<!-- cart delete -->
+								<div class="col-md-1">
+									<i class="fa fa-trash" onclick="deletecart({{_id}});" title="Delete"></i> 
+									<!--i class="fa fa-trash" data-toggle="modal" data-target="#delete-alert" title="Delete"></i -->
+								</div>
+							</div>
+						{{/each}}
+					{{else}}
+						<div class="row">
+							<p class="msg">No saved carts</p>
+						</div>
+					{{/if}}
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- user saved cart item sections ends here -->
+
+</article>
+<!-- payment dashboard ends here -->

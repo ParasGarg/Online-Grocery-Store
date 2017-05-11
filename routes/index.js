@@ -1,7 +1,7 @@
 /* importing required files and packages */
 const passport = require('../config/passport-users');
 const paymentsRoutes = require('./payments');
-const productsRoutes = require('./products');
+const productsRoutes = require('./products/products-dao');
 const supportsRoutes = require('./supports');
 const usersRoutes = require('./users');
 
