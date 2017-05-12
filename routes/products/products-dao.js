@@ -24,13 +24,11 @@ router.get('/id/:id', (req, res) => {
         productsData.getProductById(xss(req.params.id)).then((productInfo) => {
 
                 if (productInfo != null) {
-                        res.send(productInfo);
-                
-                        /* res.render('product/product-info', {
+                        res.render('product/product-info', {
                                 mainTitle: `${productInfo.title} •`,
                                 user: req.user,
                                 product: productInfo
-                        }); */
+                        });
                 } else {
                         res.render('alerts/error', {
                                 mainTitle: "Page Not Found •",
@@ -57,13 +55,11 @@ router.get('/category/:category', (req, res) => {
         productsData.getProductByCategory(xss(req.params.category)).then((productsList) => {
 
                 if (productsList != null) {
-                        res.send(productsList);
-                
-                        /* res.render('product/product-info', {
-                                mainTitle: `${productInfo.title} •`,
+                        res.render('product/product-category-results', {
+                                mainTitle: `${xss(req.params.category)} •`,
                                 user: req.user,
-                                product: productInfo
-                        }); */
+                                product: productsList
+                        });
                 } else {
                         res.render('alerts/error', {
                                 mainTitle: "Page Not Found •",

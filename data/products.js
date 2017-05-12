@@ -40,7 +40,7 @@ module.exports = productsControllers = {
     //------------------------ fetch a product information by email id
     getProductByCategory: (category) => {
         return products().then((productsCollection) => {  // returning a found json document else returning null
-            return productsCollection.find({ category:category }).toArray();
+            return productsCollection.find({ category: { $regex : `.*${category}.*`, $options : 'i' } }).toArray();
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'products' collection.");

@@ -1,11 +1,11 @@
 
 
 {{#if product}}
-	
-	{{_id}}<br>
-	{{title}}<br>
-	{{size}}<br>
-	{{price}}<br>
-	{{images[0]}}<br>
+
+	<img src="{{product.images.[0]}}" /><br/>
+	{{product._id}}<br>
+	{{product.title}}<br>
+	{{product.size}}<br>
+	{{product.price}}<br>
 
 {{/if}}
