@@ -92,7 +92,7 @@ router.post('/', isValid, (req, res) => {
     }
 
     passport.authenticate('user')(req, res, function () {   //authenticate user
-        res.json({ success: true });
+        res.json({ success: true, url: req.url });
     });
 });
 

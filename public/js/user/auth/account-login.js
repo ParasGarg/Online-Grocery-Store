@@ -21,12 +21,12 @@ $(document).ready(function() {
 					type: "POST",
 					dataType: "json",
 					data: JSON.stringify(formData),
-					success: function() {
+					success: function(data) {
 						$("#error-login").addClass("hidden")						
 						$("#success-login").removeClass("hidden");
 
 						setTimeout(() => {
-							window.location.href =" /user/dashboard";
+							window.location.href = data.url;
 						}, 600);
 					},
 					error: function (xhr, ajaxOptions, thrownError) {

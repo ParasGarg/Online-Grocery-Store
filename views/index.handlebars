@@ -9,24 +9,39 @@
 
 	<div>
 	{{#each products}}
-		<div class="col-md-3 item">
-			<div class="row">
-				<img src="{{images.[0]}}" alt="{{title}}" />
-			</div>
-
-			<div class="row">
-				<a href="/product/id/{{_id}}">
-					<h2>{{title}}</h2>
+		<div class="panel panel-default item">
+			<div class="panel-heading" role="tab" id="profile-head">
+				<a role="button" href="/product/id/{{_id}}"  data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
+					<h2 class="panel-title">
+						{{title}}
+					</h2>
 				</a>
 			</div>
 
-			<div class="row">
-				<div class="col-md-6">
-					<i class="fa fa-dollar"></i>
-					{{price}}
-				</div>
-				<div class="col-md-6">
-					<input type="button" class="btn btn-default" value="Add to Cart" />
+			<div id="profile-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="profile-head">
+				<div class="panel-body">
+					<div class="col-md-12">
+						<div class="row">
+							<img src="{{images.[0]}}" alt="{{title}}" />
+						</div>
+
+						<div class="row detail">
+							<div class="col-md-4 price">
+								<i class="fa fa-dollar"></i>
+								{{price}}
+							</div>
+							<div class="col-md-4">
+								<form method="post" action="/user/update/cart/{{_id}}/home" enctype='application/json'>
+									<input type="submit" class="btn btn-default" value="Add to Cart" />
+								</form>
+							</div>
+							<div class="col-md-4">
+								<form method="post" action="/user/update/cart/{{_id}}" enctype='application/json'>
+									<input type="button" class="btn btn-default" value="Buy Now" />
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

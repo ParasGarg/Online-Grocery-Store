@@ -27,7 +27,7 @@ module.exports = usersControllers = {
     //------------------------ fetch a user information by email id
     getUserById: (email) => {
         return users().then((usersCollection) => {  // returning a found json document else returning null
-            return usersCollection.findOne({ _id: email }, { _id: 1, name: 1, mobile: 1, cart: 1, card: 1, wish:1, wallet: 1 });
+            return usersCollection.findOne({ _id: email }, { _id: 1, name: 1, mobile: 1, cart: 1, cartLen:1, card: 1, wallet: 1 });
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
@@ -45,8 +45,8 @@ module.exports = usersControllers = {
                 mobile: mobile,
                 regDate: new Date("2010-06-09T15:20:00Z").toUTCString(),
                 cart: [],
+                cartLen: 0,
                 card: [],
-                wish: [],
                 wallet: 0
             }
 

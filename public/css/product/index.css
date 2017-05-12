@@ -1,4 +1,6 @@
+.item { display: inline-block;margin: 1rem;width: 30% }
+.item img { height: 220px; width: 100%; }
 
-.item { border: 1px solid black;display: inline-block;margin: 1.5%;padding: 3rem;width: 30% }
-.item img { height: 180px; width: 220px; }
-.item h2 { font-size: 1.2rem; }
+.item .panel-body { padding: 0; }
+.item .detail { margin: 1rem 0; }
+.item .price { color: #3c763d;font-size: 1.8rem;margin-top: .6rem; }
