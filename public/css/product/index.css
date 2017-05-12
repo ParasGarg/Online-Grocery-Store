@@ -1,0 +1,4 @@
+
+.item { border: 1px solid black;display: inline-block;margin: 1.5%;padding: 3rem;width: 30% }
+.item img { height: 180px; width: 220px; }
+.item h2 { font-size: 1.2rem; }

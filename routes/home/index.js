@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 		res.render('index', {
             mainTitle: "Welcome to",
             user: req.user,
-			prod: productsList
+			products: productsList
         });
     })
     .catch((error) => {

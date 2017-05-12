@@ -56,7 +56,7 @@ router.get('/category/:category', (req, res) => {
 
                 if (productsList != null) {
                         res.render('product/product-category-results', {
-                                mainTitle: `${xss(req.params.category)} •`,
+                                mainTitle: `${xss(productsList[0].category)} Products •`,
                                 user: req.user,
                                 product: productsList
                         });

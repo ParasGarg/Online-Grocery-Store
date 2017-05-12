@@ -68,7 +68,7 @@ module.exports = productsControllers = {
     //------------------------ fetch all product information
     getAllProducts: () => {
         return products().then((productsCollection) => {  // returning a found json document else returning null
-            return productsCollection.find({ }, { _id:1, title:1 }).toArray();
+            return productsCollection.find({ }).toArray();
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'products' collection.");

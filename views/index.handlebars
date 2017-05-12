@@ -1,11 +1,36 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/product/index.css">
+<!-- script --
+<script src="/public/js/user/gui/account-setting.js"></script -->
+
 <article>
 
-<h1>Welcome to home page</h1>
+	<h1>Welcome to Online Grocery Store</h1>
 
+	<div>
+	{{#each products}}
+		<div class="col-md-3 item">
+			<div class="row">
+				<img src="{{images.[0]}}" alt="{{title}}" />
+			</div>
 
-{{#each prod}}
-	<a href="/product/id/{{_id}}"><b>{{title}}</b></a><br/>
+			<div class="row">
+				<a href="/product/id/{{_id}}">
+					<h2>{{title}}</h2>
+				</a>
+			</div>
 
-{{/each}}
+			<div class="row">
+				<div class="col-md-6">
+					<i class="fa fa-dollar"></i>
+					{{price}}
+				</div>
+				<div class="col-md-6">
+					<input type="button" class="btn btn-default" value="Add to Cart" />
+				</div>
+			</div>
+		</div>
+	{{/each}}
+	</div>
 
 </article>

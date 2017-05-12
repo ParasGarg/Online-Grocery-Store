@@ -1,11 +1,76 @@
-
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/product/product-info.css">
+<!-- script -->
+<script src="/public/js/user/gui/account-setting.js"></script>
 
 {{#if product}}
+	<!-- product info starts from here -->
+	<article class="product info">
+		<h1>{{product.title}}</h1>
+			
+		<!-- image sections starts from here -->
+		<div class="col-md-4">
+			<div class="row">
+				<img src="{{product.images.[0]}}" alt="{{product.title}}" />
+			</div>
+		</div>
+		<!-- image sections ends here -->	
+				
+		<!-- details section starts from here -->
+		<div class="col-md-7 col-md-offset-1 details">
+			<!-- description -->
+			<div class="row">
+				{{product.description}}
+			</div>
 
-	<img src="{{product.images.[0]}}" /><br/>
-	{{product._id}}<br>
-	{{product.title}}<br>
-	{{product.size}}<br>
-	{{product.price}}<br>
+			<!-- size and price -->
+			<br/>
+			<div class="row">
+				<div class="col-md-4">
+					Size: <strong>{{product.size}}</strong>
+				</div>
+				<div class="col-md-4">
+					Price: 
+					<strong><i class="fa fa-dollar"></i>{{product.price}}</strong>
+				</div>
+				<div class="col-md-4">
+					Stock: <strong>{{product.stock}} items left</strong>
+				</div>
+			</div>
 
+			<!-- suggestions -->
+			<br />
+			<div class="row">
+				{{#if product.suggestion}}
+					Suggestions
+					<div class="col-md-12">
+						{{product.suggestion}}
+					</div>
+				{{/if}}
+			</div>
+
+			<!-- allegations -->
+			<br />
+			<div class="row">
+				{{#if product.allegations}}
+					Allegations
+					<div class="col-md-12">
+						{{product.allegations}}
+					</div>
+				{{/if}}
+			</div>
+
+			<br/>
+			<!-- add to cart -->
+			<div class="col-md-12">
+				<div class="row">
+					<input type="button" id="cart-btn" class="btn btn-default" value="Add to Cart"/>
+				</div>
+			</div>
+
+		</div>
+		<!-- details section ends here -->
+
+	</article>
+	<!-- product info ends here -->
 {{/if}}

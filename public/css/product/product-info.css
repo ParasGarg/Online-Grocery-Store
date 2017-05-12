@@ -1,0 +1,7 @@
+.product { width: 100%; }
+
+.product.info h1 { margin-bottom: 2rem; }
+.product.info img { height: 300px; width: 400px; }
+
+.product.info .details { text-align: justify; }
+.product.info .btn { margin: 0 0 3rem; }
