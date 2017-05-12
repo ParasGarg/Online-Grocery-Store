@@ -24,120 +24,54 @@ const xss = require('xss');
 const mongoDbCollection = require('../config/mongodb-collection');
 const users = mongoDbCollection.users;
 
-module.exports = cardControllers = {
+module.exports = cartControllers = {
 
-    //------------------------ fetch a card information by card id/number
-    getCardById: (id) => {
-        return users().then((usersCollection) => {  // returning a found json document else returning null
-            return usersCollection.findOne({ _id:email, "card._id":id }, { "card._id":1, "card.name":1, "card.type":1, "card.issuer":1, "card.expiry":1, "card.cvv":1 });
-        })
-        .catch(() => {  // returning a reject promise
-            return Promise.reject("Server issue with 'users card' collection.");
-        });
-    },
-
-    //------------------------ fetch a card information by user id and card id/number
-    getCardByIds: (email, id) => {
-        return users().then((usersCollection) => {  // returning a found json document else returning null
-            return usersCollection.findOne({ _id:email, "card._id":id }, { _id:0, card:1 }).then((cardList) => {
-
-                    cardList = cardList.card;
-
-                    if (!cardList) { 
-                        return Promise.reject("No card is saved");
-                    }
-
-                    // finding comment location in comment array
-                    var loc = 0;
-                    while (loc < cardList.length) {
-                        if (cardList[loc]._id === id.toString()) {
-                            break;
-                        }
-
-                        loc++;
-                    }
-
-                    // creating json variable
-                    let cardDetails = {
-                        _id: id,
-                        name: cardList[loc].name,
-                        type: cardList[loc].type,
-                        issuer: cardList[loc].issuer,
-                        expiry: cardList[loc].expiry,
-                        cvv: cardList[loc].cvv
-                    };
-
-                    return cardDetails;
-            });
-        })
-        .catch(() => {  // returning a reject promise
-            return Promise.reject("Server issue with 'users card' collection.");
-        });
-    },
-
-    //------------------------ fetch a all card information for a user
-    getAllCard: (email) => {
+    //------------------------ fetch a all cart information for a user
+    getAllCartItems: (email) => {
         return users().then((usersCollection) => {  // returning all found json document else returning null
-            return usersCollection.findOne({ _id:email }, { _id:0, card:1 });
+            return usersCollection.findOne({ _id:email }, { _id:0, cart:1 });
         })
         .catch(() => {  // returning a reject promise
-            return Promise.reject("Server issue with 'users card' collection.");
+            return Promise.reject("Server issue with 'users cart' collection.");
         });
     },
 
-    //------------------------ add a card information
-    addCard: (email, newCardData) => {
+    //------------------------ add a cart information
+    addItemInCart: (email, prodInfo) => {
         users().then((usersCollection) => {
             usersCollection.findOne({ _id:email }).then(() => {
 
-               // new card object
-                let addCard = { };
-
-                // storing details
-                if (newCardData.number) {
-                    addCard['_id'] = xss(newCardData.number);
-                }
-
-                if (newCardData.username) {
-                    addCard['name'] = xss(newCardData.username);
-                }
-
-                if (newCardData.type) {
-                    addCard['type'] = xss(newCardData.type);
-                }
-
-                if (newCardData.issuer) {
-                    addCard['issuer'] = xss(newCardData.issuer);
-                }
-
-                if (newCardData.exp) {
-                    addCard['expiry'] = xss(newCardData.exp);
-                }
-
-                if (newCardData.cvv) {
-                    addCard['cvv'] = xss(newCardData.cvv);
-                }
-
+                // new cart object
+                let addItem = { 
+                    _id: prodInfo._id,
+                    title: prodInfo.title,
+                    description: prodInfo.description,
+                    size: prodInfo.size,
+                    price: prodInfo.price,
+                    stock: prodInfo.stock,
+                    image: prodInfo.images[0]
+                };
+                
                 // updating user collection
-                usersCollection.update({ _id:email }, { $push: { card: addCard } });
+                return usersCollection.update({ _id:email }, { $push: { cart: addItem } });
             })
         })
         .catch(() => {  // returning a reject promise
-            return Promise.reject("Server issue with 'users card' collection.");
+            return Promise.reject("Server issue with 'users cart' collection.");
         });
     },
 
-    //------------------------ delete a card information
-    deleteCard: (email, cardId) => {
+    //------------------------ delete a cart information
+    deleteItemFromCart: (email, itemId) => {
         return users().then((usersCollection) => {
-            return usersCollection.update({ _id:email }, { $pull: { card: { _id:cardId } } }).then((deletedCardInfo) => {
-                if (deletedCardInfo.deletedCount === 0) {
+            return usersCollection.update({ _id:email }, { $pull: { cart: { _id:itemId } } }).then((deletedCartInfo) => {
+                if (deletedCartInfo.deletedCount === 0) {
                     return "deleted";
                 }
             })
         })
         .catch(() => {  // returning a reject promise
-            return Promise.reject("Server issue with 'users card' collection.");
+            return Promise.reject("Server issue with 'users cart' collection.");
         });
     }
 };

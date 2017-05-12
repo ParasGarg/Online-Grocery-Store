@@ -25,7 +25,7 @@
 					<div class="col-md-12">
 						<div id="success-cart-list" class="alert alert-success hidden">
 							<i class="fa fa-check success"></i>
-							<strong>Item has been deleted successfully</strong> 
+							<strong>Item has been removed successfully</strong> 
 						</div>
 					</div>
 				</div>
@@ -62,17 +62,17 @@
 
 								<!-- cart name -->
 								<div class="col-md-3">
-									{{name}}
+									{{title}}
 								</div>
 
 								<!-- cart expiry -->
 								<div class="col-md-2">
-									{{expiry}}
+									{{description}}
 								</div>
 
 								<!-- cart expiry -->
 								<div class="col-md-3">
-									{{type}}
+									{{price}}
 								</div>
 
 								<!-- cart delete -->
@@ -84,7 +84,7 @@
 						{{/each}}
 					{{else}}
 						<div class="row">
-							<p class="msg">No saved carts</p>
+							<p class="msg">Cart is empty</p>
 						</div>
 					{{/if}}
 				</div>

@@ -1,6 +1,7 @@
 /* importing required files and packages */
 const passport = require('../config/passport-users');
 const paymentsRoutes = require('./payments');
+const homeRoutes = require('./home');
 const productsRoutes = require('./products/products-dao');
 const supportsRoutes = require('./supports');
 const usersRoutes = require('./users');
@@ -17,12 +18,7 @@ function isLoggedIn(req, res, next) {
 const mainRoutes = (app) => {
 
     /* home page routes */
-    app.use("/$/", (req, res) => {
-        res.render('index', {
-            mainTitle: "Welcome to",
-            user: req.user
-        });
-    });
+    app.use("/$/", homeRoutes);
 
     /* customized routes */
     //app.use("/payment", paymentsRoutes);    // payments routes

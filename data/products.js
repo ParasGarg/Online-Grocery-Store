@@ -4,13 +4,18 @@
  * Products Controllers for DAO actions *
 
  * Controllers Index: 
-        =========================================================================
-        | S.No. |   Function Call   |                Description                |
-        =========================================================================
-        |   1.  | getProductsById   | Search infomation for an existing product |
-        -------------------------------------------------------------------------
-        |   2.  | addNewProduct     | Add new product record in the collection  |
-        -------------------------------------------------------------------------
+        ==========================================================================
+        | S.No. |    Function Call   |                Description                |
+        ==========================================================================
+        |   1.  | getProductsById    | Search infomation by a product id         |
+        --------------------------------------------------------------------------
+        |   2.  | getProductBySearch | Search infomation from a sting            |
+        --------------------------------------------------------------------------
+        |   3.  | getAllProducts     | Search all product items infomation       |
+        --------------------------------------------------------------------------
+        |   4.  | addNewProduct      | Add new product record in the collection  |
+        --------------------------------------------------------------------------
+        
 */
 
 /* importing required files and packages */
@@ -26,6 +31,44 @@ module.exports = productsControllers = {
     getProductById: (id) => {
         return products().then((productsCollection) => {  // returning a found json document else returning null
             return productsCollection.findOne({ _id:id });
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'products' collection.");
+        });
+    },
+
+    //------------------------ fetch a product information by email id
+    getProductByCategory: (category) => {
+        return products().then((productsCollection) => {  // returning a found json document else returning null
+            return productsCollection.find({ category:category }).toArray();
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'products' collection.");
+        });
+    },
+
+    //------------------------ fetch a product information by search string
+    getProductBySearch: (keyword) => {
+        return products().then((productsCollection) => {  // returning a found json document else returning null
+
+            let query = [ 
+                { _id:keyword }, 
+                { title: { $regex : `.*${keyword}.*`, $options : 'i' } }, 
+                { category: { $regex : `.*${keyword}.*`, $options : 'i' } },
+                { description: { $regex : `.*${keyword}.*`, $options : 'i' } }                  
+            ];
+
+            return productsCollection.find({ $or: query }).toArray();
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'products' collection.");
+        });
+    },
+
+    //------------------------ fetch all product information
+    getAllProducts: () => {
+        return products().then((productsCollection) => {  // returning a found json document else returning null
+            return productsCollection.find({ }, { _id:1, title:1 }).toArray();
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'products' collection.");

@@ -5,6 +5,7 @@ const subscriptionsData = require('./subscriptions');
 const transactionWallet = require('./transactionWallet');
 const usersData = require('./users');
 const usersCardData = require('./usersCard');
+const usersCartData = require('./usersCart');
 const usersWalletData = require('./usersWallet');
 
 let dataMethod = (app) => {
@@ -23,5 +24,6 @@ module.exports = {
     transactionWallet: require('./transactionWallet'),
     users: require('./users'),
     usersCard: require('./usersCard'),
+    usersCart: require('./usersCart'),
     usersWallet: require('./usersWallet')
 };

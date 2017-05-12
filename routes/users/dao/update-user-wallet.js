@@ -120,13 +120,7 @@ router.post('/', isLoggedIn, (req, res) => {
 	let remark = "Added cash in wallet";
 
 	if (Object.keys(amount).length === 0 || amount == undefined) {    // check for empty json passed
-		res.render("users/gui/user-wallet", {
-			mainTitle: "Bad Request •",
-			code: 400,
-			message: `No data has been provided for update.`,
-			url: req.originalUrl,
-			user: req.user
-		});
+		res.status(400).json({ error: "No wallet details provided provided" });
 	} else if (!amount) {
 		res.status(400).json({ error: "No amount provided" });
 	} else if (!cardData.name) {

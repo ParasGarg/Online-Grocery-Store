@@ -45,14 +45,7 @@ router.post('/', isLoggedIn, (req, res) => {
         let email = xss(req.user._id);
 
         if (Object.keys(userUpdates).length === 0 || userUpdates == undefined) {    // check for empty json passed
-                res.render("users/gui/user-card", {
-                        mainTitle: "Bad Request •",
-                        code: 400,
-                        message: `No data has been provided for update.`,
-                        url: req.originalUrl,
-                        user: req.user
-                });
-
+                res.status(400).json({ error: "No card information provided" });
         } else if (!userUpdates.username) {
                 res.status(400).json({ error: "No card holder's name provided" });
         } else if (!userUpdates.number) {

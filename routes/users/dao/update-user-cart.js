@@ -4,13 +4,13 @@
  * User Cart *
 
  * Functionalities Index: 
-        ======================================================================================================
-        | S.No. |  Type  |         URL         |   Function Call   | Controller |         Description        |
-        ======================================================================================================
-        |   1.  | Post   | /user/update/cart   | addCart           | usersCart  | Insert new cart record     |
-        ------------------------------------------------------------------------------------------------------
-        |   2.  | Delete | /user/update/cart   | deleteCart        | usersCart  | Delete a saved cart record |
-        ------------------------------------------------------------------------------------------------------
+        =======================================================================================================
+        | S.No. |  Type  |         URL         |    Function Call   | Controller |         Description        |
+        =======================================================================================================
+        |   1.  | Post   | /user/update/cart   | addItemInCart      | usersCart  | Insert new cart record     |
+        -------------------------------------------------------------------------------------------------------
+        |   2.  | Delete | /user/update/cart   | deleteItemFromCart | usersCart  | Delete a saved cart record |
+        -------------------------------------------------------------------------------------------------------
 */
 /* importing required files and packages */
 const express = require('express');
@@ -18,7 +18,8 @@ const router = express.Router();
 const xss = require('xss');
 const data = require('../../../data');
 const usersData = data.users;
-const usersCardData = data.usersCard;
+const usersCartData = data.usersCart;
+const productData = data.products;
 const passport = require('../../../config/passport-users');
 
 /* local scoped function */
@@ -39,54 +40,28 @@ function isLoggedIn(req, res, next) {
 
 /* global scoped function */
 //------------------------ route to update user information by id
-router.post('/', isLoggedIn, (req, res) => {
+router.post('/', /*isLoggedIn,*/ (req, res) => {
 
-        let userUpdates = req.body;
-        let email = xss(req.user._id);
+        let prodId = req.body.itemId;
+        //let email = xss(req.user._id);
+        let email = xss(req.body.email);
 
-        if (Object.keys(userUpdates).length === 0 || userUpdates == undefined) {    // check for empty json passed
-                res.render("users/gui/user-card", {
-                        mainTitle: "Bad Request •",
-                        code: 400,
-                        message: `No data has been provided for update.`,
-                        url: req.originalUrl,
-                        user: req.user
-                });
-
-        } else if (!userUpdates.username) {
-                res.status(400).json({ error: "No card holder's name provided" });
-        } else if (!userUpdates.number) {
-                res.status(400).json({ error: "No card number provided" });
-        } else if (!userUpdates.type) {
-                res.status(400).json({ error: "No card type provided" });
-        } else if (!userUpdates.issuer) {
-                res.status(400).json({ error: "No card issuer provided" });
-        } else if (!userUpdates.exp) {
-                res.status(400).json({ error: "No card expiry provided" });
-        } else if (!userUpdates.cvv) {
-                res.status(400).json({ error: "No card cvv provided" });
+        if (!prodId) {
+                res.status(400).json({ error: "No product selected" });
         }
-        
-        usersCardData.getAllCard(email).then((cardInfo) => {
 
-                var len = cardInfo.card.length;
-                var exist = false; 
+        productData.getProductById(prodId).then((prodInfo) => {
 
-                for (var i = 0; i < len; i++) {
-                        if (cardInfo.card[i]._id === xss(userUpdates.number)) {
-                                exist = true;
-                                break;
-                        }
-                }
+                if (prodInfo != null) {
+                        usersCartData.addItemInCart(email, prodInfo).then(() => {
 
-                if (exist == false) {
-                        usersCardData.addCard(email, userUpdates).then(() => {
+console.log(5);
+                                
                                 res.status(200).json({ success: true });
                         });
                 } else {
-                        res.status(400).json({ error: "This card is already saved" });
+                        res.status(400).json({ error: "No such product exists in collection" });
                 }
-
         })
         .catch((error) => {     // rendering error page
                 res.render('alerts/error', {
@@ -102,10 +77,10 @@ router.post('/', isLoggedIn, (req, res) => {
 //------------------------ route to delete user information by id
 router.delete('/', isLoggedIn, (req, res) => {
 
-        let cardId = xss(req.body.cardNumber);
+        let prodId = xss(req.body.prodId);
         let email = xss(req.user._id);
 
-        usersCardData.deleteCard(email, cardId).then(() => {
+        usersCartData.deleteItemFromCart(email, prodId).then(() => {
                 res.json({success: true})
         })
         .catch((error) => {     // rendering error page

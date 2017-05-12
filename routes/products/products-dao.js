@@ -10,6 +10,7 @@
         |   1.  | Post   | /products/doa       | addNewProduct     | products   | Add new product record     |
         ------------------------------------------------------------------------------------------------------
 */
+
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
@@ -18,20 +19,130 @@ const data = require('../../data');
 const productsData = data.products;
 
 /* global scoped function */
-//------------------------ route to update user information by id
+//------------------------ route to get product information by id
+router.get('/id/:id', (req, res) => {
+        productsData.getProductById(xss(req.params.id)).then((productInfo) => {
+
+                if (productInfo != null) {
+                        res.send(productInfo);
+                
+                        /* res.render('product/product-info', {
+                                mainTitle: `${productInfo.title} •`,
+                                user: req.user,
+                                product: productInfo
+                        }); */
+                } else {
+                        res.render('alerts/error', {
+                                mainTitle: "Page Not Found •",
+                                code: 404,
+                                message: "Page Not Found",
+                                url: req.originalUrl,
+                                user: req.user
+                        });
+                }
+        })
+        .catch((error) => {
+                res.render('alerts/error', {
+                        mainTitle: "Page Not Found •",
+                        code: 404,
+                        message: "Page Not Found",
+                        url: req.originalUrl,
+                        user: req.user
+                });
+        })
+});
+
+//------------------------ route to get product information by id
+router.get('/category/:category', (req, res) => {
+        productsData.getProductByCategory(xss(req.params.category)).then((productsList) => {
+
+                if (productsList != null) {
+                        res.send(productsList);
+                
+                        /* res.render('product/product-info', {
+                                mainTitle: `${productInfo.title} •`,
+                                user: req.user,
+                                product: productInfo
+                        }); */
+                } else {
+                        res.render('alerts/error', {
+                                mainTitle: "Page Not Found •",
+                                code: 404,
+                                message: "Page Not Found",
+                                url: req.originalUrl,
+                                user: req.user
+                        });
+                }
+        })
+        .catch((error) => {
+                res.render('alerts/error', {
+                        mainTitle: "Page Not Found •",
+                        code: 404,
+                        message: "Page Not Found",
+                        url: req.originalUrl,
+                        user: req.user
+                });
+        })
+});
+
+//------------------------ route to get product information by search command
+//router.post('/search?keyword:query', (req, res) => {
+router.get('/search', (req, res) => {
+        let prodSearchbar = xss(req.query.keyword);
+
+        if (prodSearchbar) {
+                productsData.getProductBySearch(prodSearchbar).then((productResults) => {
+
+                        if (productResults.length != 0) {
+                                res.render('product/product-search-results', {
+                                        mainTitle: `${prodSearchbar} •`,
+                                        product: productResults,
+                                        user: req.user
+                                });
+                        } else {
+                                res.render('alerts/error', {
+                                        mainTitle: "Page Not Found •",
+                                        code: 404,
+                                        message: "Your search did not match any products.",
+                                        url: req.originalUrl,
+                                        user: req.user
+                                });
+                        }
+
+                })
+                .catch((error) => {
+                        res.render('alerts/error', {
+                                mainTitle: "Page Not Found •",
+                                code: 404,
+                                message: "Page Not Found",
+                                url: req.originalUrl,
+                                user: req.user
+                        });
+                });
+        } else {
+                res.redirect('/');
+        }
+});
+
+
+
+//------------------------ route to get all product list
+router.get('/', (req, res) => {
+        productsData.getAllProducts().then((productsList) => {
+                res.send(productsList);
+        })
+        .catch((error) => {
+                res.send({ error: error });
+        })
+});
+
+//------------------------ route to add product information
 router.post('/', (req, res) => {
 
         let productUpdates = req.body;
 
         if (Object.keys(productUpdates).length === 0 || productUpdates == undefined) {    // check for empty json passed
-                res.render("users/gui/user-card", {
-                        mainTitle: "Bad Request •",
-                        code: 400,
-                        message: `No data has been provided for update.`,
-                        url: req.originalUrl,
-                        user: req.user
-                });
-
+                res.status(400).json({ error: "No data provided" });
         } else if (!productUpdates.title) {
                 res.status(400).json({ error: "No title provided" });
         } else if (!productUpdates.description) {
