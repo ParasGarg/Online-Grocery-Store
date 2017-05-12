@@ -35,7 +35,8 @@ function isLoggedIn(req, res, next) {
 			mainTitle: "Bad Request •",
 			code: 400,
 			message: "Unauthorized Request Attempt",
-			url: req.originalUrl
+			url: req.originalUrl,
+			user: req.user
 		});
 	}
 }
@@ -119,12 +120,7 @@ router.post('/', isLoggedIn, (req, res) => {
 	let remark = "Added cash in wallet";
 
 	if (Object.keys(amount).length === 0 || amount == undefined) {    // check for empty json passed
-		res.render("users/gui/user-wallet", {
-			mainTitle: "Bad Request •",
-			code: 400,
-			message: `No data has been provided for update.`,
-			url: req.originalUrl
-		});
+		res.status(400).json({ error: "No wallet details provided provided" });
 	} else if (!amount) {
 		res.status(400).json({ error: "No amount provided" });
 	} else if (!cardData.name) {
@@ -163,7 +159,8 @@ router.post('/', isLoggedIn, (req, res) => {
 			mainTitle: "Server Error •",
 			code: 500,
 			message: error,
-			url: req.originalUrl
+			url: req.originalUrl,
+			user: req.user
 		});
 	});
 });

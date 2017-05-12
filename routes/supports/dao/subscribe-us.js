@@ -35,7 +35,8 @@ function isLoggedIn(req, res, next) {
 		    code: 401,
             user: req.user,
 		    message: "You are not allowed to access this page.",
-            url: req.originalUrl
+            url: req.originalUrl,
+            user: req.user
         });
     }
 }
@@ -131,7 +132,8 @@ router.post('/subscribe', (req, res) => {
             mainTitle: "Server Error •",
             code: 500,
             message: collectionError,
-            url: req.originalUrl
+            url: req.originalUrl,
+            d
         });
     });
 });
@@ -150,7 +152,8 @@ router.post('/unsubscribe', (req, res) => {
             mainTitle: "Server Error •",
             code: 500,
             message: collectionError,
-            url: req.originalUrl
+            url: req.originalUrl,
+            user: req.user
         });
     });
 });

@@ -8,7 +8,7 @@
         ===========================================================================================================
         | S.No. |  Type  |             URL           |   Function Call   | Controller |       Description         |
         ===========================================================================================================
-        |   1.  | Get    | /user/dashboard/payments  | updateUser        | users      | update user payment info  |
+        |   1.  | Get    | /user/dashboard/cart      | updateUser        | users      | update user cart item     |
         -----------------------------------------------------------------------------------------------------------
 */
 
@@ -37,7 +37,7 @@ function isLoggedIn(req, res, next) {
 
 //------------------------ route to fetch user information by email id
 router.get('/', isLoggedIn, (req, res) => {
-    res.render('users/gui/user-card', {
+    res.render('users/gui/user-cart', {
 		mainTitle: "Dashboard • Payment Details •",
 		user: req.user
 	});

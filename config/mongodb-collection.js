@@ -26,6 +26,5 @@ module.exports = {
     subscriptions: getCollectionFn("subscriptions"),
     transactions: getCollectionFn("transactions"),
     transactionWallet: getCollectionFn("walletTransaction"),    
-    users: getCollectionFn("users"),
-    wishes: getCollectionFn("wishes")
+    users: getCollectionFn("users")
 };

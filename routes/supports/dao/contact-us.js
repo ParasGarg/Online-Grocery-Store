@@ -40,7 +40,8 @@ router.post('/', (req, res) => {
             mainTitle: "Server Error •",
             code: 500,
             message: collectionError,
-            url: req.originalUrl
+            url: req.originalUrl,
+            user: req.user
         });
     });
 });

@@ -32,7 +32,8 @@ function isLoggedIn(req, res, next) {
             mainTitle: "Bad Request •",
 		    code: 400,
 		    message: "Unauthorized Request Attempt",
-            url: req.originalUrl
+            url: req.originalUrl,
+            user: req.user
         });
     }
 }
@@ -45,20 +46,9 @@ router.post('/', isLoggedIn, (req, res) => {
     let email = xss(req.user._id);
 
     if (Object.keys(userUpdates).length === 0 || userUpdates == undefined) {    // check for empty json passed
-        res.render("users/gui/user-account", {
-            mainTitle: "Bad Request •",
-            code: 400,
-            message: `No data has been provided for update.`,
-            url: req.originalUrl
-        });
+        res.status(400).json({ error: "No user information provided" });
     } else if (!validator.isEmail(email)) {     // validating email syntax
-        res.render('alerts/error', {
-            mainTitle: "Bad Request •",
-		    code: 400,
-		    message: "Unauthorized Request Attempt",
-            url: req.originalUrl
-        });
-        return;
+        res.status(400).json({ error: "Invalid email id format" });
     } else {
 
         // validating user existance
@@ -86,7 +76,8 @@ router.post('/', isLoggedIn, (req, res) => {
                 mainTitle: "Server Error •",
                 code: 500,
                 message: error,
-                url: req.originalUrl
+                url: req.originalUrl,
+                user: req.user
             });
         });
     }

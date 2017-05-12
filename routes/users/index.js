@@ -11,11 +11,13 @@ usersRouter.use("/forget-password", require('./auth/user-forget-password'));		//
 usersRouter.use("/new", require('./dao/create-new-user'));							// url: ~/user/new
 usersRouter.use("/update/info", require('./dao/update-user-info'));					// url: ~/user/update/info
 usersRouter.use("/update/card", require('./dao/update-user-card'));					// url: ~/user/update/card
+usersRouter.use("/update/cart", require('./dao/update-user-cart'));					// url: ~/user/update/cart
 usersRouter.use("/update/wallet", require('./dao/update-user-wallet'));				// url: ~/user/update/wallet
 
 /* users personal settings */
 usersRouter.use("/dashboard", require('./gui/user-dashboard'));						// url: ~/user/dashboard
 usersRouter.use("/dashboard/account", require('./gui/user-account'));				// url: ~/user/dashboard/account
+usersRouter.use("/dashboard/cart", require('./gui/user-cart'));						// url: ~/user/dashboard/cart
 usersRouter.use("/dashboard/payments", require('./gui/user-card'));					// url: ~/user/dashboard/payment
 usersRouter.use("/dashboard/wallet", require('./gui/user-wallet'));					// url: ~/user/dashboard/wallet
 
@@ -25,7 +27,8 @@ usersRouter.use("*", (req, res) => {
 		mainTitle: "Page Not Found •",
 		code: 404,
 		message: `Page Not Found`,
-		url: req.originalUrl 
+		url: req.originalUrl,
+		user: req.user
 	});
 });
 
