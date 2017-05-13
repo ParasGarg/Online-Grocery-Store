@@ -11,7 +11,7 @@ $(document).ready(function() {
 			if (regex.test(email)) {
 
 				const formData = {
-					email: email,
+					email: email
 				}
 
 				$.ajax({
@@ -21,7 +21,7 @@ $(document).ready(function() {
 					data: JSON.stringify(formData),
 					success: function(data) {
 						$("#error-subscribe").addClass("hidden")						
-						$("#success-subscribe").removeClass("hidden");
+						window.location.href = `/support/subscription/status/${data.email}`;
 					},
 					contentType: "application/json"
 				});

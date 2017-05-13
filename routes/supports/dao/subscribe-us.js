@@ -114,14 +114,22 @@ router.post('/subscribe', (req, res) => {
 
             // adding a record in a collection
             subscriptionsData.addSubscription(email).then(() => {
-                res.redirect(`/support/subscription/status/${email}`);
+                 if (req.body.email != undefined) {
+                   res.json({ email:email });
+                } else if (req.user != undefined) {
+                    res.redirect(`/support/subscription/status/${email}`);    
+                }
             });
 
         } else {
 
             // updating a record in a collection
             subscriptionsData.updateSubscription(email).then(() => {
-                res.redirect(`/support/subscription/status/${email}`);
+                if (req.body.email != undefined) {
+                   res.json({ email:email });
+                } else if (req.user != undefined) {
+                    res.redirect(`/support/subscription/status/${email}`);    
+                }
             });
 
         }
