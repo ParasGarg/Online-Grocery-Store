@@ -1,8 +1,12 @@
-function updateQty(id) {
+function saveQty(id) {
+	$(`#quant-${id}`).val($(`#quantity-${id}`).val());
+}
 
+function updateQty(id) {
 	var numRegex = /^[0-9]+$'/;
 	const quant = $(`#quantity-${id}`).val();
-	
+	var hidden = $(`#quant-${id}`).val();
+
 	if (quant.length > 0) {
 		var qty = parseInt(quant);
 
@@ -30,12 +34,14 @@ function updateQty(id) {
 
 			} else {
 				alert("Quantity cannot be less than 1");
+				$(`#quantity-${id}`).val(hidden);
 			}
 /*		} else {
 			alert("Invalid quantity. It should be numberic only.");
 		}
 */	} else {
 		alert("Quantity cannot be empty");
+		$(`#quantity-${id}`).val(hidden);
 	}
 }
 
@@ -70,3 +76,11 @@ function deleteCartItem(prod) {
 		contentType: "application/json"
 	});
 }
+
+/* disable tab key
+$(document).keydown(function(objEvent) {
+    if (objEvent.keyCode == 9) {  //tab pressed
+        objEvent.preventDefault(); // stops its action
+    }
+})
+*/

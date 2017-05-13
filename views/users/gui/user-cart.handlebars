@@ -57,7 +57,7 @@
 									</div>
 
 									<div class="col-md-1">
-										<input id="quantity-{{_id}}" type="text" onblur="updateQty('{{_id}}')" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="{{qty}}" />
+										<input id="quantity-{{_id}}" type="text" onblur="updateQty('{{_id}}')" class="form-control" onfocus="saveQty('{{_id}}')" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="{{qty}}" />
 									</div>
 
 									<div class="col-md-2">
@@ -72,6 +72,8 @@
 									</div>
 
 								</div>
+
+								<input type="text" class="form-control hidden" id="quant-{{_id}}" disabled/>
 							{{/each}}
 						{{else}}
 							<div class="row">
