@@ -31,9 +31,9 @@
 
 /* cart */
 .dashboard.cart { width: 100%; }
+.dashboard.cart h3 { font-size: 1.2rem;font-weight: bold;text-align: left;margin-top: 0; }
 .dashboard.cart .left-panel { display: inline-block;margin-right: 1%;width: 68%; }
 .dashboard.cart .right-panel { display: inline-block;width: 30%; }
-.dashboard.cart h3 { font-size: 1.2rem;font-weight: bold;text-align: left;margin-top: 0; }
 .dashboard.cart .row { text-align: left; }
 .dashboard.cart .row.b-margin { margin-bottom: 2rem; }
 .dashboard.cart .btn { margin-top: 1rem;width: 100%; }

@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 	// click on user login form button
     $("#btn-add-card").on('click', function() {
-		var numRegex = "/^\d+$/;"
+		var numRegex = "/^\d+$/";
 		var alphRegex = /^[A-Za-z]+$/;
 
 		const cardName = $("#card-name").val();

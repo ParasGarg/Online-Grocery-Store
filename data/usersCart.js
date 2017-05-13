@@ -75,10 +75,37 @@ module.exports = cartControllers = {
                     usersCollection.update({ _id:email }, { $push: { cart: addItem } });
                     usersCollection.updateOne({ _id: email }, { $set: userChanges })
                 } else {
-                    usersCollection.update({ "cart._id":prodInfo._id }, { $set: { "cart.$.qty": quant, "cart.$.total": Math.round(prodInfo.price * quant) } });
+                    usersCollection.update({ "cart._id":prodInfo._id }, { $set: { "cart.$.qty": quant, "cart.$.total": Math.round(prodInfo.price * quant * 100)/100 } });
                 }
 
                 return userChanges.cartLen;                
+            });
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'users cart' collection.");
+        });
+    },
+
+    //------------------------ update a cart quantity information
+    updateItemQty: (email, itemId, itemQty) => {
+        return users().then((usersCollection) => {
+            return usersCollection.findOne({ _id:email }).then((userInfo) => {
+
+                if (userInfo != null) {
+
+                    let itemCpst = 0;
+                    for(var i = 0; i < userInfo.cart.length; i++ ) {
+                        if (userInfo.cart[i]._id === itemId) {
+                            itemCpst = userInfo.cart[i].price;
+                            break;
+                        }
+                    }
+
+                    usersCollection.update({ _id:email, "cart._id":itemId }, { $set: { "cart.$.qty": itemQty, "cart.$.total": Math.round(itemCpst * itemQty * 100)/100 } });
+                    return usersCollection.findOne({ _id:email });
+                }
+                
+                res.json({error: "user not exist"});
             });
         })
         .catch(() => {  // returning a reject promise
@@ -103,7 +130,7 @@ module.exports = cartControllers = {
 
                         // updating user collection
                         usersCollection.updateOne({ _id: email }, { $set: userChanges });
-                        return usersCollection.findOne({ _id:email });                        
+                        return usersCollection.findOne({ _id:email });
                     });
                 }
             });

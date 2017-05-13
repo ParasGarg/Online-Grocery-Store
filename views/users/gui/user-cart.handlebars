@@ -33,6 +33,13 @@
 
 					<div id="saved-cart-list"> 
 						{{#if user.cart}}
+							<div class="row b-margin cart-show carts">
+									<div class="col-md-3"></div>
+									<div class="col-md-3">Description</div>
+									<div class="col-md-2">Price</div>
+									<div class="col-md-1">Qty</div>
+									<div class="col-md-2">Total</div>
+								</div>
 							{{#each user.cart}}
 								<div class="row b-margin cart-show carts">
 									<div class="col-md-3">
@@ -40,8 +47,8 @@
 									</div>
 
 									<div class="col-md-3">
-											<h3>{{title}}</h3>									
-											{{size}}											
+										<h3>{{title}}</h3>									
+										{{size}}											
 									</div>
 
 									<div class="col-md-2">
@@ -50,7 +57,7 @@
 									</div>
 
 									<div class="col-md-1">
-										<input type="text" class="form-control" value="{{qty}}" />
+										<input id="quantity-{{_id}}" type="text" onblur="updateQty('{{_id}}')" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="{{qty}}" />
 									</div>
 
 									<div class="col-md-2">

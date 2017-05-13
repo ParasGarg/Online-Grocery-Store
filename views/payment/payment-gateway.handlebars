@@ -122,7 +122,7 @@
 													</div>
 												</div>
 											</div -->
-											<div class="col-md-6">
+											<div class="col-md-12">
 												<div class="row">
 													{{#if isWallet}}
 													<div class="col-md-1" style="text-align:center;"><input type="checkbox"></div>
@@ -132,8 +132,10 @@
 													</div>
 													{{else}}
 													<div style="text-align:center;">
-														You do not have enough amount in wallet to payment.
-														Wallet amount <i class="fa fa-dollar"></i> {{user.wallet}}
+														<p class="msg">
+															You do not have enough amount in wallet to pay.<br/>
+															Wallet amount <i class="fa fa-dollar"></i>{{user.wallet}}
+															</p>
 													</div>
 													{{/if}}
 												</div>

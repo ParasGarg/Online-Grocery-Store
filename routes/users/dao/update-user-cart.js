@@ -36,7 +36,7 @@ function isLoggedIn(req, res, next) {
 }
 
 /* global scoped function */
-//------------------------ route to update user information by id
+//------------------------ route to update user cart item
 router.post('/:id/:loc', isLoggedIn, (req, res) => {
 
         let prodId = xss(req.params.id);
@@ -85,7 +85,29 @@ router.post('/:id/:loc', isLoggedIn, (req, res) => {
         });
 });
 
-//------------------------ route to delete user information by id
+//------------------------ route to update cart quantity
+router.put('/', isLoggedIn, (req, res) => {
+
+        let email = xss(req.user._id);
+        let prodId = xss(req.body.id);
+        let quantity = xss(req.body.qty);
+
+        usersCartData.updateItemQty(email, prodId, quantity).then((userInfo) => {
+                req.user = userInfo;
+                res.json({ success: true });
+        })
+        .catch((error) => {     // rendering error page
+                res.render('alerts/error', {
+                        mainTitle: "Server Error •",
+                        code: 500,
+                        message: error,
+                        url: req.originalUrl,
+                        user: req.user
+                });
+        });
+});
+
+//------------------------ route to delete user cart item
 router.delete('/', isLoggedIn, (req, res) => {
 
         let prodId = xss(req.body.id);
