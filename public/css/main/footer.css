@@ -15,7 +15,8 @@ footer .inp-equal-width { display: inline-block;width: 48.8%; }
 footer .inp-equal-width:first-child { float: left; }
 footer .inp-equal-width:last-child { float: right; }
 
-footer blockquote { padding: 0 20px; }
+footer blockquote { font-size: 1.5rem;padding: 0 20px; }
+footer a, footer a:hover { color: #fff; }
 
 #form-subscribe input[type="text"] { display: inline-block;width: 60%; }
 #form-subscribe input[type="submit"] { display: inline-block;margin-top: -.3rem;width: 35%; }

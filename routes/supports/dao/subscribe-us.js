@@ -21,6 +21,7 @@
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
+const xss = require('xss');
 const data = require('../../../data');
 const subscriptionsData = data.subscriptions;
 
@@ -70,11 +71,11 @@ router.get('/status', isLoggedIn, (req, res) => {
 
 //------------------------ route to render to show status of subscription to anonymous user
 router.get('/status/:email', (req, res) => {
-    if (req.isAuthenticated() && req.params.email == req.user._id) {
+    if (req.isAuthenticated() && xss(req.params.email) == xss(req.user._id)) {
         res.redirect("/support/subscription/status");
     } else {
         // searching for a record
-        subscriptionsData.getSubscriptionById(req.params.email).then((subscriptionDetails) => {
+        subscriptionsData.getSubscriptionById(xss(req.params.email)).then((subscriptionDetails) => {
             // checking for a value in the received document
             if (subscriptionDetails != null) {
 
@@ -100,9 +101,9 @@ router.post('/subscribe', (req, res) => {
     let email = null;
     
     if (req.body.email != undefined) {
-        email = req.body.email;
+        email = xss(req.body.email);
     } else if (req.user != undefined) {
-        email = req.user._id;      
+        email = xss(req.user._id);      
     }
 
     // checking for existing record
@@ -148,7 +149,7 @@ router.post('/subscribe', (req, res) => {
 
 //------------------------ route to deactivate user subscription
 router.post('/unsubscribe', (req, res) => {
-    let email = req.user._id;
+    let email = xss(req.user._id);
 
     // updating a record
     subscriptionsData.removeSubscription(email).then(() => {

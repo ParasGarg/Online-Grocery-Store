@@ -92,7 +92,7 @@
 												<input type="text" class="form-control" name="cardHolder" placeholder="Card Holder Name">
 											</div>
 											<div class="row">
-												<input type="text" class="form-control" name="cardNumber" placeholder="Card Number" maxlength="16">
+												<input type="text" class="form-control" name="cardNumber" placeholder="Card Number" maxlength="16" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 											</div>
 											<div class="row">
 												<input type="number" class="form-control" name="expMonth" placeholder="Month" min="1" max="12">

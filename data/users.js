@@ -43,7 +43,7 @@ module.exports = usersControllers = {
                 _id: email,
                 name: name,
                 mobile: mobile,
-                regDate: new Date("2010-06-09T15:20:00Z").toUTCString(),
+                regDate: new Date().toUTCString(),
                 cart: [],
                 cartLen: 0,
                 card: [],

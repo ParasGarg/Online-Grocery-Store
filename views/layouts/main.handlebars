@@ -59,10 +59,11 @@
 							
 								<form class="navbar-form navbar-left" action="/product/search" method="get" enctype='application/json'>
 									<div class="form-group" id="form-search">
-										<input type="text" class="form-control" name="keyword" placeholder="Search">
+										<input type="text" id="searchbar" class="form-control" name="keyword" placeholder="Search">
 									</div>
 									<button type="submit" class="btn btn-default">Submit</button>
 								</form>
+								<label for="searchbar"></label>
 
 								<ul class="nav navbar-nav navbar-right">
 									{{#if user}}
@@ -134,11 +135,12 @@
 					<!-- about us ends here -->
 					
 					<!-- contact us form starts from here -->
+					<script src="/public/js/support/contact-form-validation.js"></script>
 					<div class="col-md-3 col-md-offset-1">
 						<div class="row"><h3>Contact Us</h3></div>
 						
 						<div class="row">
-							<form method="post" action="/support/contact-us/" id="form-contact-us">
+							<form id="form-contact-us">
 								<div class="row">
 
 									<div class="col-md-12 inp-row-margin">
@@ -149,8 +151,10 @@
 
 									<div class="col-md-12 inp-row-margin">
 										<div class="row">
+											
+										
 											<input type="text" name="email" id="contact-email" class="form-control inp-equal-width" placeholder="Email Id" />
-											<input type="text" name="mobile" id="contact-mobile" class="form-control inp-equal-width" placeholder="Contact Number" />
+											<input type="text" name="mobile" id="contact-mobile" class="form-control inp-equal-width" placeholder="Contact Number" maxlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
 										</div>
 									</div>
 
@@ -163,17 +167,19 @@
 									<div class="col-md-12 inp-row-margin">
 										<div class="row">
 											<div class="col-md-3" style="padding-left: 0;">
-												<input type="submit" id="btn-submit" class="btn btn-default btn-full" value="Send" />
+												<input type="button" id="btn-send" class="btn btn-default btn-full" value="Send" />
 											</div>
+
+											<!-- alert notification -->
 											<div class="col-md-9" style="padding-left: 0;">
-												<p class="error">
-													<i class="fa fa-close error"></i>
-													Invalid email id
-												</p>
-												<p class="success">
-													<i class="fa fa-check success"></i>													
-													Message sent successfully
-												</p>
+												<div id="error-contact" class="alert error hidden">
+														<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+														<strong id="error-contact-message"></strong>
+												</div>
+												<div id="success-contact" class="alert success hidden">
+														<i class="fa fa-check success"></i>
+														<strong>Message sent.</strong>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -182,6 +188,11 @@
 							</form>
 						</div>
 					</div>
+
+					<label for="contact-name"></label>
+					<label for="contact-email"></label>
+					<label for="contact-mobile"></label>
+					<label for="contact-description"></label>
 					<!-- contact us form ends here -->
 
 					<!-- follow-us and subscription links starts from here -->
@@ -189,7 +200,7 @@
 						<div class="row"><h3>Follow Us</h3></div>
 						<div class="row">
 							<div data-href="https://github.com/ParasGarg/Online-Grocery-Store" data-tabs="repository" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-								<blockquote cite="https://github.com/ParasGarg/Online-Grocery-Store"><a href="https://github.com/ParasGarg/Online-Grocery-Store">GitHub</a></blockquote>
+								<blockquote cite="https://github.com/ParasGarg/Online-Grocery-Store"><a href="https://github.com/ParasGarg/Online-Grocery-Store" target="_blank">GitHub</a></blockquote>
 							</div>
 						</div>
 
@@ -209,7 +220,7 @@
 										<strong id="error-subscribe-message"></strong>
 										</div>
 										<div id="success-subscribe" class="alert success hidden">
-										<i class="fa fa-spinner fa-pulse fa-fw success"></i>
+										<i class="fa fa-check success"></i>
 										<strong>You have successfully subscribed for our notifications.</strong>
 										</div>
 									</div>
@@ -218,6 +229,7 @@
 							</form>
 						</div>
 					</div>
+					<label for="subscribe-email"></label>					
 					<!-- follow-us and subscription links ends here -->	
 
 				</div>		
