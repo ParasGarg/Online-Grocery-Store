@@ -10,7 +10,7 @@
 
 .dashboard .positive { color: #3c763d; }
 .dashboard .negative { color: #a94442; }
-.dashboard p.msg { font-size: 1.5rem;font-weight: 500;margin-top: 1rem; }
+.dashboard p.msg { font-size: 1.5rem;font-weight: 500;margin-top: 1rem;text-align: center; }
 .dashboard p.msg.banner { font-size: 1.5rem;font-style: italic;font-weight: 400;margin-top: 0; }
 
 /* account */ /* payments */
@@ -31,6 +31,13 @@
 
 /* cart */
 .dashboard.cart { width: 100%; }
+.dashboard.cart .left-panel { display: inline-block;margin-right: 1%;width: 68%; }
+.dashboard.cart .right-panel { display: inline-block;width: 30%; }
+.dashboard.cart h3 { font-size: 1.2rem;font-weight: bold;text-align: left;margin-top: 0; }
+.dashboard.cart .row { text-align: left; }
+.dashboard.cart .row.b-margin { margin-bottom: 2rem; }
+.dashboard.cart .btn { margin-top: 1rem;width: 100%; }
+.dashboard.cart i.delete { color: #a94442;cursor: pointer; }
 
 
 #wallet-transaction-panel { text-align: left; }

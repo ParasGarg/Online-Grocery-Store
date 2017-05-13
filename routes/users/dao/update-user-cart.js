@@ -59,9 +59,9 @@ router.post('/:id/:loc', isLoggedIn, (req, res) => {
 
                                 if (redirectLoc === "product-view") {
                                         res.render('product/product-added-cart', {
-                                        mainTitle: "Item Added •",
-                                        user: req.user
-                                });
+                                                mainTitle: "Item Added •",
+                                                user: req.user
+                                        });
                                 }
                         });
                 } else {
@@ -88,11 +88,14 @@ router.post('/:id/:loc', isLoggedIn, (req, res) => {
 //------------------------ route to delete user information by id
 router.delete('/', isLoggedIn, (req, res) => {
 
-        let prodId = xss(req.body.prodId);
+        let prodId = xss(req.body.id);
         let email = xss(req.user._id);
 
         usersCartData.deleteItemFromCart(email, prodId).then(() => {
-                res.json({success: true})
+                usersCartData.addItemInCart(email, prodInfo).then((userInfo) => {
+                        req.user.cartLen = userInfo.cartLen;
+                        res.json({ success: true });
+                });
         })
         .catch((error) => {     // rendering error page
                 res.render('alerts/error', {

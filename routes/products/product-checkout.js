@@ -50,12 +50,18 @@ router.post('/', isLoggedIn, (req, res) => {
 			taxes = Math.round(totalCost * 0.07);
 			netCost = Math.round(totalCost + taxes);
 
+			let wFlag = true;
+			if (userInfo.wallet < netCost) {
+				wFlag = false;
+			}
+
 			res.render('payment/payment-gateway', {
 				mainTitle: "Checkout •",
 				user: req.user,
 				total: totalCost,
 				tax: taxes,
-				net: netCost
+				net: netCost,
+				isWallet: wFlag 
 			});
 		} else {
 			res.render('alerts/error', {

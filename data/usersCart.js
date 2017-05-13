@@ -60,7 +60,8 @@ module.exports = cartControllers = {
                         size: prodInfo.size,
                         price: prodInfo.price,
                         image: prodInfo.images[0],
-                        qty: quant
+                        qty: quant,
+                        total: prodInfo.price * quant
                     };
 
                     // increasing cart length
@@ -72,7 +73,7 @@ module.exports = cartControllers = {
                     usersCollection.update({ _id:email }, { $push: { cart: addItem } });
                     usersCollection.updateOne({ _id: email }, { $set: userChanges })
                 } else {
-                    usersCollection.update({ "cart._id":prodInfo._id }, { $set: { "cart.$.qty": quant } });
+                    usersCollection.update({ "cart._id":prodInfo._id }, { $set: { "cart.$.qty": quant, "cart.$.total": Math.round(prodInfo.price * quant) } });
                 }
 
                 return usersCollection.findOne({ _id:email }, { _id:0, cartLen:1 });                
@@ -87,8 +88,21 @@ module.exports = cartControllers = {
     deleteItemFromCart: (email, itemId) => {
         return users().then((usersCollection) => {
             return usersCollection.update({ _id:email }, { $pull: { cart: { _id:itemId } } }).then((deletedCartInfo) => {
+
                 if (deletedCartInfo.deletedCount === 0) {
-                    return "deleted";
+                    return "not deleted";
+                } else {
+                    usersCollection.findOne({ _id:email }).then((userInfo) => {
+
+                        // decrease cart length
+                        let userChanges = {
+                            cartLen: userInfo.cartLen - 1
+                        }
+
+                        // updating user collection
+                        usersCollection.updateOne({ _id: email }, { $set: userChanges });
+                        return usersCollection.findOne({ _id:email }, { _id:0, cartLen:1 });
+                    });
                 }
             })
         })

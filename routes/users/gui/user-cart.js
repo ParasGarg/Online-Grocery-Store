@@ -37,9 +37,25 @@ function isLoggedIn(req, res, next) {
 
 //------------------------ route to fetch user information by email id
 router.get('/', isLoggedIn, (req, res) => {
+
+    let totalCost = 0;
+    let taxes = 0;
+    let netCost = 0;
+
+    for (var i = 0; i < req.user.cart.length; i++) {
+        totalCost += req.user.cart[i].total;
+    }
+
+    totalCost = Math.round(totalCost);
+    taxes = Math.round(totalCost * 0.07);
+    netCost = Math.round(totalCost + taxes);
+
     res.render('users/gui/user-cart', {
 		mainTitle: "Dashboard • Payment Details •",
-		user: req.user
+		user: req.user,
+        total: totalCost,
+        tax: taxes,
+        net: netCost
 	});
 });
 

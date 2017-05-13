@@ -69,9 +69,8 @@
 									</div>
 
 									{{else}}
-
 									<div>
-										-- No saved cards --
+										No saved cards
 									</div>
 
 									{{/if}}
@@ -125,11 +124,18 @@
 											</div -->
 											<div class="col-md-6">
 												<div class="row">
-													<div class="col-md-1" style="text-align:center;"><input type="checkbox" value=""></div>
+													{{#if isWallet}}
+													<div class="col-md-1" style="text-align:center;"><input type="checkbox"></div>
 													<div class="col-md-10" style="text-align:center;">
 														<i class="fa fa-google-wallet" aria-hidden="true"></i>
 														Wallet ($ {{user.wallet}})
 													</div>
+													{{else}}
+													<div style="text-align:center;">
+														You do not have enough amount in wallet to payment.
+														Wallet amount <i class="fa fa-dollar"></i> {{user.wallet}}
+													</div>
+													{{/if}}
 												</div>
 											</div>
 										</div>

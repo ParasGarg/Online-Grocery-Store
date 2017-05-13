@@ -1,29 +1,20 @@
-//
-$(document).ready(function() {
+function deleteCartItem(prod) {
 
-	// click on add card form button
-    $("#btn-error-close").on('click', function() {
-		$("#error-add-card").addClass("hidden");
-	});
-});
-
-function deleteCard(cardNumber) {
-
-	data = {
-		cardNumber: cardNumber
+	const data = {
+		id: prod
 	}
 
 	$.ajax({
-		url: "/user/update/card",
+		url: "/user/update/cart",
 		type: "DELETE",
 		dataType: "json",
 		data: JSON.stringify(data),
-		success: function(result) {
-			$("#success-card-list").removeClass("hidden");
-			$("#saved-card-list").load(location.href + " #saved-card-list");
+		success: function() {
+			alert(1);
+			$("#success-cart-list").removeClass("hidden");
+			$("#saved-cart-list").load(location.href + " #saved-cart-list");
 			setTimeout(() => {
-				$("#error-add-card").addClass("hidden");
-				$("#success-add-card").addClass("hidden");
+				$("#success-cart-list").addClass("hidden");
 			},6000);
 		},
 		contentType: "application/json"

@@ -99,7 +99,7 @@ router.delete('/', isLoggedIn, (req, res) => {
         let email = xss(req.user._id);
 
         usersCardData.deleteCard(email, cardId).then(() => {
-                res.json({success: true})
+                res.json({ success: true });
         })
         .catch((error) => {     // rendering error page
                 res.render('alerts/error', {

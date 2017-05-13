@@ -96,7 +96,7 @@ $(document).ready(function() {
 
 function deleteCard(cardNumber) {
 
-	data = {
+	var data = {
 		cardNumber: cardNumber
 	}
 
