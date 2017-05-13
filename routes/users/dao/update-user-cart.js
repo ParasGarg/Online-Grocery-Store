@@ -30,7 +30,7 @@ function isLoggedIn(req, res, next) {
         } else {
                 res.render('users/auth/user-login-account', {
                         mainTitle: "User Login •",
-                        url: "/",
+                        url: `/product/id/${xss(req.params.id)}`
                 });
         }
 }
@@ -50,10 +50,18 @@ router.post('/:id/:loc', isLoggedIn, (req, res) => {
         productData.getProductById(prodId).then((prodInfo) => {
 
                 if (prodInfo != null) {
-                        usersCartData.addItemInCart(email, prodInfo).then((cartLen) => {
-                                req.user.cartLen = cartLen;
+                        usersCartData.addItemInCart(email, prodInfo).then((userInfo) => {
+                                req.user.cartLen = userInfo.cartLen;
+                                
                                 if (redirectLoc === "home") {
                                         res.redirect('/');
+                                }
+
+                                if (redirectLoc === "product-view") {
+                                        res.render('product/product-added-cart', {
+                                        mainTitle: "Item Added •",
+                                        user: req.user
+                                });
                                 }
                         });
                 } else {

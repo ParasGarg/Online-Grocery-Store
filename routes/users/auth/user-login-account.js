@@ -74,8 +74,9 @@ router.get('/', isLoggedIn, (req, res) => {
 	if (req.session.flash["error"] === undefined) {
         res.render('users/auth/user-login-account', { 
             mainTitle: "Dashboard Login •",
+            url: '/user/dashboard',
             error: req.session.flash.error 
-        });   
+        });
     } else {
         res.render('users/auth/user-login-account', { 
             mainTitle: "Dashboard Login •",

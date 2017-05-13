@@ -17,7 +17,7 @@
 .gateway .panel-default { margin-bottom: 3rem; }
 .gateway .panel-heading { background-color: #eee;padding: 1.5rem 2rem;text-align: center; }
 .gateway .panel-heading a { text-decoration: none; }
-.gateway .panel-title { color: #23527f; }
+.gateway .panel-title { color: #23527f;padding: 0; }
 
 .gateway input[type="number"] { display: inline-block;width: 48%; }
 .gateway input[type="number"]:first-child { float: left;width: 48%; }
@@ -39,10 +39,10 @@
 #promo-code-form .error { color: #ff0000; }
 #promo-code-form .success { color: #32cd32; }
 
-#payment-summary { text-align: left; }
+#payment-summary { text-align: left;padding: 0; }
 #payment-summary h3 { text-align: center;text-decoration: underline; }
 
-#payment-now { margin-top: 6rem; }
+#payment-now { margin-top: 5rem; }
 #payment-now input { padding: 2rem 6rem; }
 
 

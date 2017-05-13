@@ -1,4 +1,5 @@
 .item { display: inline-block;margin: 1rem;width: 30% }
+.item a, .item a:hover { cursor: text; text-decoration: none; }
 .item img { height: 220px; width: 100%; }
 
 .item .panel-body { padding: 0; }

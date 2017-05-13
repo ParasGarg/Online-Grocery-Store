@@ -71,12 +71,11 @@ module.exports = cartControllers = {
                     // updating user collection
                     usersCollection.update({ _id:email }, { $push: { cart: addItem } });
                     usersCollection.updateOne({ _id: email }, { $set: userChanges })
-                    return userChanges.cartLen;
                 } else {
-
                     usersCollection.update({ "cart._id":prodInfo._id }, { $set: { "cart.$.qty": quant } });
-                    return "item in cart  updated";
                 }
+
+                return usersCollection.findOne({ _id:email }, { _id:0, cartLen:1 });                
             });
         })
         .catch(() => {  // returning a reject promise

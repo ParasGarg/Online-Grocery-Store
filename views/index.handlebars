@@ -1,7 +1,11 @@
 <!-- stylesheet -->
 <link rel="stylesheet" href="/public/css/product/index.css">
-<!-- script --
-<script src="/public/js/user/gui/account-setting.js"></script -->
+<!-- script -->
+<script>
+	function view(id) {
+		window.location.href = `/product/id/${id}`;
+	}
+</script>
 
 <article>
 
@@ -11,7 +15,7 @@
 	{{#each products}}
 		<div class="panel panel-default item">
 			<div class="panel-heading" role="tab" id="profile-head">
-				<a role="button" href="/product/id/{{_id}}"  data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
+				<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
 					<h2 class="panel-title">
 						{{title}}
 					</h2>
@@ -30,15 +34,8 @@
 								<i class="fa fa-dollar"></i>
 								{{price}}
 							</div>
-							<div class="col-md-4">
-								<form method="post" action="/user/update/cart/{{_id}}/home" enctype='application/json'>
-									<input type="submit" class="btn btn-default" value="Add to Cart" />
-								</form>
-							</div>
-							<div class="col-md-4">
-								<form method="post" action="/user/update/cart/{{_id}}" enctype='application/json'>
-									<input type="button" class="btn btn-default" value="Buy Now" />
-								</form>
+							<div class="col-md-8">
+								<input type="submit" class="btn btn-default" onclick="window.location.href = '/product/id/{{_id}}'" value="View Product Details" />
 							</div>
 						</div>
 					</div>
