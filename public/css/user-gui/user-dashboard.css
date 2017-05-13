@@ -37,7 +37,9 @@
 .dashboard.cart .row { text-align: left; }
 .dashboard.cart .row.b-margin { margin-bottom: 2rem; }
 .dashboard.cart .btn { margin-top: 1rem;width: 100%; }
+.dashboard.cart .cost-summary { display: inline; }
 .dashboard.cart i.delete { color: #a94442;cursor: pointer; }
+.dashboard.cart #success-cart-list { text-align: center; }
 
 
 #wallet-transaction-panel { text-align: left; }

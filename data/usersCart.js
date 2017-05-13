@@ -41,6 +41,11 @@ module.exports = cartControllers = {
         return users().then((usersCollection) => {
             return usersCollection.findOne({ _id:email }).then((userInfo) => {
 
+                // cart length object
+                let userChanges = {
+                    cartLen: userInfo.cartLen
+                }
+
                 let exist = false;
                 let quant = 1;
                 for(var i = 0; i < userInfo.cart.length; i++ ) {
@@ -64,10 +69,7 @@ module.exports = cartControllers = {
                         total: prodInfo.price * quant
                     };
 
-                    // increasing cart length
-                    let userChanges = {
-                        cartLen: userInfo.cartLen + 1
-                    }
+                    userChanges["cartLen"] = userChanges.cartLen + 1;
 
                     // updating user collection
                     usersCollection.update({ _id:email }, { $push: { cart: addItem } });
@@ -76,7 +78,7 @@ module.exports = cartControllers = {
                     usersCollection.update({ "cart._id":prodInfo._id }, { $set: { "cart.$.qty": quant, "cart.$.total": Math.round(prodInfo.price * quant) } });
                 }
 
-                return usersCollection.findOne({ _id:email }, { _id:0, cartLen:1 });                
+                return userChanges.cartLen;                
             });
         })
         .catch(() => {  // returning a reject promise
@@ -92,7 +94,7 @@ module.exports = cartControllers = {
                 if (deletedCartInfo.deletedCount === 0) {
                     return "not deleted";
                 } else {
-                    usersCollection.findOne({ _id:email }).then((userInfo) => {
+                    return usersCollection.findOne({ _id:email }).then((userInfo) => {
 
                         // decrease cart length
                         let userChanges = {
@@ -101,10 +103,10 @@ module.exports = cartControllers = {
 
                         // updating user collection
                         usersCollection.updateOne({ _id: email }, { $set: userChanges });
-                        return usersCollection.findOne({ _id:email }, { _id:0, cartLen:1 });
+                        return usersCollection.findOne({ _id:email });                        
                     });
                 }
-            })
+            });
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users cart' collection.");

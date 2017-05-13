@@ -26,7 +26,7 @@
 						<div class="col-md-12">
 							<div id="success-cart-list" class="alert alert-success hidden">
 								<i class="fa fa-check success"></i>
-								<strong>Item has been removed successfully</strong> 
+								Item has been removed successfully
 							</div>
 						</div>
 					</div>
@@ -50,7 +50,7 @@
 									</div>
 
 									<div class="col-md-1">
-										{{qty}}
+										<input type="text" class="form-control" value="{{qty}}" />
 									</div>
 
 									<div class="col-md-2">
@@ -81,7 +81,7 @@
 
 	<!-- user checkout cart item section starts frome here -->
 	{{#if user.cart}}
-	<div class="right-panel">
+	<div class="right-panel" id="summary">
 		<div class="panel panel-default">
 			<div class="panel-heading" role="tab" id="head-summary-cart">
 				<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="summary-cart-panel">
@@ -98,7 +98,7 @@
 						<div class="col-md-6 col-md-offset-1"><label>Total Price</label></div>
 						<div class="col-md-4 col-md-offset-1">
 							<i class="fa fa-dollar"></i>
-							{{total}}
+							<div class="cost-summary" id="total-cost">{{total}}</div>
 						</div>
 					</div>
 
@@ -106,7 +106,7 @@
 						<div class="col-md-6 col-md-offset-1"><label>Taxes</label></div>
 						<div class="col-md-4 col-md-offset-1">
 							<i class="fa fa-dollar"></i>
-							{{tax}}
+							<div class="cost-summary" id="tax-cost">{{tax}}</div>
 						</div>
 					</div>
 
@@ -114,7 +114,7 @@
 						<div class="col-md-6 col-md-offset-1"><label>Net Price</label></div>
 						<div class="col-md-4 col-md-offset-1">
 							<i class="fa fa-dollar"></i>
-							{{net}}
+							<div class="cost-summary" id="net-cost">{{net}}</div>
 						</div>
 					</div>
 

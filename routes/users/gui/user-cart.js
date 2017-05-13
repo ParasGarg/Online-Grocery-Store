@@ -46,9 +46,9 @@ router.get('/', isLoggedIn, (req, res) => {
         totalCost += req.user.cart[i].total;
     }
 
-    totalCost = Math.round(totalCost);
-    taxes = Math.round(totalCost * 0.07);
-    netCost = Math.round(totalCost + taxes);
+    totalCost = Math.round(totalCost * 100) / 100;
+    taxes = Math.round(totalCost * 0.07 * 100) / 100;
+    netCost = Math.round((totalCost + taxes) * 100) / 100;
 
     res.render('users/gui/user-cart', {
 		mainTitle: "Dashboard • Payment Details •",

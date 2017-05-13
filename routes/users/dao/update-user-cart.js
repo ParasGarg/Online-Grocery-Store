@@ -50,9 +50,9 @@ router.post('/:id/:loc', isLoggedIn, (req, res) => {
         productData.getProductById(prodId).then((prodInfo) => {
 
                 if (prodInfo != null) {
-                        usersCartData.addItemInCart(email, prodInfo).then((userInfo) => {
-                                req.user.cartLen = userInfo.cartLen;
-                                
+                        usersCartData.addItemInCart(email, prodInfo).then((cartLen) => {
+                                req.user.cartLen = cartLen;
+
                                 if (redirectLoc === "home") {
                                         res.redirect('/');
                                 }
@@ -91,11 +91,10 @@ router.delete('/', isLoggedIn, (req, res) => {
         let prodId = xss(req.body.id);
         let email = xss(req.user._id);
 
-        usersCartData.deleteItemFromCart(email, prodId).then(() => {
-                usersCartData.addItemInCart(email, prodInfo).then((userInfo) => {
-                        req.user.cartLen = userInfo.cartLen;
-                        res.json({ success: true });
-                });
+        usersCartData.deleteItemFromCart(email, prodId).then((userInfo) => {
+                req.user = userInfo;
+                req.user.cartLen = userInfo.cartLen;
+                res.json({ success: true, cartSize: userInfo.cartLen });
         })
         .catch((error) => {     // rendering error page
                 res.render('alerts/error', {

@@ -68,7 +68,7 @@
 									{{#if user}}
 										<li>
 											<a href="/user/dashboard/cart"class="cart-items-number">
-												{{#if user.cartLen}}<span>{{ user.cartLen }}</span> {{/if}}
+												<span id="cart-size">{{#if user.cartLen}}<span class="cart">{{ user.cartLen }}</span> {{/if}}</span>
 												<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 												Cart
 											</a>
