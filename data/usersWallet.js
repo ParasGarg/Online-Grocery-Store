@@ -59,7 +59,26 @@ module.exports = walletControllers = {
     },
 
     //------------------------ deduct cash into wallet
-    deductCash: (email, subtractCash) => {
+    deductCash: (email, spendCash) => {
+        return users().then((usersCollection) => {
+            return walletControllers.getCashById(email).then((walletInfo) => {
 
+                let userChanges = {};
+                let availableCash = walletInfo.wallet;
+
+                // checking for values to update
+                if (spendCash) {
+                    userChanges['wallet'] = availableCash - spendCash;
+                }
+
+                // updating user information into the collection
+                return usersCollection.updateOne({ _id: email }, { $set: userChanges }).then(() => {
+                    return walletControllers.getCashById(email);
+                });
+            })
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'users wallet' collection.");
+        });
     }
 };

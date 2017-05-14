@@ -44,7 +44,7 @@ module.exports = orderTransactionsControllers = {
     },
 
     //------------------------ insert/create a new transaction record
-    logTransaction: (email, amount, cardData, cartItems) => {
+    logTransaction: (email, amount, cardData, cartItems, mode) => {
         return orderTransaction().then((orderTransactionCollection) => {
             
             // new user object
@@ -54,6 +54,7 @@ module.exports = orderTransactionsControllers = {
 				amount: amount,				
 				card: cardData,
                 items: cartItems,
+                payMode: mode,
                 date: new Date().toUTCString()
             }
 

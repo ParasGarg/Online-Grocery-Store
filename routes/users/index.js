@@ -18,6 +18,7 @@ usersRouter.use("/update/wallet", require('./dao/update-user-wallet'));				// ur
 usersRouter.use("/dashboard", require('./gui/user-dashboard'));						// url: ~/user/dashboard
 usersRouter.use("/dashboard/account", require('./gui/user-account'));				// url: ~/user/dashboard/account
 usersRouter.use("/dashboard/cart", require('./gui/user-cart'));						// url: ~/user/dashboard/cart
+usersRouter.use("/dashboard/order-history", require('./gui/user-orders'));			// url: ~/user/dashboard/order-history
 usersRouter.use("/dashboard/payments", require('./gui/user-card'));					// url: ~/user/dashboard/payment
 usersRouter.use("/dashboard/wallet", require('./gui/user-wallet'));					// url: ~/user/dashboard/wallet
 

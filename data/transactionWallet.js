@@ -48,7 +48,6 @@ module.exports = walletTransactionsControllers = {
         return walletTransaction().then((walletTransactionCollection) => {
             
             let creditCheck = false;
-
             if (status === "Credit") {
                 creditCheck = true;
             }

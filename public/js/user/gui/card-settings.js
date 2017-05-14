@@ -11,12 +11,12 @@ $(document).ready(function() {
 		const cardType = $("#card-type").val();
 		const expiryMonth = $("#card-month").val();
 		const expiryYear = $("#card-year").val();
-		const cardIssuer = $("#card-brand").val();
+		//const cardIssuer = $("#card-brand").val();
 		const cvv = $("#card-cvv").val();
 		const form = $("#form-add-card");
 
 		if (cardName.length > 0 && cardNumber.length > 0 && expiryMonth.length > 0 && expiryYear.length > 0 && cvv.length > 0
-				&& cardType.length > 0 && cardIssuer.length > 0) {
+				&& cardType.length > 0 /*&& cardIssuer.length > 0*/) {
 
 			if (cardNumber.length == 16) {
 				if ((expiryMonth >= 1  && expiryMonth <= 12) && (expiryYear >= 2017 && expiryYear <= 2051)) {
@@ -26,7 +26,7 @@ $(document).ready(function() {
 							number: cardNumber,
 							username: cardName,
 							type: cardType,
-							issuer: cardIssuer,
+							//issuer: cardIssuer,
 							exp: `${expiryMonth}/${expiryYear}`,
 							cvv: cvv
 						}
@@ -50,7 +50,7 @@ $(document).ready(function() {
 									$("#card-type").val("Card Type");
 									$("#card-month").val("");
 									$("#card-year").val("");
-									$("#card-brand").val("Card Brand");
+									//$("#card-brand").val("Card Brand");
 									$("#card-cvv").val("");
 								} else if (xhr.status === 400) {	// receiving 400 status code
 									$("#success-add-card").addClass("hidden");

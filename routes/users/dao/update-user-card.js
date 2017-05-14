@@ -52,9 +52,9 @@ router.post('/', isLoggedIn, (req, res) => {
                 res.status(400).json({ error: "No card number provided" });
         } else if (!userUpdates.type) {
                 res.status(400).json({ error: "No card type provided" });
-        } else if (!userUpdates.issuer) {
+        }/* else if (!userUpdates.issuer) {
                 res.status(400).json({ error: "No card issuer provided" });
-        } else if (!userUpdates.exp) {
+        }*/ else if (!userUpdates.exp) {
                 res.status(400).json({ error: "No card expiry provided" });
         } else if (!userUpdates.cvv) {
                 res.status(400).json({ error: "No card cvv provided" });

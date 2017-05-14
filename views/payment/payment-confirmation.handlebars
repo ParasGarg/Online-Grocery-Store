@@ -34,13 +34,13 @@
 							<p>
 								Your order has been placed successfully!
 							</p>
-							<label>Order #{{ orderId }} </label><br/>
+							<label>Order Id #{{ orderId }} </label><br/>
 						{{else}}
 							<p>
 								We have received your payment of ${{amount}}!
 							</p>
+							<label>Transaction Id #{{ transactionId }} </label>
 						{{/if}}
-						<label>Transaction #{{ transactionId }} </label>
 					</div>
 				</article>
 
