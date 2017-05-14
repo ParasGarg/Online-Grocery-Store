@@ -39,23 +39,19 @@
 									Paid By
 								</div>
 
-								<div class="col-md-2">
-									Pay Mode
-								</div>
-
 								<!-- Date -->
-								<div class="col-md-2">
+								<div class="col-md-1">
 									Date
 								</div>
 
 								<!-- description -->
-								<div class="col-md-3">
-									Description
+								<div class="col-md-6">
+									Purchased Items Description
 								</div>
 							</div>
 
 							{{#each transactions}}
-								<div class="row">
+								<div class="row separate">
 									<div class="col-md-2">
 										{{_id}}
 									</div>
@@ -66,23 +62,28 @@
 									</div>
 
 									<div class="col-md-2">
+										{{payMode}}
+										
 										{{#if card.number}}
 											{{card.number}}
-										{{else}}
-											-- NA --
 										{{/if}}
 									</div>
 
-									<div class="col-md-2">
-										{{payMode}}
-									</div>
-
-									<div class="col-md-2">
+									<div class="col-md-1">
 										{{formatDate date day="numeric" month="long" year="numeric"}}
 									</div>
 
-									<div class="col-md-3">
-										{{remark}}
+									<div class="col-md-6">
+										{{#each items}}
+											<ul>
+												<li>
+													{{title}}.<br>
+													Price: <i class="fa fa-dollar"></i>{{price}} &nbsp;&nbsp;&nbsp;
+													Qty: {{qty}} &nbsp;&nbsp;&nbsp;
+													Total: <i class="fa fa-dollar"></i>{{total}}
+												</li>
+											</ul>
+										{{/each}}
 									</div>
 								</div>
 							{{/each}}
