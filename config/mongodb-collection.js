@@ -24,7 +24,7 @@ module.exports = {
     orders: getCollectionFn("orders"),
     products: getCollectionFn("products"),
     subscriptions: getCollectionFn("subscriptions"),
-    transactions: getCollectionFn("transactions"),
+    transactionOrder: getCollectionFn("orderTransaction"),
     transactionWallet: getCollectionFn("walletTransaction"),    
     users: getCollectionFn("users")
 };

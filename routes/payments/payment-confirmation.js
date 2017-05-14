@@ -32,11 +32,13 @@ function isLoggedIn(req, res, next) {
 
 //------------------------ route to render to create new user form
 router.get('/', (req, res) => {
-    res.render('payment/payment-confirmation', {
-		userName: "Paras",
-		orderId: 4545232,
-		transactionId: 124542322343
-	});
+    res.render('alerts/error', {
+        mainTitle: "Page Not Found •",
+        code: 404,
+        message: "Page Not Found",
+        url: req.originalUrl,
+        user: req.user
+    });
 });
 
 // exporting routing apis

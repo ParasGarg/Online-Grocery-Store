@@ -138,5 +138,23 @@ module.exports = cartControllers = {
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users cart' collection.");
         });
+    },
+
+    emptyCart: (email) => {
+        return users().then((usersCollection) => {
+            return usersCollection.findOne({ _id:email }).then((userInfo) => {
+
+                if (userInfo != null) {
+
+                    usersCollection.update({ _id:email }, { $set: { cart: [], cartLen: 0 } });
+                    return usersCollection.findOne({ _id:email });
+                }
+                
+                res.json({error: "user not exist"});
+            });
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'users cart' collection.");
+        });
     }
 };

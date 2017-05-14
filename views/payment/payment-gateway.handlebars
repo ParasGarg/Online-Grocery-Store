@@ -1,13 +1,7 @@
 <!-- stylesheet -->
 <link rel="stylesheet" href="/public/css/payment/payment-gateway.css">
 <!-- script -->
-<script>
-	$('#myTabs a').click(function (e) {
-		e.preventDefault()
-		$(this).tab('show')
-	})
-
-</script>
+<script src="/public/js/payment/gatway-checkout.js"></script>
 
 <!-- body -->
 <div class="gateway">
@@ -35,9 +29,9 @@
 								</a>
 							</li>
 							<li role="presentation">
-								<a href="#other" aria-controls="other" role="tab" data-toggle="tab">
+								<a href="#wallet" aria-controls="wallet" role="tab" data-toggle="tab">
 									<i class="fa fa-google-wallet" aria-hidden="true"></i>
-									Other
+									Wallet
 								</a>
 							</li>
 						</ul>
@@ -50,22 +44,33 @@
 
 									<div class="col-md-12">
 										<div class="row">
-											<div class="col-md-1"><strong>Select</strong></div>
+											<div class="col-md-1"><strong></strong></div>
 											<div class="col-md-4"><strong>Card Number</strong></div>
 											<div class="col-md-4"><strong>Name on Card</strong></div>
 											<div class="col-md-2"><strong>Card Expiry</strong></div>
 											<div class="col-md-1"><strong>CVV</strong></div>
 										</div>
 
-										{{#each user.card}}
-										<div class="row">
-											<div class="col-md-1" style="text-align:center;"><input type="checkbox" value=""></div>
-											<div class="col-md-4">{{_id}}</div>
-											<div class="col-md-4">{{name}}</div>
-											<div class="col-md-2">{{expiry}}</div>
-											<div class="col-md-1">{{cvv}}</div>
-										</div>
-										{{/each}}
+										<form id="form-saved-card" method="post" action="/payment/gateway/saved" enctype="application/json">
+											{{#each user.card}}
+											<div class="row">
+												<div class="col-md-1" style="text-align:center;">
+													<input type="radio" name="savedCard" value="{{_id}}">
+												</div>
+												<div class="col-md-4">{{_id}}</div>
+												<div class="col-md-4">{{name}}</div>
+												<div class="col-md-2">{{expiry}}</div>
+												<div class="col-md-1">{{cvv}}</div>
+											</div>
+											{{/each}}
+
+											<input type="text" class="form-control hidden" name="amount" value="{{net}}"/>
+											<div class="row">
+												<div class="col-md-6 col-md-offset-3">
+													<input type="button" id="btn-saved-card" class="btn btn-default" value="Pay">
+												</div>
+											</div>
+										</form>
 									</div>
 
 									{{else}}
@@ -78,37 +83,45 @@
 							</div>
 
 							<div role="tabpanel" class="tab-pane desc-div" id="new-card">
-								<div class="row">
-									<div class="col-md-2">
-										<div class="row">Name on Card</div>
-										<div class="row">Card Number</div>
-										<div class="row">Card Expiry</div>
-										<div class="row">Card CVV</div>
-									</div>
+								<form>
+									<div class="row">
+										<div class="col-md-2">
+											<div class="row">Name on Card</div>
+											<div class="row">Card Number</div>
+											<div class="row">Card Expiry</div>
+											<div class="row">Card CVV</div>
+										</div>
 
-									<div class="col-md-6">
-										<form class="form" name="new-card-form" id="new-card-form">
-											<div class="row">
-												<input type="text" class="form-control" name="cardHolder" placeholder="Card Holder Name">
-											</div>
-											<div class="row">
-												<input type="text" class="form-control" name="cardNumber" placeholder="Card Number" maxlength="16" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-											</div>
-											<div class="row">
-												<input type="number" class="form-control" name="expMonth" placeholder="Month" min="1" max="12">
-												<input type="number" class="form-control" name="expYear" placeholder="Year" min="2017" max="2051" maxlength="4" minlength="4">
-											</div>
-											<div class="row">
-												<input type="password" class="form-control" name="cardCVV" placeholder="CVV" maxlength="4">
-											</div>
-											<!-- div class="row">
-												<input type="submit" class="btn btn-default" value="Add Card">												
-											</div --> 
-										</form>
+										<div class="col-md-6">
+											<form class="form" name="new-card-form" id="new-card-form">
+												<div class="row">
+													<input id="new-card-name" type="text" class="form-control" name="cardHolder" placeholder="Card Holder Name">
+												</div>
+												<div class="row">
+													<input id="new-card-number" type="text" class="form-control" name="cardNumber" placeholder="Card Number" maxlength="16" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+												</div>
+												<div class="row">
+													<input id="new-card-month" type="number" class="form-control" name="expMonth" placeholder="Month" min="1" max="12">
+													<input id="new-card-year" type="number" class="form-control" name="expYear" placeholder="Year" min="2017" max="2051" maxlength="4" minlength="4">
+												</div>
+												<div class="row">
+													<input id="new-card-cvv" type="password" class="form-control" name="cardCVV" placeholder="CVV" maxlength="4">
+												</div>
+												<!-- div class="row">
+													<input type="submit" class="btn btn-default" value="Add Card">												
+												</div --> 
+											</form>
+										</div>
 									</div>
-								</div>
+									<div class="row">
+										<div class="col-md-6 col-md-offset-1">
+											<input type="submit" class="btn btn-default" value="Pay">
+										</div>
+									</div>
+								</form>
 							</div>
-							<div role="tabpanel" class="tab-pane desc-div" id="other">
+
+							<div role="tabpanel" class="tab-pane desc-div" id="wallet">
 								<div class="row">
 
 									<div class="col-md-12">
@@ -125,7 +138,9 @@
 											<div class="col-md-12">
 												<div class="row">
 													{{#if isWallet}}
-													<div class="col-md-1" style="text-align:center;"><input type="checkbox"></div>
+													<div class="col-md-1" style="text-align:center;">
+														<input id="wallet-cash" type="checkbox">
+													</div>
 													<div class="col-md-10" style="text-align:center;">
 														<i class="fa fa-google-wallet" aria-hidden="true"></i>
 														Wallet ($ {{user.wallet}})
@@ -169,7 +184,7 @@
 					<!-- payment summary starts from here -->					
 					<br/>
 					<div class="row">
-						<div class="col-md-8" id="payment-summary">
+						<div class="col-md-8 col-md-offset-2" id="payment-summary">
 							<div class="panel panel-default">
 								<div class="panel-heading" role="tab" id="profile-head">
 									<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
@@ -214,13 +229,13 @@
 							</div>
 						</div>
 
-						<div class="col-md-4" id="payment-now">
+						<!-- div class="col-md-4" id="payment-now">
 							<div class="row">
 								<div class="col-md-6 col-md-offset-3">
 									<input type="button" class="btn btn-default" value="Pay" />
 								</div>
 							</div>
-						</div>
+						</div -->
 
 					</div>
 					<!-- payment summary ends here -->					

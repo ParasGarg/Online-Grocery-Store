@@ -31,6 +31,7 @@
 					 border-radius: 1px 1px 4px 4px;box-sizing: border-box;padding: 1rem 3rem; }
 .gateway .desc-div .row .row { margin: 1rem 0;text-align: left;}
 .gateway input[type="number"] { display: inline-block;width: 30%;}
+.gateway input[type="submit"] { margin-top: 1rem;padding: 1rem 0;width: 100%;}
 
 /* promo code */
 #promo-code-form input { display: inline-block;vertical-align: middle; }

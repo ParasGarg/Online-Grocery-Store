@@ -2,7 +2,8 @@ const contactsData = require('./contacts');
 const credentialsData = require('./credentials');
 const productsData = require('./products');
 const subscriptionsData = require('./subscriptions');
-const transactionWallet = require('./transactionWallet');
+const transactionOrderData= require('./transactionOrder');
+const transactionWalletData = require('./transactionWallet');
 const usersData = require('./users');
 const usersCardData = require('./usersCard');
 const usersCartData = require('./usersCart');
@@ -21,6 +22,7 @@ module.exports = {
     credentials: require('./credentials'),
     products: require('./products'),
     subscriptions: require('./subscriptions'),
+    transactionOrder: require('./transactionOrder'),
     transactionWallet: require('./transactionWallet'),
     users: require('./users'),
     usersCard: require('./usersCard'),
