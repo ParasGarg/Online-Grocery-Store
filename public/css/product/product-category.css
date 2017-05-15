@@ -14,7 +14,4 @@ h1 { font-size: 2.5rem;margin: 3rem auto; }
 .item .btn { margin-left: -15%; }
 .item .row { text-align: left; }
 
-input[type="text"] { border: none;width: 8rem; }
-
-/* extra class */
-.item .pl0 {  }
+input[type="text"].search { border: none;width: 8rem; }

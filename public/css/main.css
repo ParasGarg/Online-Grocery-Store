@@ -1,9 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
 
 html { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-
-i.fa { margin-right: 1rem }
-
+a h2.head:hover { cursor: pointer;text-decoration: underline; }
 
 /* error pop-ups */
 .error { color: #a94442; }

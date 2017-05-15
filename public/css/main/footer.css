@@ -9,13 +9,14 @@ footer p.success { color:#3c763d; }
 footer i { color:#999; }
 footer i.error { color:#a94442; }
 footer i.success { color:#3c763d; }
+footer i.fa { margin-right: 1rem; }
 
 footer .inp-row-margin { margin-top: 10px; }
 footer .inp-equal-width { display: inline-block;width: 48.8%; }
 footer .inp-equal-width:first-child { float: left; }
 footer .inp-equal-width:last-child { float: right; }
 
-footer blockquote { font-size: 1.5rem;padding: 0 20px; }
+footer blockquote { border: none;font-size: 1.5rem;padding: 0; }
 footer a, footer a:hover { color: #fff; }
 
 #form-subscribe input[type="text"] { display: inline-block;width: 60%; }

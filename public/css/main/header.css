@@ -1,8 +1,7 @@
 /* header */
 header { background-color: #337ab7;display: block;min-height: 50px; }
 header a { color: #fff;font-size: 1.5rem;letter-spacing: 1px;padding: 20px 0; }
-header i.fa { font-size: 1.8rem; }
-
+header i.fa { font-size: 1.8rem;margin-right: 1rem }
 
 /* navbar */
 .navbar-default { background-color: #337ab7; }
