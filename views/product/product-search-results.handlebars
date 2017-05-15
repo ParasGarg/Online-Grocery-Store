@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- script -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="/public/js/product/product-filter.js"></script>
+<script src="/public/js/product/product-search-filter.js"></script>
 
 <!-- products result starts from here -->
 <article>
@@ -15,9 +15,9 @@
 		<!-- left panel section starts from here -->
 		<div class="col-md-3">
 			<!-- filter panel section starts frome here -->
-			<div class="panel panel-default">
+			<div class="panel panel-default product">
 				<div class="panel-heading" role="tab" id="filter-info">
-					<a role="button"  data-parent="#accordion" aria-expanded="true" aria-controls="filter-info-panel">
+					<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="filter-info-panel">
 						<h2 class="panel-title">
 							Filter your search 
 						</h2>
@@ -36,7 +36,7 @@
 										<label for="amount">Price range:</label>
 									</div>
 									<div class="col-md-5" style="text-align: right">
-										<input type="text" id="amount" readonly>
+										<input type="text" class="search" id="amount" readonly>
 									</div>
 								</div>
 
@@ -54,13 +54,13 @@
 								<div class="col-md-12">
 									<div class="controlgroup-vertical" style="width: 100%;">
 									
-										<label for="dairy-v">Dairy Product</label>
-										<input type="checkbox" name="dairy" id="dairy-v">
-										<label for="bakery-v">Bakery Product</label>
-										<input type="checkbox" name="bakery" id="bakery-v">
-										<label for="frozen-v">Frozen Product</label>
-										<input type="checkbox" name="frozen" id="frozen-v">
-									
+										<label for="dairy">Dairy Product</label>
+										<input type="radio" name="category" id="dairy" value="dairy" onchange="categorySearch(this.id)" >
+										<label for="bakery">Bakery Product</label>
+										<input type="radio" name="category" id="bakery" value="bakery" onchange="categorySearch(this.id)">
+										<label for="frozen">Frozen Product</label>
+										<input type="radio" name="category" id="frozen" value="frozen" onchange="categorySearch(this.id)">
+
 									</div>
 								</div>
 							</div>
@@ -76,12 +76,12 @@
 		<!-- left panel section ends here -->
 		
 		<!-- right panel section starts from here -->
-		<div class="col-md-9">
+		<div class="col-md-9" id="products-list" style="margin-bottom: 3rem;">
 			{{#each product}}
 			<div class="panel panel-default item">
 				<div class="panel-heading" role="tab" id="profile-head">
-					<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
-						<h2 class="panel-title">
+					<a role="button" href="/product/id/{{_id}}" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
+						<h2 class="panel-title head">
 							{{title}}
 						</h2>
 					</a>
@@ -96,7 +96,7 @@
 
 							<div class="row detail">
 								<div class="col-md-6 price">
-									<i class="fa fa-dollar"></i> {{price}}
+									<i class="fa fa-dollar"></i>{{price}}
 								</div>
 								<div class="col-md-6">
 									<input type="submit" class="btn btn-default" onclick="window.location.href = '/product/id/{{_id}}'" value="View Details"
@@ -114,3 +114,4 @@
 	</div>	
 </article>
 <!-- products result ends here -->
+<input type="text" class="form-control hidden" value="{{searchedOf}}" id="searched-value">

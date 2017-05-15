@@ -103,6 +103,7 @@ router.get('/search', (req, res) => {
                                 res.render('product/product-search-results', {
                                         mainTitle: `${prodSearchbar} •`,
                                         product: productResults,
+                                        searchedOf: prodSearchbar,
                                         user: req.user
                                 });
                         } else {
@@ -128,6 +129,34 @@ router.get('/search', (req, res) => {
         } else {
                 res.redirect('/');
         }
+});
+
+router.post('/search/filter', (req, res) => {
+
+        let search = xss(req.body.search);
+        let startRange = parseFloat(xss(req.body.startRange));
+        let endRange = parseFloat(xss(req.body.endRange));
+
+        productsData.getProductBySearchFilter(search, startRange, endRange).then((filteredProducts) => {
+
+                if (filteredProducts.length > 0) {
+                        res.json({ 
+                                empty: false,  
+                                product: filteredProducts
+                        });
+                } else {
+                        res.json({ empty: true });
+                }
+        })
+        .catch((error) => {     // rendering error page
+                res.render('alerts/error', {
+                        mainTitle: "Server Error •",
+                        code: 500,
+                        message: error,
+                        url: req.originalUrl,
+                        user: req.user
+                });
+        });
 });
 
 router.post('/filter', (req, res) => {

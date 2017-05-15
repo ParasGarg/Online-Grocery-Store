@@ -65,6 +65,24 @@ module.exports = productsControllers = {
         });
     },
 
+    //------------------------ fetch a product information by search string
+    getProductBySearchFilter: (keyword, startRange, endRange) => {
+        return products().then((productsCollection) => {  // returning a found json document else returning null
+
+            let query = [ 
+                { _id:keyword }, 
+                { title: { $regex : `.*${keyword}.*`, $options : 'i' } }, 
+                { category: { $regex : `.*${keyword}.*`, $options : 'i' } },
+                { description: { $regex : `.*${keyword}.*`, $options : 'i' } }                  
+            ];
+
+            return productsCollection.find({ $or: query, price: { $gte: startRange, $lte: endRange } }, { _id:1, title:1, category:1, price:1, images:1 }).toArray();
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'products' collection.");
+        });
+    },
+
     //------------------------ fetch a product information by filter string
     getProductByFilter: (category, startRange, endRange) => {
         return products().then((productsCollection) => {
