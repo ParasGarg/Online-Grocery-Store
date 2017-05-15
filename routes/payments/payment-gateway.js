@@ -156,8 +156,8 @@ router.post('/new', isLoggedIn, (req, res) => {
     }
 
     let cardData = {}
-    cardData["number"] = xss(userUpdates.cardName);
-    cardData["name"] = xss(userUpdates.cardNumber);
+    cardData["number"] = xss(userUpdates.cardNumber);
+    cardData["name"] = xss(userUpdates.cardName);
     cardData["type"] = xss(userUpdates.cardType);
     cardData["expiry"] = xss(userUpdates.expMonth) + "/" + xss(userUpdates.expYear);
     cardData["cvv"] = xss(userUpdates.cardCVV);

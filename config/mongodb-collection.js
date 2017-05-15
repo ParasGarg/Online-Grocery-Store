@@ -21,7 +21,6 @@ let getCollectionFn = (collection) => {
 module.exports = {
     contacts: getCollectionFn("contacts"),
     credentials: getCollectionFn("credentials"),
-    orders: getCollectionFn("orders"),
     products: getCollectionFn("products"),
     subscriptions: getCollectionFn("subscriptions"),
     transactionOrder: getCollectionFn("orderTransaction"),
