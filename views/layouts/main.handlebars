@@ -57,7 +57,7 @@
 									</li>
 								</ul>
 							
-								<form class="navbar-form navbar-left" action="/product/search" method="get" enctype='application/json'>
+								<form class="navbar-form navbar-left" action="/product/search" method="get">
 									<div class="form-group" id="form-search">
 										<input type="text" id="searchbar" class="form-control" name="keyword" placeholder="Search">
 									</div>
@@ -68,7 +68,7 @@
 								<ul class="nav navbar-nav navbar-right">
 									{{#if user}}
 										<li>
-											<a href="/user/dashboard/cart"class="cart-items-number">
+											<a href="/user/dashboard/cart" class="cart-items-number">
 												<span id="cart-size">{{#if user.cartLen}}<span class="cart">{{ user.cartLen }}</span> {{/if}}</span>
 												<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 												Cart
@@ -76,7 +76,10 @@
 										</li>
 
 										<li class="dropdown">
-											<a href="/user/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome <span id="user-identity">{{user.alias}}!<span><span class="caret"></span></a>
+											<a href="/user/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+												Welcome <span id="user-identity">{{user.alias}}!</span>
+													<span class="caret"></span>
+											</a>
 											<ul class="dropdown-menu">
 												<li><a href="/user/dashboard/account"><i class="fa fa-cog" aria-hidden="true"></i>Account</a></li>
 												<li role="separator" class="divider"></li>
@@ -126,9 +129,9 @@
 					<div class="col-md-3">
 						<div class="row"><h3>About Project</h3></div>
 						<div class="row">
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
+							<p>Online Grocery Store is an eCommerce based web application for our Web Programming project. We had developed a sample in which user can search and find necessary information about any grocery item, can proceed to checkout to buy products.
+								User can create an account, update personal information, can check its past activities, orders and transactions, and cart items.
 							<p><i class="fa fa-map-pin"></i>Stevens Institute of Technology, NJ</p>
-							<p><i class="fa fa-envelope"></i>info@ogs.com</p>
 						</div>
 						
 					</div>
@@ -176,7 +179,7 @@
 											<!-- alert notification -->
 											<div class="col-md-9" style="padding-left: 0;">
 												<div id="error-contact" class="alert error hidden">
-														<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+														<i class="fa fa-close error"></i>
 														<strong id="error-contact-message"></strong>
 												</div>
 												<div id="success-contact" class="alert success hidden">
@@ -222,7 +225,7 @@
 								<div class="row inp-row-margin">
 									<div class="col-md-12">
 										<div id="error-subscribe" class="alert error hidden">
-										<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+										<i class="fa fa-close error"></i>
 										<strong id="error-subscribe-message"></strong>
 										</div>
 										<div id="success-subscribe" class="alert success hidden">

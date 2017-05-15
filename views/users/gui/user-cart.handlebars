@@ -10,7 +10,7 @@
 	<!-- user saved cart item section starts frome here -->
 	<div class="left-panel">
 		<div class="panel panel-default">
-			<div class="panel-heading" role="tab" id="head-saved-cart">
+			<div class="panel-heading" id="head-saved-cart">
 				<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="saved-cart-panel">
 					<h2 class="panel-title">
 						Item Details
@@ -92,7 +92,7 @@
 	{{#if user.cart}}
 	<div class="right-panel" id="summary">
 		<div class="panel panel-default">
-			<div class="panel-heading" role="tab" id="head-summary-cart">
+			<div class="panel-heading" id="head-summary-cart">
 				<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="summary-cart-panel">
 					<h2 class="panel-title">
 						Payment Summary
@@ -129,7 +129,7 @@
 
 					<div class="row">
 						<div class="col-md-12">
-							<form method="post" action="/payment/checkout" enctype="application/json">
+							<form method="post" action="/payment/checkout" >
 								<input type="submit" class="btn btn-default" value="Checkout">
 							</form>	
 						</div>

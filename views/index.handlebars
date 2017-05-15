@@ -17,15 +17,15 @@
 
 	{{#each products}}
 	<div class="panel panel-default item">
-		<div class="panel-heading" role="tab" id="profile-head">
-			<a role="button" href="/product/id/{{_id}}" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
+		<div class="panel-heading">
+			<a role="button" href="/product/id/{{_id}}" data-parent="#accordion" aria-expanded="true">
 				<h2 class="panel-title head">
 					{{title}}
 				</h2>
 			</a>
 		</div>
 
-		<div id="profile-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="profile-head">
+		<div class="panel-collapse collapse in" role="tabpanel">
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="row">
@@ -37,8 +37,7 @@
 							<i class="fa fa-dollar"></i>{{price}}
 						</div>
 						<div class="col-md-8">
-							<input type="submit" class="btn btn-default" onclick="window.location.href = '/product/id/{{_id}}'" value="View Product Details"
-							/>
+							<input type="submit" class="btn btn-default" onclick="window.location.href = '/product/id/{{_id}}'" value="View Product Details"/>
 						</div>
 					</div>
 				</div>

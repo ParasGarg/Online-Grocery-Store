@@ -52,7 +52,7 @@
 											<div class="col-md-2"><strong>Card Type</strong></div>
 										</div>
 
-										<form id="form-saved-card" method="post" action="/payment/gateway/saved" enctype="application/json">
+										<form id="form-saved-card" method="post" action="/payment/gateway/saved" >
 											{{#each user.card}}
 											<div class="row">
 												<div class="col-md-1" style="text-align:center;">
@@ -85,7 +85,7 @@
 
 							<!-- new card tab -->
 							<div role="tabpanel" class="tab-pane desc-div" id="new-card">
-								<form id="form-new-card" method="post" action="/payment/gateway/new" enctype="application/json" >
+								<form id="form-new-card" method="post" action="/payment/gateway/new"  >
 									<!-- alert notification -->
 									<div class="row">
 										<div class="col-md-12">
@@ -119,8 +119,8 @@
 												</select>
 											</div>
 											<div class="row">
-												<input id="new-card-month" type="number" class="form-control" name="expMonth" placeholder="Month" min="1" max="12">
-												<input id="new-card-year" type="number" class="form-control" name="expYear" placeholder="Year" min="2017" max="2051" maxlength="4" minlength="4">
+												<input id="new-card-month" type="number" class="form-control" name="expMonth" placeholder="Month" min="1" max="12" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+												<input id="new-card-year" type="number" class="form-control" name="expYear" placeholder="Year" min="2017" max="2051" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 											</div>
 											<div class="row">
 												<input id="new-card-cvv" type="password" class="form-control" name="cardCVV" placeholder="CVV" maxlength="4">
@@ -160,7 +160,7 @@
 															<i class="fa fa-dollar" aria-hidden="true"></i>{{user.wallet}}
 														</p>
 
-														<form method="post" action="/payment/gateway/wallet" enctype="application/json">
+														<form method="post" action="/payment/gateway/wallet" enctype="" >
 															<input type="text" class="form-control hidden" name="amount" value="{{net}}"/>
 															<div class="row">
 																<div class="col-md-6 col-md-offset-3">
@@ -192,8 +192,8 @@
 					</div>
 					<!-- payment mode detail ends here -->					
 
-					<!-- promo code section starts from here --
-					<br/><br/>
+					<!-- promo code section starts from here -->
+					<!-- br/><br/>
 					<div class="row">
 						<form class="form" name="promo-code-form" id="promo-code-form">
 							<div class="row">
@@ -207,7 +207,7 @@
 								Your promo code is invalid
 							</div>
 						</form>
-					</div>
+					</div -->
 					<!-- promo code section end here -->
 
 					<!-- payment summary starts from here -->					
@@ -215,7 +215,7 @@
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2" id="payment-summary">
 							<div class="panel panel-default">
-								<div class="panel-heading" role="tab" id="profile-head">
+								<div class="panel-heading" id="profile-head">
 									<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
 										<h2 class="panel-title">
 											Payment Summary

@@ -24,21 +24,21 @@
 			<div class="col-md-8 col-md-offset-2">
 
 				<article>
-					<h2>Hey {{ user.name }}, you're all set!</h2>
+					<h1>Hey {{ user.name }}, you're all set!</h1>
 					<div class="row">
 						<i class="fa fa-check-circle" aria-hidden="true"></i>
 					</div>
 
 					<div class="row">
 						{{#if orderId }}
-							<p>
+							<h2>
 								Your order has been placed successfully!
-							</p>
+							</h2>
 							<label>Order Id #{{ orderId }} </label><br/>
 						{{else}}
-							<p>
+							<h2>
 								We have received your payment of ${{amount}}!
-							</p>
+							</h2>
 							<label>Transaction Id #{{ transactionId }} </label>
 						{{/if}}
 					</div>

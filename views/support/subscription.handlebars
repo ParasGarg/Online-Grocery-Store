@@ -9,40 +9,40 @@
 
 				{{#if status}}
 					<article>
-						<h2>You are signed up for our newsletters!</h2>
+						<h1>You are signed up for our newsletters!</h1>
 
 						<div class="row">
-							<p>
+							<h2>
 								If you want to stop receiving our newsletters. 
 								Click <a href="#" onclick="javascript: unsubscribe()">Unsubscribe</a>. 
-							</p>
+							</h2>
 						</div>
 
 					</article>
 				{{else if anonymous}}
 					<article>
-						<h2>You are signed up for our newsletters!</h2>
+						<h1>You are signed up for our newsletters!</h1>
 
 						<div class="row">
-							<p>
+							<h2>
 								Login if you want to stop receiving our newsletters. 
-							</p>
+							</h2>
 						</div>
 
 					</article>
 				{{else}}
 					<article>
-						<h2>Oh! you are not subscribed to our newsletters.</h2>
+						<h1>Oh! you are not subscribed to our newsletters.</h1>
 
 						<div class="row">
-							<p>
+							<h2>
 								If you want to receive our newsletters.
 								{{#if user}}
 									Click <a href="#" onclick="javascript: subscribe()">Subscribe</a>.
 								{{else}}
 									Click <a href="#">Subscribe</a>.
 								{{/if}}
-							</p>
+							</h2>
 						</div>
 					</article>
 				{{/if}}
@@ -55,16 +55,16 @@
 {{#if status}}
 	<script>
 		function unsubscribe() {
-			document.getElementById("form-unsubscribe").submit();
+			document.getElementById("form-unsubscribe-it").submit();
 		}
 	</script>
-	<form method="post" action="/support/subscription/unsubscribe" id="form-unsubscribe"></form>
+	<form method="post" action="/support/subscription/unsubscribe" id="form-unsubscribe-it"></form>
 {{else}}
 	<script>
 		function subscribe() {
-			document.getElementById("form-subscribe").submit();
+			document.getElementById("form-subscribe-it").submit();
 		}
 	</script>
-	<form method="post" action="/support/subscription/subscribe" id="form-subscribe"></form>
+	<form method="post" action="/support/subscription/subscribe" id="form-subscribe-it"></form>
 {{/if}}
 

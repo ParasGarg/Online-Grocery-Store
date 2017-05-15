@@ -9,14 +9,14 @@
 		<!-- image and action sections starts from here -->
 		<div class="col-md-5">
 			<div class="panel panel-default item">
-				<div class="panel-heading" role="tab" id="profile-head">
-					<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
+				<div class="panel-heading">
+					<a role="button" data-parent="#accordion" aria-expanded="true" >
 						<h2 class="panel-title">
 							Item View
 						</h2>
 					</a>
 				</div>
-				<div id="image-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="image-head">
+				<div id="image-panel" class="panel-collapse collapse in" role="tabpanel">
 					<div class="panel-body" style="padding: 0;">
 						<div class="row">
 							<img src="{{product.images.[0]}}" alt="{{product.title}}" />
@@ -28,7 +28,7 @@
 			<!-- add to cart -->
 			<div class="col-md-12">
 				<div class="row">
-					<form method="post" action="/user/update/cart/{{product._id}}/product-view" enctype='application/json'>
+					<form method="post" action="/user/update/cart/{{product._id}}/product-view">
 						<input type="submit" class="btn btn-default" value="Add to Cart" />
 					</form>
 				</div>
@@ -41,15 +41,15 @@
 			<!-- description -->
 			<div class="row">
 				<div class="panel panel-default item">
-					<div class="panel-heading" role="tab" id="profile-head">
-						<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
+					<div class="panel-heading" >
+						<a role="button" data-parent="#accordion" aria-expanded="true" >
 							<h2 class="panel-title">
 								Description
 							</h2>
 						</a>
 					</div>
 
-					<div id="profile-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="profile-head">
+					<div  class="panel-collapse collapse in" role="tabpanel" >
 						<div class="panel-body">
 							<div class="col-md-12">
 								<div class="row">
@@ -64,15 +64,15 @@
 			<!-- Specifications -->
 			<div class="row">
 				<div class="panel panel-default item">
-					<div class="panel-heading" role="tab" id="profile-head">
-						<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
+					<div class="panel-heading" >
+						<a role="button" data-parent="#accordion" aria-expanded="true" >
 							<h2 class="panel-title">
 								Specifications
 							</h2>
 						</a>
 					</div>
 
-					<div id="profile-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="profile-head">
+					<div  class="panel-collapse collapse in" role="tabpanel" >
 						<div class="panel-body">
 							<div class="col-md-12">
 								<div class="row">
@@ -97,15 +97,15 @@
 			{{#if product.suggestion}}			
 			<div class="row">
 				<div class="panel panel-default item">
-					<div class="panel-heading" role="tab" id="profile-head">
-						<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
+					<div class="panel-heading" >
+						<a role="button" data-parent="#accordion" aria-expanded="true" >
 							<h2 class="panel-title">
 								Directions
 							</h2>
 						</a>
 					</div>
 
-					<div id="profile-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="profile-head">
+					<div  class="panel-collapse collapse in" role="tabpanel" >
 						<div class="panel-body">
 							<div class="col-md-12">
 								{{product.suggestion}}
@@ -120,15 +120,15 @@
 			{{#if product.allegations}}			
 			<div class="row">
 				<div class="panel panel-default item">
-					<div class="panel-heading" role="tab" id="profile-head">
-						<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
+					<div class="panel-heading" >
+						<a role="button" data-parent="#accordion" aria-expanded="true" >
 							<h2 class="panel-title">
 								Allegations
 							</h2>
 						</a>
 					</div>
 
-					<div id="profile-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="profile-head">
+					<div  class="panel-collapse collapse in" role="tabpanel" >
 						<div class="panel-body">
 							<div class="col-md-12">
 								{{product.allegations}}

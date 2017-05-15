@@ -87,6 +87,16 @@ router.post('/saved', isLoggedIn, (req, res) => {
         cartItems.push(item);
     }
 
+    if (cartItems.length < 0) {
+        res.render('alerts/error', {
+            mainTitle: "Bad Request •",
+		    code: 400,
+		    message: "No Items in cart",
+            url: req.originalUrl,
+			user: req.user
+        });
+    }
+
     orderTransactionData.logTransaction(email, amount, cardData, cartItems, "Saved Card").then((transId) => {
         usersCartData.emptyCart(email).then((usrNewInfo) => {
             req.user = usrInfo;
@@ -177,6 +187,16 @@ router.post('/new', isLoggedIn, (req, res) => {
         cartItems.push(item);
     }
 
+    if (cartItems.length < 0) {
+        res.render('alerts/error', {
+            mainTitle: "Bad Request •",
+		    code: 400,
+		    message: "No Items in cart",
+            url: req.originalUrl,
+			user: req.user
+        });
+    }
+
     orderTransactionData.logTransaction(email, amount, cardData, cartItems, "New Card").then((transId) => {
         usersCartData.emptyCart(email).then((usrNewInfo) => {
             req.user = usrInfo;
@@ -223,6 +243,16 @@ router.post('/wallet', isLoggedIn, (req, res) => {
         }
 
         cartItems.push(item);
+    }
+
+    if (cartItems.length < 0) {
+        res.render('alerts/error', {
+            mainTitle: "Bad Request •",
+		    code: 400,
+		    message: "No Items in cart",
+            url: req.originalUrl,
+			user: req.user
+        });
     }
 
     orderTransactionData.logTransaction(email, amount, cardData, cartItems, "Wallet").then((transId) => {
