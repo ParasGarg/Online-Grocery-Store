@@ -72,7 +72,7 @@ $(function() {
 														'<i class="fa fa-dollar"></i>' + data.product[i].price +
 													'</div>' +
 													'<div class="col-md-6">' +
-														'<input type="submit" class="btn btn-default" onclick="window.location.href = "/product/id/' + data.product[i]._id +'" value="View Details"/>' +
+														'<input type="submit" class="btn btn-default" onclick="window.location.href = ' + "'/product/id/" + data.product[i]._id + "'" + '" value="View Details"/>' +
 													'</div>' +
 												'</div>' +
 											'</div>' +
@@ -96,6 +96,9 @@ $(function() {
     });
 });
 
+function viewDetails(id) {
+	window.location.href = `/product/category/${id}`	
+}
 
 /* radio button features */
 function categorySearch(category) {

@@ -57,7 +57,7 @@
 									</div>
 
 									<div class="col-md-1">
-										<input id="quantity-{{_id}}" type="text" onblur="updateQty('{{_id}}')" class="form-control" onfocus="saveQty('{{_id}}')" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="{{qty}}" />
+										<input id="quantity-{{_id}}" type="text" onblur="updateQty('{{_id}}')" class="form-control" onfocus="saveQty('{{_id}}')" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="{{qty}}" maxlength="1" />
 									</div>
 
 									<div class="col-md-2">
@@ -104,7 +104,7 @@
 				<div class="panel-body">
 
 					<div class="row">
-						<div class="col-md-6 col-md-offset-1"><label>Total Price</label></div>
+						<div class="col-md-6 col-md-offset-1"><label>Price</label></div>
 						<div class="col-md-4 col-md-offset-1">
 							<i class="fa fa-dollar"></i>
 							<div class="cost-summary" id="total-cost">{{total}}</div>
@@ -112,7 +112,7 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-6 col-md-offset-1"><label>Taxes</label></div>
+						<div class="col-md-6 col-md-offset-1"><label>Taxes (@7%)</label></div>
 						<div class="col-md-4 col-md-offset-1">
 							<i class="fa fa-dollar"></i>
 							<div class="cost-summary" id="tax-cost">{{tax}}</div>
@@ -120,7 +120,7 @@
 					</div>
 
 					<div class="row">
-						<div class="col-md-6 col-md-offset-1"><label>Net Price</label></div>
+						<div class="col-md-6 col-md-offset-1"><label>Total Price</label></div>
 						<div class="col-md-4 col-md-offset-1">
 							<i class="fa fa-dollar"></i>
 							<div class="cost-summary" id="net-cost">{{net}}</div>

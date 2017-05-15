@@ -90,11 +90,18 @@ router.put('/', isLoggedIn, (req, res) => {
 
         let email = xss(req.user._id);
         let prodId = xss(req.body.id);
-        let quantity = xss(req.body.qty);
+        let quantity = parseInt(xss(req.body.qty));
+
+        if (quantity < 1 && quantity > 5) {
+                res.json({ success: false });
+        }
 
         usersCartData.updateItemQty(email, prodId, quantity).then((userInfo) => {
+
                 req.user = userInfo;
+                req.user.cartLen = userInfo.cartLen;
                 res.json({ success: true });
+                
         })
         .catch((error) => {     // rendering error page
                 res.render('alerts/error', {

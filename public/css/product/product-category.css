@@ -1,3 +1,5 @@
+.product a:hover { text-decoration: none;cursor: text; }
+
 h1 { font-size: 2.5rem;margin: 3rem auto; }
 
 .item { display: inline-block;float: left;margin: 0 1rem 2rem;width: 30% }

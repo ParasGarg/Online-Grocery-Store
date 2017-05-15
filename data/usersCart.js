@@ -75,7 +75,8 @@ module.exports = cartControllers = {
                     usersCollection.update({ _id:email }, { $push: { cart: addItem } });
                     usersCollection.updateOne({ _id: email }, { $set: userChanges })
                 } else {
-                    usersCollection.update({ "cart._id":prodInfo._id }, { $set: { "cart.$.qty": quant, "cart.$.total": Math.round(prodInfo.price * quant * 100)/100 } });
+                    usersCollection.update({ "cart._id":prodInfo._id }, { $set: { cartLen: userChanges.cartLen + 1, "cart.$.qty": quant, "cart.$.total": Math.round(prodInfo.price * quant * 100)/100 } });
+                    userChanges["cartLen"] = userChanges.cartLen + 1;
                 }
 
                 return userChanges.cartLen;                
@@ -93,15 +94,18 @@ module.exports = cartControllers = {
 
                 if (userInfo != null) {
 
-                    let itemCpst = 0;
+                    let cartLen = userInfo.cartLen;
+                    let itemCost = 0;
+
                     for(var i = 0; i < userInfo.cart.length; i++ ) {
                         if (userInfo.cart[i]._id === itemId) {
-                            itemCpst = userInfo.cart[i].price;
+                            itemCost = userInfo.cart[i].price;
+                            cartLen = cartLen - userInfo.cart[i].qty + itemQty;
                             break;
                         }
                     }
 
-                    usersCollection.update({ _id:email, "cart._id":itemId }, { $set: { "cart.$.qty": itemQty, "cart.$.total": Math.round(itemCpst * itemQty * 100)/100 } });
+                    usersCollection.update({ _id:email, "cart._id":itemId }, { $set: { cartLen: cartLen, "cart.$.qty": itemQty, "cart.$.total": Math.round(itemCost * itemQty * 100)/100 } });
                     return usersCollection.findOne({ _id:email });
                 }
                 

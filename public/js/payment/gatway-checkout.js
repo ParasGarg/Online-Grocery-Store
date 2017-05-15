@@ -32,13 +32,19 @@ $(document).ready(function() {
 
 			if (cardNumber.length == 16) {
 				if ((expiryMonth >= 1  && expiryMonth <= 12) && (expiryYear >= 2017 && expiryYear <= 2051)) {
-					if ((cvv >= 1 && cvv <= 9999) && (cvv.length >= 3 && cvv.length <=4)) {
+					if((expiryYear == 2017 && expiryMonth > 4) || (expiryYear > 2017)) {
+						if ((cvv >= 1 && cvv <= 9999) && (cvv.length >= 3 && cvv.length <=4)) {
 
-						form.submit();
-						
+							form.submit();
+							
+						} else {
+							$("#error-new-card").removeClass("hidden");
+							$("#error-new-card-message").html("Invalid CVV");
+						}
 					} else {
+						$("#success-new-card").addClass("hidden");
 						$("#error-new-card").removeClass("hidden");
-						$("#error-new-card-message").html("Invalid CVV");
+						$("#error-new-card-message").html("Card expiry date has been passed");
 					}
 				} else {
 					$("#error-new-card").removeClass("hidden");

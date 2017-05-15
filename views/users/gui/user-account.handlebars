@@ -68,7 +68,7 @@
 										<label for="mobile">Contact Number</label>
 									</div>
 									<div class="col-md-6 col-md-offset-1">
-										<input type="text" class="form-control" name="mobile" id="mobile" value="{{user.mobile}}" />
+										<input type="text" class="form-control" name="mobile" id="mobile" value="{{user.mobile}}" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10"/>
 									</div>
 								</div>
 

@@ -12,16 +12,16 @@
 <!-- products result starts from here -->
 <article>
 	
-	<h1>{{ mainTitle }} Search Results</h1>
+	<h1>• {{ mainTitle }}</h1>
 		
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		
 		<!-- left panel section starts from here -->
 		<div class="col-md-3">
 			<!-- filter panel section starts frome here -->
-			<div class="panel panel-default">
+			<div class="panel panel-default product">
 				<div class="panel-heading" role="tab" id="filter-info">
-					<a role="button"  data-parent="#accordion" aria-expanded="true" aria-controls="filter-info-panel">
+					<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="filter-info-panel">
 						<h2 class="panel-title">
 							Filter your search 
 						</h2>
@@ -50,6 +50,26 @@
 							</div>
 
 							<!-- filter category box -->
+							<br/>
+							<div class="row">
+								<div class="col-md-12" style="text-align: left;">
+									<label >Category:</label>
+								</div>							
+								<div class="col-md-12">
+									<div class="controlgroup-vertical" style="width: 100%;">
+									
+										<label for="dairy">Dairy Product</label>
+										<input type="radio" name="category" id="dairy" value="dairy" onchange="categorySearch(this.id)" >
+										<label for="bakery">Bakery Product</label>
+										<input type="radio" name="category" id="bakery" value="bakery" onchange="categorySearch(this.id)">
+										<label for="frozen">Frozen Product</label>
+										<input type="radio" name="category" id="frozen" value="frozen" onchange="categorySearch(this.id)">
+
+									</div>
+								</div>
+							</div>
+
+							<!-- filter brand box -->
 							<br/>
 							<div class="row">
 								<div class="col-md-12" style="text-align: left;">
@@ -100,7 +120,7 @@
 
 							<div class="row detail">
 								<div class="col-md-6 price">
-									<i class="fa fa-dollar"></i> {{price}}
+									<i class="fa fa-dollar"></i>{{price}}
 								</div>
 								<div class="col-md-6">
 									<input type="submit" class="btn btn-default" onclick="window.location.href = '/product/id/{{_id}}'" value="View Details"

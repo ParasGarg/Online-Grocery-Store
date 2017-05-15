@@ -44,7 +44,7 @@ module.exports = walletControllers = {
 			
                 // checking for values to update
                 if (newCash) {
-                    userChanges['wallet'] = newCash + availableCash;
+                    userChanges['wallet'] = Math.round(newCash * 100 + availableCash * 100)/100;
                 }
 
                 // updating user information into the collection
@@ -68,7 +68,7 @@ module.exports = walletControllers = {
 
                 // checking for values to update
                 if (spendCash) {
-                    userChanges['wallet'] = availableCash - spendCash;
+                    userChanges['wallet'] = Math.round(availableCash * 100 - spendCash * 100)/100;
                 }
 
                 // updating user information into the collection

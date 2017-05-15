@@ -38,7 +38,7 @@ module.exports = credentialsControllers = {
     getCredentialById: (email) => {
         return credentials().then((credentialsCollection) => {
             // returning a found json document else returning null
-            return credentialsCollection.findOne({ _id:email }, { _id:1 });
+            return credentialsCollection.findOne({ _id:email }, { _id:1, password:1 });
         })
         .catch(() => {
             // returning a reject promise
@@ -60,7 +60,6 @@ module.exports = credentialsControllers = {
                     } else {
     					return Promise.reject("Incorrect Password");
                     }
-
 				});
 		},
         () => {
@@ -118,7 +117,7 @@ module.exports = credentialsControllers = {
 
 
     //------------------------ update a credential information
-    updateCredential: (email, password) => {
+    updateCredential: (email, password, savedPassword) => {
         return credentials().then((credentialsCollection) => {
             
             // update credential object (empty)
@@ -126,13 +125,20 @@ module.exports = credentialsControllers = {
 
             // checking for values to update
             if(password) {
-                // saving the password after hashing it
-                credentialChanges['password'] = generateHashedPassword(password);
+                // checking for same passwords
+                if (bcrypt.compareSync(password, savedPassword)) {
+                    console.log("Same Password");
+                    return false;
+                } else {
+                    // saving the password after hashing it
+                    credentialChanges['password'] = generateHashedPassword(password);
+                    
+                    // updating credential information into the collection
+                    credentialsCollection.updateOne( { _id:email }, { $set:credentialChanges });
+                    console.log("Password Updated");                        
+                    return true;
+                }
             }
-
-            // updating credential information into the collection
-            credentialsCollection.updateOne( { _id:email }, { $set:credentialChanges });
-            return true;
         })
         .catch(() => {
             // returning a reject promise

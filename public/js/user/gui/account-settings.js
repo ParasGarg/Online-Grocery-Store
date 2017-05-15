@@ -11,22 +11,29 @@ $(document).ready(function() {
 		$("#success-profile").addClass("hidden");
 
 		if (username.length > 0 && contact.length > 0) {
-			const formData = {
-				name: username,
-				mobile: contact
-			}
+			if (contact.length == 10) {
+				const formData = {
+					name: username,
+					mobile: contact
+				}
 
-			$.ajax({
-				url: "/user/update/info",
-				type: "POST",
-				dataType: "json",
-				data: JSON.stringify(formData),
-				success: function() {
-					$("#error-profile").addClass("hidden");
-					$("#success-profile").removeClass("hidden");
-				},
-				contentType: "application/json"
-			});
+				$.ajax({
+					url: "/user/update/info",
+					type: "POST",
+					dataType: "json",
+					data: JSON.stringify(formData),
+					success: function() {
+						$("#user-identity").load(location.href + " #user-identity");
+						$("#error-profile").addClass("hidden");
+						$("#success-profile").removeClass("hidden");
+					},
+					contentType: "application/json"
+				});
+			} else {
+				$("#success-profile").addClass("hidden");
+				$("#error-profile").removeClass("hidden");
+				$("#error-profile-message").html("Invalid contact number");
+			}
 		} else {
 			$("#success-profile").addClass("hidden");
 			$("#error-profile").removeClass("hidden");
@@ -59,9 +66,15 @@ $(document).ready(function() {
 					type: "POST",
 					dataType: "json",
 					data: JSON.stringify(formData),
-					success: function() {
-						$("#error-privacy").addClass("hidden");
-						$("#success-privacy").removeClass("hidden");
+					success: function(status) {
+						if (status.success == true) {
+							$("#error-privacy").addClass("hidden");
+							$("#success-privacy").removeClass("hidden");
+						} else {
+							$("#success-privacy").addClass("hidden");
+							$("#error-privacy").removeClass("hidden");
+							$("#error-privacy-message").html(status.error);
+						}
 						$("#new-password").val("");
 						$("#confirm-password").val("");
 					},

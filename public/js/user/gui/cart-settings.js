@@ -11,7 +11,7 @@ function updateQty(id) {
 		var qty = parseInt(quant);
 
 //		if (numRegex.test(qty)) {
-			if (qty > 0) {
+			if (qty > 0 && qty < 6) {
 
 				const formData = {
 					id: id,
@@ -23,17 +23,22 @@ function updateQty(id) {
 					type: "PUT",
 					dataType: "json",
 					data: JSON.stringify(formData),
-					success: function(result) {
-						$("#saved-cart-list").load(location.href + " #saved-cart-list");
-						$("#total-cost").load(location.href + " #total-cost");
-						$("#tax-cost").load(location.href + " #tax-cost");
-						$("#net-cost").load(location.href + " #net-cost");
+					success: function(status) {
+						if (status.success == true) {
+							$("#saved-cart-list").load(location.href + " #saved-cart-list");
+							$("#cart-size").load(location.href + " #cart-size");
+							$("#total-cost").load(location.href + " #total-cost");
+							$("#tax-cost").load(location.href + " #tax-cost");
+							$("#net-cost").load(location.href + " #net-cost");
+						} else {
+							alert("Quantity cannot be less than 1 and more than 5");
+						}
 					},
 					contentType: "application/json"
 				});
 
 			} else {
-				alert("Quantity cannot be less than 1");
+				alert("Quantity cannot be less than 1 and more than 5");
 				$(`#quantity-${id}`).val(hidden);
 			}
 /*		} else {

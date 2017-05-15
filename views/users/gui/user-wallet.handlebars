@@ -87,7 +87,7 @@
 										</div>
 										<div class="col-md-7">
 											<i class="fa fa-dollar add-amount"></i>
-											<input type="text" class="form-control add-amount" name="amount" id="amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter amount to add"/>
+											<input type="text" class="form-control add-amount" name="amount" id="amount" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46" placeholder="Enter amount to add"/>
 										</div>
 									</div>
 
@@ -112,15 +112,14 @@
 									</div>
 
 									<!-- amount submit form section -->
-									<input type="button" id="btn-user-quick-add" class="btn btn-default" onclick="updateWallet()" value="Quick Add" />
-									<input type="button" id="btn-user-add" class="btn btn-default" onclick="addCash()" value="Add" />
+									<input type="button" id="btn-user-quick-add" class="btn btn-default" onclick="updateWallet()" value="Use Saved Card" />
+									<input type="button" id="btn-user-add" class="btn btn-default" onclick="addCash()" value="Use New Card" />
 								
 								</form>
 								<!-- add amount detail form ends here -->
 
 							</div>
 						</div>
-
 
 					</div>
 				</div>
@@ -187,7 +186,7 @@
 										</div>
 
 										<div class="col-md-2">
-											{{formatDate date day="numeric" month="long" year="numeric"}}
+											{{date}}
 										</div>
 
 										<div class="col-md-3">
@@ -210,7 +209,7 @@
 										</div>
 
 										<div class="col-md-2">
-											{{formatDate date day="numeric" month="long" year="numeric"}}
+											{{date}}
 										</div>
 
 										<div class="col-md-3">

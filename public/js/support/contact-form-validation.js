@@ -43,7 +43,7 @@ $(document).ready(function() {
 			} else {
 				$("#success-contact").addClass("hidden");
 				$("#error-contact").removeClass("hidden");
-				$("#error-contact-message").html("Invalid email id format");
+				$("#error-contact-message").html("Invalid email id");
 			}
 		} else {
 			$("#success-contact").addClass("hidden");

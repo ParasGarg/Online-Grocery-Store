@@ -74,7 +74,7 @@ router.put('/', isLoggedIn, (req, res) => {
 			number: cardInfo._id,
 			type: cardInfo.type,
 			expiry: cardInfo.expiry,
-			issuer: cardInfo.issuer,
+			//issuer: cardInfo.issuer,
 			cvv: cardInfo.cvv
 		}
 
@@ -113,7 +113,7 @@ router.post('/', isLoggedIn, (req, res) => {
 		number: xss(req.body.cardNumber),
 		type: xss(req.body.cardType),
 		expiry: `${xss(req.body.cardMonth)}/${xss(req.body.cardYear)}`,
-		issuer: xss(req.body.cardBrand),
+		//issuer: xss(req.body.cardBrand),
 		cvv: xss(req.body.cardCVV)
 	};
 	let status = "Credit";
@@ -131,9 +131,9 @@ router.post('/', isLoggedIn, (req, res) => {
 		res.status(400).json({ error: "No card type provided" });
 	} else if (!cardData.expiry) {
 		res.status(400).json({ error: "No expiry provided" });
-	} else if (!cardData.issuer) {
+	}/* else if (!cardData.issuer) {
 		res.status(400).json({ error: "No card issuer provided" });
-	} else if (!cardData.cvv) {
+	}*/ else if (!cardData.cvv) {
 		res.status(400).json({ error: "No card CVV provided" });
 	} 
 
