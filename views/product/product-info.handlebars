@@ -1,11 +1,147 @@
-
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/product/product-info.css">
 
 {{#if product}}
+	<!-- product info starts from here -->
+	<article class="product info">
+		<h1>{{product.title}}</h1>
+			
+		<!-- image and action sections starts from here -->
+		<div class="col-md-5">
+			<div class="panel panel-default item">
+				<div class="panel-heading">
+					<a role="button" data-parent="#accordion" aria-expanded="true" >
+						<h2 class="panel-title">
+							Item View
+						</h2>
+					</a>
+				</div>
+				<div id="image-panel" class="panel-collapse collapse in" role="tabpanel">
+					<div class="panel-body" style="padding: 0;">
+						<div class="row">
+							<img src="{{product.images.[0]}}" alt="{{product.title}}" />
+						</div>
+					</div>
+				</div>
+			</div>
 
-	<img src="{{product.images.[0]}}" /><br/>
-	{{product._id}}<br>
-	{{product.title}}<br>
-	{{product.size}}<br>
-	{{product.price}}<br>
+			<!-- add to cart -->
+			<div class="col-md-12">
+				<div class="row">
+					<form method="post" action="/user/update/cart/{{product._id}}/product-view">
+						<input type="submit" class="btn btn-default" value="Add to Cart" />
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- image and action sections ends here -->	
+				
+		<!-- details section starts from here -->
+		<div class="col-md-7 details">
+			<!-- description -->
+			<div class="row">
+				<div class="panel panel-default item">
+					<div class="panel-heading" >
+						<a role="button" data-parent="#accordion" aria-expanded="true" >
+							<h2 class="panel-title">
+								Description
+							</h2>
+						</a>
+					</div>
 
+					<div  class="panel-collapse collapse in" role="tabpanel" >
+						<div class="panel-body">
+							<div class="col-md-12">
+								<div class="row">
+									{{product.description}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Specifications -->
+			<div class="row">
+				<div class="panel panel-default item">
+					<div class="panel-heading" >
+						<a role="button" data-parent="#accordion" aria-expanded="true" >
+							<h2 class="panel-title">
+								Specifications
+							</h2>
+						</a>
+					</div>
+
+					<div  class="panel-collapse collapse in" role="tabpanel" >
+						<div class="panel-body">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-4">
+										Size: <strong>{{product.size}}</strong>
+									</div>
+									<div class="col-md-4" style="text-align: center;">
+										Price: 
+										<strong><i class="fa fa-dollar"></i>{{product.price}}</strong>
+									</div>
+									<div class="col-md-4">
+										Brand: <strong>{{product.brand}}</strong>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- suggestions -->
+			{{#if product.suggestion}}			
+			<div class="row">
+				<div class="panel panel-default item">
+					<div class="panel-heading" >
+						<a role="button" data-parent="#accordion" aria-expanded="true" >
+							<h2 class="panel-title">
+								Directions
+							</h2>
+						</a>
+					</div>
+
+					<div  class="panel-collapse collapse in" role="tabpanel" >
+						<div class="panel-body">
+							<div class="col-md-12">
+								{{product.suggestion}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			<!-- allegations -->
+			{{#if product.allegations}}			
+			<div class="row">
+				<div class="panel panel-default item">
+					<div class="panel-heading" >
+						<a role="button" data-parent="#accordion" aria-expanded="true" >
+							<h2 class="panel-title">
+								Allegations
+							</h2>
+						</a>
+					</div>
+
+					<div  class="panel-collapse collapse in" role="tabpanel" >
+						<div class="panel-body">
+							<div class="col-md-12">
+								{{product.allegations}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+		</div>
+		<!-- details section ends here -->
+
+	</article>
+	<!-- product info ends here -->
 {{/if}}

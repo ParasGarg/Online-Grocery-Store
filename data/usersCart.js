@@ -38,23 +38,79 @@ module.exports = cartControllers = {
 
     //------------------------ add a cart information
     addItemInCart: (email, prodInfo) => {
-        users().then((usersCollection) => {
-            usersCollection.findOne({ _id:email }).then(() => {
+        return users().then((usersCollection) => {
+            return usersCollection.findOne({ _id:email }).then((userInfo) => {
 
-                // new cart object
-                let addItem = { 
-                    _id: prodInfo._id,
-                    title: prodInfo.title,
-                    description: prodInfo.description,
-                    size: prodInfo.size,
-                    price: prodInfo.price,
-                    stock: prodInfo.stock,
-                    image: prodInfo.images[0]
-                };
+                // cart length object
+                let userChanges = {
+                    cartLen: userInfo.cartLen
+                }
+
+                let exist = false;
+                let quant = 1;
+                for(var i = 0; i < userInfo.cart.length; i++ ) {
+                    if (userInfo.cart[i]._id === prodInfo._id) {
+                        exist = true;
+                        quant = quant + userInfo.cart[i].qty;
+                        break;
+                    }
+                }
+
+                if(!exist) {
+                    // new cart object
+                    let addItem = { 
+                        _id: prodInfo._id,
+                        title: prodInfo.title,
+                        description: prodInfo.description,
+                        size: prodInfo.size,
+                        price: prodInfo.price,
+                        image: prodInfo.images[0],
+                        qty: quant,
+                        total: prodInfo.price * quant
+                    };
+
+                    userChanges["cartLen"] = userChanges.cartLen + 1;
+
+                    // updating user collection
+                    usersCollection.update({ _id:email }, { $push: { cart: addItem } });
+                    usersCollection.updateOne({ _id: email }, { $set: userChanges })
+                } else {
+                    usersCollection.update({ "cart._id":prodInfo._id }, { $set: { cartLen: userChanges.cartLen + 1, "cart.$.qty": quant, "cart.$.total": Math.round(prodInfo.price * quant * 100)/100 } });
+                    userChanges["cartLen"] = userChanges.cartLen + 1;
+                }
+
+                return userChanges.cartLen;                
+            });
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'users cart' collection.");
+        });
+    },
+
+    //------------------------ update a cart quantity information
+    updateItemQty: (email, itemId, itemQty) => {
+        return users().then((usersCollection) => {
+            return usersCollection.findOne({ _id:email }).then((userInfo) => {
+
+                if (userInfo != null) {
+
+                    let cartLen = userInfo.cartLen;
+                    let itemCost = 0;
+
+                    for(var i = 0; i < userInfo.cart.length; i++ ) {
+                        if (userInfo.cart[i]._id === itemId) {
+                            itemCost = userInfo.cart[i].price;
+                            cartLen = cartLen - userInfo.cart[i].qty + itemQty;
+                            break;
+                        }
+                    }
+
+                    usersCollection.update({ _id:email, "cart._id":itemId }, { $set: { cartLen: cartLen, "cart.$.qty": itemQty, "cart.$.total": Math.round(itemCost * itemQty * 100)/100 } });
+                    return usersCollection.findOne({ _id:email });
+                }
                 
-                // updating user collection
-                return usersCollection.update({ _id:email }, { $push: { cart: addItem } });
-            })
+                res.json({error: "user not exist"});
+            });
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users cart' collection.");
@@ -65,10 +121,41 @@ module.exports = cartControllers = {
     deleteItemFromCart: (email, itemId) => {
         return users().then((usersCollection) => {
             return usersCollection.update({ _id:email }, { $pull: { cart: { _id:itemId } } }).then((deletedCartInfo) => {
+
                 if (deletedCartInfo.deletedCount === 0) {
-                    return "deleted";
+                    return "not deleted";
+                } else {
+                    return usersCollection.findOne({ _id:email }).then((userInfo) => {
+
+                        // decrease cart length
+                        let userChanges = {
+                            cartLen: userInfo.cartLen - 1
+                        }
+
+                        // updating user collection
+                        usersCollection.updateOne({ _id: email }, { $set: userChanges });
+                        return usersCollection.findOne({ _id:email });
+                    });
                 }
-            })
+            });
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'users cart' collection.");
+        });
+    },
+
+    emptyCart: (email) => {
+        return users().then((usersCollection) => {
+            return usersCollection.findOne({ _id:email }).then((userInfo) => {
+
+                if (userInfo != null) {
+
+                    usersCollection.update({ _id:email }, { $set: { cart: [], cartLen: 0 } });
+                    return usersCollection.findOne({ _id:email });
+                }
+                
+                res.json({error: "user not exist"});
+            });
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users cart' collection.");

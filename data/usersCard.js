@@ -29,7 +29,7 @@ module.exports = cardControllers = {
     //------------------------ fetch a card information by card id/number
     getCardById: (id) => {
         return users().then((usersCollection) => {  // returning a found json document else returning null
-            return usersCollection.findOne({ _id:email, "card._id":id }, { "card._id":1, "card.name":1, "card.type":1, "card.issuer":1, "card.expiry":1, "card.cvv":1 });
+            return usersCollection.findOne({ _id:email, "card._id":id }, { "card._id":1, "card.name":1, "card.type":1, /*"card.issuer":1,*/ "card.expiry":1, "card.cvv":1 });
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users card' collection.");
@@ -62,7 +62,7 @@ module.exports = cardControllers = {
                         _id: id,
                         name: cardList[loc].name,
                         type: cardList[loc].type,
-                        issuer: cardList[loc].issuer,
+                        //issuer: cardList[loc].issuer,
                         expiry: cardList[loc].expiry,
                         cvv: cardList[loc].cvv
                     };
@@ -106,9 +106,9 @@ module.exports = cardControllers = {
                     addCard['type'] = xss(newCardData.type);
                 }
 
-                if (newCardData.issuer) {
+                /*if (newCardData.issuer) {
                     addCard['issuer'] = xss(newCardData.issuer);
-                }
+                }*/
 
                 if (newCardData.exp) {
                     addCard['expiry'] = xss(newCardData.exp);

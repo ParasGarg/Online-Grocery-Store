@@ -1,10 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
 
 html { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-
-h6 { margin-bottom: 2rem; font-size: 2rem; color: #fff; font-weight: 700; }
-i.fa { margin-right: 1rem }
-
+a { color: #23527c; }
+a h2.head:hover { cursor: pointer;text-decoration: underline; }
 
 /* error pop-ups */
 .error { color: #a94442; }
@@ -13,3 +11,13 @@ i.fa { margin-right: 1rem }
 .hidden { visibility: hidden; }
 .show { visibility: visible; }
 
+/* jqueryui */
+.ui-state-active, 
+.ui-widget-content .ui-state-active, 
+.ui-widget-header .ui-state-active, 
+a.ui-button:active, .ui-button:active, 
+.ui-button.ui-state-active:hover { background-color: #235293 !important; }
+
+.ui-icon-background, .ui-state-active .ui-icon-background {
+	border: #fff !important;
+}

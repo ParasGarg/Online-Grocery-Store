@@ -50,7 +50,15 @@ router.get('/', isLoggedIn, (req, res) => {
             user: req.user,
             transactions: transactionsList
         });
-    });
+    })
+	.catch((error) => {     // rendering error page
+		res.render('alerts/error', {
+			mainTitle: "Server Error •",
+			code: 500,
+			message: error,
+			url: req.originalUrl
+		});
+	});
 });
 
 //------------------------ route to update wallet amount by user id through payment gatewaty

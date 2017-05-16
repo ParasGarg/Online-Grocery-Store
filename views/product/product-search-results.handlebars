@@ -1,11 +1,117 @@
-<h1> welcome to category search results </h1>
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/product/product-category.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- script -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/public/js/product/product-search-filter.js"></script>
 
-{{#each product}}
-	<img src="{{images.[0]}}" height="100" width="120" /><br>
-	{{_id}}<br>
-	{{title}}<br>
-	{{description}}<br>
-	{{price}}
+<!-- products result starts from here -->
+<article>
+	
+	<h1>• {{ mainTitle }}</h1>
+		
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		
+		<!-- left panel section starts from here -->
+		<div class="col-md-3">
+			<!-- filter panel section starts frome here -->
+			<div class="panel panel-default product">
+				<div class="panel-heading" role="tab" id="filter-info">
+					<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="filter-info-panel">
+						<h2 class="panel-title">
+							Filter your search 
+						</h2>
+					</a>
+				</div>
 
-	<br/><br/>
-{{/each}}
+				<!-- user filter starts from here -->									
+				<div id="filter-info-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="filter-info">
+					<div class="panel-body">
+						<div class="col-md-12">
+							
+							<!-- filter amount section -->
+							<div class="row">
+								<div class="col-md-12">
+									<div class="col-md-7" style="padding-left: 0;text-align: left">
+										<label for="amount">Price range:</label>
+									</div>
+									<div class="col-md-5" style="text-align: right">
+										<input type="text" class="search" id="amount" readonly>
+									</div>
+								</div>
+
+								<div class="col-md-12">
+									<div id="slider-range"></div>
+								</div>
+							</div>
+
+							<!-- filter category box -->
+							<br/>
+							<div class="row">
+								<div class="col-md-12" style="text-align: left;">
+									<label >Category:</label>
+								</div>							
+								<div class="col-md-12">
+									<div class="controlgroup-vertical" style="width: 100%;">
+									
+										<label for="dairy">Dairy Product</label>
+										<input type="radio" name="category" id="dairy" value="dairy" onchange="categorySearch(this.id)" >
+										<label for="bakery">Bakery Product</label>
+										<input type="radio" name="category" id="bakery" value="bakery" onchange="categorySearch(this.id)">
+										<label for="frozen">Frozen Product</label>
+										<input type="radio" name="category" id="frozen" value="frozen" onchange="categorySearch(this.id)">
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- user filter form ends here -->
+
+			</div>
+			<!-- filter panel sections ends here -->
+		</div>
+		<!-- left panel section ends here -->
+		
+		<!-- right panel section starts from here -->
+		<div class="col-md-9" id="products-list" style="margin-bottom: 3rem;">
+			{{#each product}}
+			<div class="panel panel-default item">
+				<div class="panel-heading" role="tab">
+					<a role="button" href="/product/id/{{_id}}" data-parent="#accordion" aria-expanded="true">
+						<h2 class="panel-title head">
+							{{title}}
+						</h2>
+					</a>
+				</div>
+
+				<div class="panel-collapse collapse in" role="tabpanel">
+					<div class="panel-body">
+						<div class="col-md-12">
+							<div class="row">
+								<img src="{{images.[0]}}" alt="{{title}}" />
+							</div>
+
+							<div class="row detail">
+								<div class="col-md-6 price">
+									<i class="fa fa-dollar"></i>{{price}}
+								</div>
+								<div class="col-md-6">
+									<input type="submit" class="btn btn-default" onclick="window.location.href = '/product/id/{{_id}}'" value="View Details"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		<!-- right panel section ends here -->
+
+	</div>	
+</article>
+<!-- products result ends here -->
+<input type="text" class="form-control hidden" value="{{searchedOf}}" id="searched-value">

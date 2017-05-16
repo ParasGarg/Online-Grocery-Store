@@ -48,7 +48,6 @@ module.exports = walletTransactionsControllers = {
         return walletTransaction().then((walletTransactionCollection) => {
             
             let creditCheck = false;
-
             if (status === "Credit") {
                 creditCheck = true;
             }
@@ -59,7 +58,7 @@ module.exports = walletTransactionsControllers = {
 				user: email,
 				amount: amount,				
 				cardDetails: cardData,
-                date: new Date("2010-06-09T15:20:00Z").toUTCString(),
+                date: new Date().toUTCString(),
 				status: status,
                 isCredited: creditCheck,
 				remark: remark

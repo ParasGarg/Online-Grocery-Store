@@ -1,8 +1,7 @@
 /* header */
 header { background-color: #337ab7;display: block;min-height: 50px; }
 header a { color: #fff;font-size: 1.5rem;letter-spacing: 1px;padding: 20px 0; }
-header i.fa { font-size: 1.8rem; }
-
+header i.fa { font-size: 1.8rem;margin-right: 1rem }
 
 /* navbar */
 .navbar-default { background-color: #337ab7; }
@@ -21,7 +20,7 @@ header #form-logout { visibility: hidden; }
 .dropdown-menu > li > a { padding: 9px 20px; }
 .dropdown-menu .divider { margin: 0; }
 
-header a.cart-items-number { padding-top: 10px;padding-bottom: 13px;z-index: 0;  }
-header a.cart-items-number > span { background-color: #ff0000;border-radius: 1rem;font-size: 1.2rem;margin: 0 -1.5rem 0 0;padding: .2rem .4rem .2rem .5rem;z-index: 10;  }
+header a.cart-items-number { padding-top: 10px;padding-bottom: 14px;z-index: 0;  }
+header a.cart-items-number span.cart { background-color: #a94442;border-radius: 1rem;font-size: 1.2rem;margin: 0 -1.5rem 0 0;padding: .2rem .4rem .2rem .5rem;z-index: 10;  }
 header a.cart-items-number > i { font-size: 2.5rem;position: relative;z-index: -1;transform: rotateY(180deg);
 								-webkit-transform: rotateY(180deg);-moz-transform: rotateY(180deg);-o-transform: rotateY(180deg);-ms-transform: rotateY(180deg); }

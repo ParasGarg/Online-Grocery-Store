@@ -74,8 +74,9 @@ router.get('/', isLoggedIn, (req, res) => {
 	if (req.session.flash["error"] === undefined) {
         res.render('users/auth/user-login-account', { 
             mainTitle: "Dashboard Login •",
+            url: '/user/dashboard',
             error: req.session.flash.error 
-        });   
+        });
     } else {
         res.render('users/auth/user-login-account', { 
             mainTitle: "Dashboard Login •",
@@ -92,7 +93,7 @@ router.post('/', isValid, (req, res) => {
     }
 
     passport.authenticate('user')(req, res, function () {   //authenticate user
-        res.json({ success: true });
+        res.json({ success: true, url: req.url });
     });
 });
 

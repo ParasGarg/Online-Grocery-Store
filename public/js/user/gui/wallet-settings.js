@@ -5,13 +5,14 @@ $(document).ready(function() {
     $("#btn-user-quick-add").on('click', function() {
 
 		const regex = /^[A-Za-z]+$/;
+		const amtRegex = /^\d+(\.\d{1,2})?$/;
 		const amount = $("#amount").val();
 		const card = $("#pay-card").val();
 		const form = $("#form-user-wallet");
 
 		if (amount.length > 0 && card != null) {
 			if (amount > 0) {
-				if (!regex.test(amount)) {
+				if (!regex.test(amount) && amtRegex.test(amount)) {
 
 					const formData = {
 						amount: amount,
@@ -39,7 +40,7 @@ $(document).ready(function() {
 					$("#success-wallet").addClass("hidden");
 					$("#error-wallet").removeClass("hidden");
 					$("#amount").val("");
-					$("#error-wallet-message").html("Only numeric value is allowed");
+					$("#error-wallet-message").html("Invalid Amount");
 				}
 			} else {
 				$("#success-wallet").addClass("hidden");
@@ -61,11 +62,12 @@ $(document).ready(function() {
 	// click on user wallet form button
     $("#btn-user-add").on('click', function() {
 		const regex = /^[A-Za-z]+$/;
+		const amtRegex = /^\d+(\.\d{1,2})?$/;
 		const amount = $("#amount").val();
 
 		if (amount.length > 0) {
 			if (amount > 0) {
-				if (!regex.test(amount)) {
+				if (!regex.test(amount) && amtRegex.test(amount)) {
 
 					$("#form-user-wallet").submit();
 					
@@ -73,7 +75,7 @@ $(document).ready(function() {
 					$("#success-wallet").addClass("hidden");
 					$("#error-wallet").removeClass("hidden");
 					$("#amount").val("");
-					$("#error-wallet-message").html("Only numeric value is allowed");
+					$("#error-wallet-message").html("Invalid Amount");
 				}
 			} else {
 				$("#success-wallet").addClass("hidden");

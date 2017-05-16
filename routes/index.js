@@ -6,22 +6,13 @@ const productsRoutes = require('./products/products-dao');
 const supportsRoutes = require('./supports');
 const usersRoutes = require('./users');
 
-// check user authenticity
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()) {
-        res.redirect('/');
-    } else {
-        return next();
-    }
-}
-
 const mainRoutes = (app) => {
 
     /* home page routes */
     app.use("/$/", homeRoutes);
 
     /* customized routes */
-    //app.use("/payment", paymentsRoutes);    // payments routes
+    app.use("/payment", paymentsRoutes);    // payments routes
     app.use("/product", productsRoutes);    // products routes
     app.use("/support", supportsRoutes);    // supports routes
     app.use("/user", usersRoutes);          // user routes

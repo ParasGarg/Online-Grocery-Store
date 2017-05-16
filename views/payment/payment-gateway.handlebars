@@ -1,13 +1,7 @@
 <!-- stylesheet -->
 <link rel="stylesheet" href="/public/css/payment/payment-gateway.css">
 <!-- script -->
-<script>
-	$('#myTabs a').click(function (e) {
-		e.preventDefault()
-		$(this).tab('show')
-	})
-
-</script>
+<script src="/public/js/payment/gatway-checkout.js"></script>
 
 <!-- body -->
 <div class="gateway">
@@ -16,7 +10,7 @@
 			<div class="col-md-8 col-md-offset-2">
 
 				<article>
-					<h2>Pay and you're done!</h2>
+					<h1>Pay and you're done!</h1>
 
 					<!-- payment mode detail starts from here -->
 					<div class="row">
@@ -35,75 +29,120 @@
 								</a>
 							</li>
 							<li role="presentation">
-								<a href="#other" aria-controls="other" role="tab" data-toggle="tab">
+								<a href="#wallet" aria-controls="wallet" role="tab" data-toggle="tab">
 									<i class="fa fa-google-wallet" aria-hidden="true"></i>
-									Other
+									Wallet
 								</a>
 							</li>
 						</ul>
 
 						<!-- Tab panes -->
 						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane desc-div active" id="saved-card">
+							<!-- saved card tab -->
+							<div role="tabpanel" class="tab-pane desc-div active" id="saved-card">							
 								<div class="row">
+									{{#if user.card}}
 
 									<div class="col-md-12">
 										<div class="row">
-											<div class="col-md-1"><strong>Select</strong></div>
+											<div class="col-md-1"><strong></strong></div>
 											<div class="col-md-4"><strong>Card Number</strong></div>
 											<div class="col-md-4"><strong>Name on Card</strong></div>
-											<div class="col-md-2"><strong>Card Expiry</strong></div>
-											<div class="col-md-1"><strong>CVV</strong></div>
+											<div class="col-md-1"><strong>Expiry</strong></div>
+											<div class="col-md-2"><strong>Card Type</strong></div>
 										</div>
 
-										<div class="row">
-											<div class="col-md-1" style="text-align:center;"><input type="checkbox" value=""></div>
-											<div class="col-md-4">4234-6433-6433-1244</div>
-											<div class="col-md-4">Paras Garg</div>
-											<div class="col-md-2">12/2019</div>
-											<div class="col-md-1">4543</div>
-										</div>
-									</div>
+										<form id="form-saved-card" method="post" action="/payment/gateway/saved" >
+											{{#each user.card}}
+											<div class="row">
+												<div class="col-md-1" style="text-align:center;">
+													<input type="radio" name="savedCard" value="{{_id}}">
+												</div>
+												<div class="col-md-4">{{_id}}</div>
+												<div class="col-md-4">{{name}}</div>
+												<div class="col-md-1">{{expiry}}</div>
+												<div class="col-md-2">{{type}}</div>
+											</div>
+											{{/each}}
 
-								</div>
-							</div>
-							<div role="tabpanel" class="tab-pane desc-div" id="new-card">
-								<div class="row">
-									<div class="col-md-2">
-										<div class="row"><h4>Name on Card</h4></div>
-										<div class="row"><h4>Card Number</h4></div>
-										<div class="row"><h4>Card Expiry</h4></div>
-										<div class="row"><h4>Card CVV</h4></div>
-									</div>
-
-									<div class="col-md-6 ">
-										<form class="form" name="new-card-form" id="new-card-form">
+											<input type="text" class="form-control hidden" name="amount" value="{{net}}"/>
 											<div class="row">
-												<input type="text" class="form-control" name="cardHolder" placeholder="Card Holder Name">
+												<div class="col-md-6 col-md-offset-3">
+													<input type="button" id="btn-saved-card" class="btn btn-default" value="Pay">
+												</div>
 											</div>
-											<div class="row">
-												<input type="text" class="form-control" name="cardNumber" placeholder="Card Number">
-											</div>
-											<div class="row">
-												<input type="number" class="form-control" name="expMonth" placeholder="Month" min="1" max="12">
-												<input type="number" class="form-control" name="expYear" placeholder="Year" min="2017" max="2051">
-											</div>
-											<div class="row">
-												<input type="text" class="form-control" name="cardCVV" placeholder="CVV">
-											</div>
-											<!-- div class="row">
-												<input type="submit" class="btn btn-default" value="Add Card">												
-											</div --> 
 										</form>
 									</div>
+
+									{{else}}
+									<div>
+										No saved cards
+									</div>
+
+									{{/if}}
 								</div>
 							</div>
-							<div role="tabpanel" class="tab-pane desc-div" id="other">
+
+							<!-- new card tab -->
+							<div role="tabpanel" class="tab-pane desc-div" id="new-card">
+								<form id="form-new-card" method="post" action="/payment/gateway/new"  >
+									<!-- alert notification -->
+									<div class="row">
+										<div class="col-md-12">
+											<div id="error-new-card" class="alert alert-danger hidden">
+												<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+												<strong id="error-new-card-message"></strong> 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-3">
+											<div class="row"><label for="new-card-name">Name on Card</label></div>
+											<div class="row"><label for="new-card-number">Card Number</label></div>
+											<div class="row"><label for="new-card-type">Card Type</label></div>
+											<div class="row"><label for="new-card-month">Card Expiry</label></div>
+											<div class="row"><label for="new-card-cvv">Card CVV</label></div>
+										</div>
+										<div class="col-md-6">
+											<div class="row">
+												<input id="new-card-name" type="text" class="form-control" name="cardName" placeholder="Card Holder Name">
+											</div>
+											<div class="row">
+												<input id="new-card-number" type="text" class="form-control" name="cardNumber" placeholder="Card Number" maxlength="16" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+											</div>
+											<div class="row">
+												<select class="btn btn-default" name="cardType" id="new-card-type">
+													<option selected disabled>Card Type</option>
+													<option value="Credit Card">Credit Card</option>
+													<option value="Debit Card">Debit Card</option>
+												</select>
+											</div>
+											<div class="row">
+												<input id="new-card-month" type="number" class="form-control" name="expMonth" placeholder="Month" min="1" max="12" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+												<input id="new-card-year" type="number" class="form-control" name="expYear" placeholder="Year" min="2017" max="2051" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+											</div>
+											<div class="row">
+												<input id="new-card-cvv" type="password" class="form-control" name="cardCVV" placeholder="CVV" maxlength="4">
+											</div>
+										</div>
+									</div>
+
+									<input type="text" class="form-control hidden" name="amount" value="{{net}}"/>
+									<div class="row">
+										<div class="col-md-6 col-md-offset-1">
+											<input id="btn-new-card" type="button" class="btn btn-default" value="Pay">
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<div role="tabpanel" class="tab-pane desc-div" id="wallet">
 								<div class="row">
 
 									<div class="col-md-12">
 										<div class="row">
-											<div class="col-md-6">
+											<!--div class="col-md-6">
 												<div class="row">
 													<div class="col-md-1" style="text-align:center;"><input type="checkbox" value=""></div>
 													<div class="col-md-10" style="text-align:center;">
@@ -111,14 +150,38 @@
 														Cash
 													</div>
 												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="row">
-													<div class="col-md-1" style="text-align:center;"><input type="checkbox" value=""></div>
-													<div class="col-md-10" style="text-align:center;">
-														<i class="fa fa-google-wallet" aria-hidden="true"></i>
-														Wallet (Bal $ 51)
+											</div -->
+											<div class="col-md-12">
+												<div class="row" style="text-align: center;">
+													{{#if isWallet}}
+													<div class="col-md-12">
+														<p class="msg">
+															Wallet Balance 
+															<i class="fa fa-dollar" aria-hidden="true"></i>{{user.wallet}}
+														</p>
+
+														<form method="post" action="/payment/gateway/wallet" enctype="" >
+															<input type="text" class="form-control hidden" name="amount" value="{{net}}"/>
+															<div class="row">
+																<div class="col-md-6 col-md-offset-3">
+																	<input id="btn-wallet" type="submit" class="btn btn-default" value="Pay">
+																</div>
+															</div>
+														</form>
 													</div>
+													{{else}}
+													<div class="col-md-12">
+														<p class="msg">
+															You do not have enough amount in your wallet.<br/>
+															Wallet amount <i class="fa fa-dollar"></i>{{user.wallet}}
+														</p>
+														<div class="row">
+															<div class="col-md-6 col-md-offset-3">
+																<input type="button" class="btn btn-default" value="Add cash to Wallet" onclick="addCash()">
+															</div>
+														</div>
+													</div>
+													{{/if}}
 												</div>
 											</div>
 										</div>
@@ -130,7 +193,7 @@
 					<!-- payment mode detail ends here -->					
 
 					<!-- promo code section starts from here -->
-					<br/><br/>
+					<!-- br/><br/>
 					<div class="row">
 						<form class="form" name="promo-code-form" id="promo-code-form">
 							<div class="row">
@@ -144,38 +207,64 @@
 								Your promo code is invalid
 							</div>
 						</form>
-					</div>
+					</div -->
 					<!-- promo code section end here -->
 
 					<!-- payment summary starts from here -->					
 					<br/>
 					<div class="row">
-						<div class="col-md-8" id="payment-summary">
-							<h3>Payment Summary</h3>
-							
-							<div class="row">
-								<div class="col-md-6 col-md-offset-1"><label>Total Price</label></div>
-								<div class="col-md-4 col-md-offset-1">$ 124.54</div>
-							</div>
+						<div class="col-md-8 col-md-offset-2" id="payment-summary">
+							<div class="panel panel-default">
+								<div class="panel-heading" id="profile-head">
+									<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="profile-panel">
+										<h2 class="panel-title">
+											Payment Summary
+										</h2>
+									</a>
+								</div>
 
-							<div class="row">
-								<div class="col-md-6 col-md-offset-1"><label>Promo Discount</label></div>
-								<div class="col-md-4 col-md-offset-1">$ 10</div>
-							</div>
+								<div id="profile-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="profile-head">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-6 col-md-offset-1"><label>Price</label></div>
+											<div class="col-md-4 col-md-offset-1">
+												<i class="fa fa-dollar"></i>
+												{{total}}
+											</div>
+										</div>
 
-							<div class="row">
-								<div class="col-md-6 col-md-offset-1"><label>Net Price</label></div>
-								<div class="col-md-4 col-md-offset-1">$ 114.50</div>
-							</div>
-						</div>
+										<!-- div class="row">
+											<div class="col-md-6 col-md-offset-1"><label>Promo Discount</label></div>
+											<div class="col-md-4 col-md-offset-1">$ 10</div>
+										</div -->
 
-						<div class="col-md-4" id="payment-now">
-							<div class="row">
-								<div class="col-md-6 col-md-offset-3">
-									<input type="button" class="btn btn-default" value="Buy Now" />
+										<div class="row">
+											<div class="col-md-6 col-md-offset-1"><label>Taxes (@7%)</label></div>
+											<div class="col-md-4 col-md-offset-1">
+												<i class="fa fa-dollar"></i>
+												{{tax}}
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-6 col-md-offset-1"><label>Total Price</label></div>
+											<div class="col-md-4 col-md-offset-1">
+												<i class="fa fa-dollar"></i>
+												{{net}}
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
+
+						<!-- div class="col-md-4" id="payment-now">
+							<div class="row">
+								<div class="col-md-6 col-md-offset-3">
+									<input type="button" class="btn btn-default" value="Pay" />
+								</div>
+							</div>
+						</div -->
 
 					</div>
 					<!-- payment summary ends here -->					

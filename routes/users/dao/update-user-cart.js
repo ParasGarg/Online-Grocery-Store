@@ -28,23 +28,20 @@ function isLoggedIn(req, res, next) {
         if (req.isAuthenticated()) {
                 return next();
         } else {
-                res.render('alerts/error', {
-                        mainTitle: "Bad Request •",
-                        code: 400,
-                        message: "Unauthorized Request Attempt",
-                        url: req.originalUrl,
-                        user: req.user
+                res.render('users/auth/user-login-account', {
+                        mainTitle: "User Login •",
+                        url: `/product/id/${xss(req.params.id)}`
                 });
         }
 }
 
 /* global scoped function */
-//------------------------ route to update user information by id
-router.post('/', /*isLoggedIn,*/ (req, res) => {
+//------------------------ route to update user cart item
+router.post('/:id/:loc', isLoggedIn, (req, res) => {
 
-        let prodId = req.body.itemId;
-        //let email = xss(req.user._id);
-        let email = xss(req.body.email);
+        let prodId = xss(req.params.id);
+        let redirectLoc = xss(req.params.loc);
+        let email = xss(req.user._id);
 
         if (!prodId) {
                 res.status(400).json({ error: "No product selected" });
@@ -53,14 +50,28 @@ router.post('/', /*isLoggedIn,*/ (req, res) => {
         productData.getProductById(prodId).then((prodInfo) => {
 
                 if (prodInfo != null) {
-                        usersCartData.addItemInCart(email, prodInfo).then(() => {
+                        usersCartData.addItemInCart(email, prodInfo).then((cartLen) => {
+                                req.user.cartLen = cartLen;
 
-console.log(5);
-                                
-                                res.status(200).json({ success: true });
+                                if (redirectLoc === "home") {
+                                        res.redirect('/');
+                                }
+
+                                if (redirectLoc === "product-view") {
+                                        res.render('product/product-added-cart', {
+                                                mainTitle: "Item Added •",
+                                                user: req.user
+                                        });
+                                }
                         });
                 } else {
-                        res.status(400).json({ error: "No such product exists in collection" });
+                        res.render('alerts/error', {
+                                mainTitle: "Bad Request •",
+                                code: 400,
+                                message: "No such product exists",
+                                url: req.originalUrl,
+                                user: req.user
+                        });
                 }
         })
         .catch((error) => {     // rendering error page
@@ -74,14 +85,45 @@ console.log(5);
         });
 });
 
-//------------------------ route to delete user information by id
+//------------------------ route to update cart quantity
+router.put('/', isLoggedIn, (req, res) => {
+
+        let email = xss(req.user._id);
+        let prodId = xss(req.body.id);
+        let quantity = parseInt(xss(req.body.qty));
+
+        if (quantity < 1 && quantity > 5) {
+                res.json({ success: false });
+        }
+
+        usersCartData.updateItemQty(email, prodId, quantity).then((userInfo) => {
+
+                req.user = userInfo;
+                req.user.cartLen = userInfo.cartLen;
+                res.json({ success: true });
+                
+        })
+        .catch((error) => {     // rendering error page
+                res.render('alerts/error', {
+                        mainTitle: "Server Error •",
+                        code: 500,
+                        message: error,
+                        url: req.originalUrl,
+                        user: req.user
+                });
+        });
+});
+
+//------------------------ route to delete user cart item
 router.delete('/', isLoggedIn, (req, res) => {
 
-        let prodId = xss(req.body.prodId);
+        let prodId = xss(req.body.id);
         let email = xss(req.user._id);
 
-        usersCartData.deleteItemFromCart(email, prodId).then(() => {
-                res.json({success: true})
+        usersCartData.deleteItemFromCart(email, prodId).then((userInfo) => {
+                req.user = userInfo;
+                req.user.cartLen = userInfo.cartLen;
+                res.json({ success: true, cartSize: userInfo.cartLen });
         })
         .catch((error) => {     // rendering error page
                 res.render('alerts/error', {

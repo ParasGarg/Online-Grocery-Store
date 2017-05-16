@@ -15,6 +15,7 @@
 /* importing required files and packages */
 const express = require('express');
 const router = express.Router();
+const xss = require('xss');
 const data = require('../../../data');
 const contactsData = data.contacts;
 
@@ -31,8 +32,9 @@ router.post('/', (req, res) => {
     let senderInfo = req.body;
 
     // checking for existing record
-    contactsData.addContact(senderInfo.name, senderInfo.email, senderInfo.mobile, senderInfo.description).then(() => {
-		res.redirect('back');
+    contactsData.addContact(xss(senderInfo.name), xss(senderInfo.email), xss(senderInfo.mobile), xss(senderInfo.description)).then(() => {
+		res.json({success: true});
+		//res.redirect('back');
     })
     .catch((collectionError) => {
         // rendering error page

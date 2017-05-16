@@ -9,7 +9,7 @@
 
 	<!-- user saved card section starts frome here -->
 	<div class="panel panel-default">
-		<div class="panel-heading" role="tab" id="head-saved-card">
+		<div class="panel-heading" id="head-saved-card">
 			<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="saved-card-panel">
 				<h2 class="panel-title">
 					Saved Cards
@@ -96,7 +96,7 @@
 
 	<!-- user add card section starts frome here -->
 	<div class="panel panel-default">
-		<div class="panel-heading" role="tab" id="add-card-head">
+		<div class="panel-heading" id="add-card-head">
 			<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="add-card-panel">
 
 				<h2 class="panel-title">
@@ -166,15 +166,16 @@
 							<div class="row">
 								<div class="col-md-4">
 									<label for="card-month">Card Expiry</label>
+									<label for="card-year" class="hidden">Card Expiry</label>
 								</div>
 								<div class="col-md-6 col-md-offset-1">
-									<input type="number" class="form-control" name="cardMonth" id="card-month" min="1" max="12" maxlength="2" placeholder="Month" />
-									<input type="number" class="form-control" name="cardYear" id="card-year" min="2017" max="2051" maxlength="4" placeholder="Year" />
+									<input type="number" class="form-control" name="cardMonth" id="card-month" min="1" max="12" placeholder="Month" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+									<input type="number" class="form-control" name="cardYear" id="card-year" min="2017" max="2051" placeholder="Year" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
 								</div>
 							</div>
 
 							<!-- card brand section -->
-							<div class="row">
+							<!-- div class="row">
 								<div class="col-md-4">
 									<label for="card-brand">Card Issuer</label>
 								</div>
@@ -186,7 +187,7 @@
 										<option value="Visa">Visa</option>
 									</select>
 								</div>
-							</div>
+							</div -->
 
 							<!-- card cvv section -->
 							<div class="row">
@@ -213,24 +214,3 @@
 
 </article>
 <!-- payment dashboard ends here -->
-
-<!-- delete alert modal -->
-<div class="modal fade" id="delete-alert">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Alert</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Do you want to delete it?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="deleteCard(33333333);" >Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>

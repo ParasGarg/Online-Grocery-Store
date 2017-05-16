@@ -1,11 +1,49 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/product/index.css">
+<!-- script -->
+<script>
+	function view(id) {
+		window.location.href = `/product/id/${id}`;
+	}
+</script>
+
 <article>
 
-<h1>Welcome to home page</h1>
+	<h1>Welcome to Online Grocery Store</h1>
 
+	<div class="col-md-12">
+		<img src="/public/images/cover.jpg" alt="Online-grocery-store" height="400"/>
+	</div>
 
-{{#each prod}}
-	<a href="/product/id/{{_id}}"><b>{{title}}</b></a><br/>
+	{{#each products}}
+	<div class="panel panel-default item">
+		<div class="panel-heading">
+			<a role="button" href="/product/id/{{_id}}" data-parent="#accordion" aria-expanded="true">
+				<h2 class="panel-title head">
+					{{title}}
+				</h2>
+			</a>
+		</div>
 
-{{/each}}
+		<div class="panel-collapse collapse in" role="tabpanel">
+			<div class="panel-body">
+				<div class="col-md-12">
+					<div class="row">
+						<img src="{{images.[0]}}" alt="{{title}}" />
+					</div>
+
+					<div class="row detail">
+						<div class="col-md-4 price">
+							<i class="fa fa-dollar"></i>{{price}}
+						</div>
+						<div class="col-md-8">
+							<input type="submit" class="btn btn-default" onclick="window.location.href = '/product/id/{{_id}}'" value="View Product Details"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/each}}
 
 </article>

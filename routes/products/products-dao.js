@@ -19,6 +19,16 @@ const data = require('../../data');
 const productsData = data.products;
 
 /* global scoped function */
+//------------------------ route to get all product list
+router.get('/', (req, res) => {
+        productsData.getAllProducts().then((productsList) => {
+                res.send(productsList);
+        })
+        .catch((error) => {
+                res.send({ error: error });
+        })
+});
+
 //------------------------ route to get product information by id
 router.get('/id/:id', (req, res) => {
         productsData.getProductById(xss(req.params.id)).then((productInfo) => {
@@ -56,15 +66,16 @@ router.get('/category/:category', (req, res) => {
 
                 if (productsList != null) {
                         res.render('product/product-category-results', {
-                                mainTitle: `${xss(req.params.category)} •`,
+                                mainTitle: `${xss(productsList[0].category)} Products •`,
                                 user: req.user,
-                                product: productsList
+                                product: productsList,
+                                category: xss(req.params.category)
                         });
                 } else {
                         res.render('alerts/error', {
                                 mainTitle: "Page Not Found •",
                                 code: 404,
-                                message: "Page Not Found",
+                                message: `Your search did not match any products in ${xss(req.params.category)} category`,
                                 url: req.originalUrl,
                                 user: req.user
                         });
@@ -82,7 +93,6 @@ router.get('/category/:category', (req, res) => {
 });
 
 //------------------------ route to get product information by search command
-//router.post('/search?keyword:query', (req, res) => {
 router.get('/search', (req, res) => {
         let prodSearchbar = xss(req.query.keyword);
 
@@ -93,6 +103,7 @@ router.get('/search', (req, res) => {
                                 res.render('product/product-search-results', {
                                         mainTitle: `${prodSearchbar} •`,
                                         product: productResults,
+                                        searchedOf: prodSearchbar,
                                         user: req.user
                                 });
                         } else {
@@ -120,16 +131,60 @@ router.get('/search', (req, res) => {
         }
 });
 
+router.post('/search/filter', (req, res) => {
 
+        let search = xss(req.body.search);
+        let startRange = parseFloat(xss(req.body.startRange));
+        let endRange = parseFloat(xss(req.body.endRange));
 
-//------------------------ route to get all product list
-router.get('/', (req, res) => {
-        productsData.getAllProducts().then((productsList) => {
-                res.send(productsList);
+        productsData.getProductBySearchFilter(search, startRange, endRange).then((filteredProducts) => {
+
+                if (filteredProducts.length > 0) {
+                        res.json({ 
+                                empty: false,  
+                                product: filteredProducts
+                        });
+                } else {
+                        res.json({ empty: true });
+                }
         })
-        .catch((error) => {
-                res.send({ error: error });
+        .catch((error) => {     // rendering error page
+                res.render('alerts/error', {
+                        mainTitle: "Server Error •",
+                        code: 500,
+                        message: error,
+                        url: req.originalUrl,
+                        user: req.user
+                });
+        });
+});
+
+router.post('/filter', (req, res) => {
+        
+        let category = xss(req.body.category);
+        let startRange = parseFloat(xss(req.body.startRange));
+        let endRange = parseFloat(xss(req.body.endRange));
+
+        productsData.getProductByFilter(category, startRange, endRange).then((filteredProducts) => {
+                
+                if (filteredProducts.length > 0) {
+                        res.json({ 
+                                empty: false,  
+                                product: filteredProducts
+                        });
+                } else {
+                        res.json({ empty: true });
+                }
         })
+        .catch((error) => {     // rendering error page
+                res.render('alerts/error', {
+                        mainTitle: "Server Error •",
+                        code: 500,
+                        message: error,
+                        url: req.originalUrl,
+                        user: req.user
+                });
+        });
 });
 
 //------------------------ route to add product information
@@ -145,6 +200,8 @@ router.post('/', (req, res) => {
                 res.status(400).json({ error: "No description provided" });
         } else if (!productUpdates.category) {
                 res.status(400).json({ error: "No category provided" });
+        } else if (!productUpdates.brand) {
+                res.status(400).json({ error: "No brand provided" });
         } else if (!productUpdates.expDate) {
                 res.status(400).json({ error: "No expiry date provided" });
         } else if (!productUpdates.mfdDate) {
@@ -163,21 +220,21 @@ router.post('/', (req, res) => {
                 productUpdates["allegations"] = []
         }
         
-        productsData.addNewProduct(productUpdates.title, productUpdates.description, productUpdates.category, productUpdates.expDate, 
-                productUpdates.mfdDate, productUpdates.size, productUpdates.price, productUpdates.stock, productUpdates.images, 
-                productUpdates.suggestion, productUpdates.allegations)
-                .then(() => {
-                        res.status(200).send({ success: true });
-                })
-                .catch((error) => {     // rendering error page
-                        res.render('alerts/error', {
-                                mainTitle: "Server Error •",
-                                code: 500,
-                                message: error,
-                                url: req.originalUrl,
-                                user: req.user
+        productsData.addNewProduct(productUpdates.title, productUpdates.description, productUpdates.category, productUpdates.brand,
+                productUpdates.expDate, productUpdates.mfdDate, productUpdates.size, productUpdates.price, productUpdates.stock, 
+                productUpdates.images, productUpdates.suggestion, productUpdates.allegations)
+                        .then(() => {
+                                res.send({ success: true });
+                        })
+                        .catch((error) => {     // rendering error page
+                                res.render('alerts/error', {
+                                        mainTitle: "Server Error •",
+                                        code: 500,
+                                        message: error,
+                                        url: req.originalUrl,
+                                        user: req.user
+                                });
                         });
-                });
 });
 
 // exporting routing apis

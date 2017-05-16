@@ -1,0 +1,107 @@
+<!-- stylesheet -->
+<link rel="stylesheet" href="/public/css/user-gui/user-dashboard.css">
+<!-- script -->
+<script src="/public/js/user/gui/orders-settings.js"></script>
+
+<!-- orders dashboard starts from here -->
+<article class="dashboard orders">
+	<h1>Order History</h1>
+		
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		
+		<!-- transactions section starts from here -->
+		<div class="col-md-12">
+			<!-- orders transactions section starts frome here -->
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="orders-transaction">
+					<a role="button"  data-parent="#accordion" aria-expanded="true" aria-controls="orders-transaction-panel">
+						<h2 class="panel-title">
+							Orders Transactions
+						</h2>
+					</a>
+				</div>
+				<div id="orders-transaction-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="orders-transaction">
+					<div class="panel-body">
+
+						{{#if transactions}}
+							<div class="row">
+								<!-- order id -->
+								<div class="col-md-2">
+									Transaction Id
+								</div>
+
+								<!--price -->
+								<div class="col-md-1">
+									Amount
+								</div>
+
+								<div class="col-md-2">
+									Paid By
+								</div>
+
+								<!-- Date -->
+								<div class="col-md-1">
+									Date
+								</div>
+
+								<!-- description -->
+								<div class="col-md-6">
+									Purchased Items Description
+								</div>
+							</div>
+
+							{{#each transactions}}
+								<div class="row separate">
+									<div class="col-md-2">
+										{{_id}}
+									</div>
+
+									<div class="col-md-1">
+										<i class="fa fa-dollar"></i>
+										{{amount}}
+									</div>
+
+									<div class="col-md-2">
+										{{payMode}}
+										
+										{{#if card.number}}
+											{{card.number}}
+										{{/if}}
+									</div>
+
+									<div class="col-md-1">
+										{{formatDate date day="numeric" month="long" year="numeric"}}
+									</div>
+
+									<div class="col-md-6">
+										{{#each items}}
+											<ul>
+												<li>
+													{{title}}.<br>
+													Price: <i class="fa fa-dollar"></i>{{price}} &nbsp;&nbsp;&nbsp;
+													Qty: {{qty}} &nbsp;&nbsp;&nbsp;
+													Total: <i class="fa fa-dollar"></i>{{total}}
+												</li>
+											</ul>
+										{{/each}}
+									</div>
+								</div>
+							{{/each}}
+
+							<p class="msg banner">(Showing recent 10 activities)</p>
+						{{else}}
+							<div class="row">
+								<p class="msg">No orders transactions</p>
+							</div>
+						{{/if}}
+
+					</div>
+				</div>			
+			</div>
+			<!-- orders transactions sections ends here -->
+		</div>
+		<!-- transactions section ends here -->
+
+	</div>	
+</article>
+<!-- orders dashboard ends here -->

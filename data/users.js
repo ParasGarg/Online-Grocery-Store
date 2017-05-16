@@ -21,13 +21,38 @@
 const mongoDbCollection = require('../config/mongodb-collection');
 const users = mongoDbCollection.users;
 
+//------ create alias of name
+function makeAlias(name) {
+
+    let alias = "";
+    for (var i = 0; i < name.length; i++) {
+        if((name.charCodeAt(i) >= 65 && name.charCodeAt(i) <= 90) || (name.charCodeAt(i) >= 97 && name.charCodeAt(i) <= 122)) {
+            alias += name.charAt(i);
+        } else if (name.charCodeAt(i) == 32 || name.charCodeAt(i) == 46 || name.charAt(i) == 44) {
+            break;
+        }
+    }
+
+/*    if (alias.length > 15) {
+        
+        var initial = name.charAt(0);
+        if (name.charCodeAt(0) >= 97 && name.charCodeAt(0) <= 122) {
+            initial = String.fromCharCode(name.charCodeAt(0) - 32);
+        }
+
+        alias = "Mr. " + initial;
+    }
+*/
+    return alias;
+}
+
 /* exporting controllers apis */
 module.exports = usersControllers = {
 
     //------------------------ fetch a user information by email id
     getUserById: (email) => {
         return users().then((usersCollection) => {  // returning a found json document else returning null
-            return usersCollection.findOne({ _id: email }, { _id: 1, name: 1, mobile: 1, cart: 1, card: 1, wish:1, wallet: 1 });
+            return usersCollection.findOne({ _id: email }, { _id: 1, name: 1, alias:1, mobile: 1, cart: 1, cartLen:1, card: 1, wallet: 1 });
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'users' collection.");
@@ -38,15 +63,18 @@ module.exports = usersControllers = {
     createNewUser: (name, email, mobile) => {
         return users().then((usersCollection) => {
             
+            var alias = makeAlias(name);
+
             // new user object
             let newUser = {
                 _id: email,
                 name: name,
+                alias: alias,
                 mobile: mobile,
-                regDate: new Date("2010-06-09T15:20:00Z").toUTCString(),
+                regDate: new Date().toUTCString(),
                 cart: [],
+                cartLen: 0,
                 card: [],
-                wish: [],
                 wallet: 0
             }
 
@@ -73,6 +101,7 @@ module.exports = usersControllers = {
             // checking for values to update
             if (name) {
                 userChanges['name'] = name;
+                userChanges['alias'] = makeAlias(name);
             }
 
             if (mobile) {

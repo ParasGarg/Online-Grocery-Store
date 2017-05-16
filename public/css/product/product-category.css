@@ -1,0 +1,19 @@
+.product a:hover { text-decoration: none;cursor: text; }
+
+h1 { font-size: 2.5rem;margin: 3rem auto; }
+
+.item { display: inline-block;float: left;margin: 0 1rem 2rem;width: 30% }
+.item a, .item a:hover { cursor: text; text-decoration: none; }
+.item img { height: 220px; width: 100%; }
+
+.item .detail { margin: 1rem 0; }
+.item .price { color: #3c763d;font-size: 1.8rem;margin-top: .6rem; }
+
+.panel-group .panel+.panel { margin-top: 0;margin-bottom: 1.8rem }
+.item .panel-heading { height: 5rem;overflow: hidden; }
+.item .panel-title { line-height: 2rem;margin-top: -3px; }
+.item .panel-body { padding: 0; }
+.item .btn { margin-left: -15%; }
+.item .row { text-align: left; }
+
+input[type="text"].search { border: none;width: 8rem; }

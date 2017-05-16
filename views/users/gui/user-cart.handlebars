@@ -8,91 +8,138 @@
 	<h1>Cart Review</h1>
 
 	<!-- user saved cart item section starts frome here -->
-	<div class="panel panel-default">
-		<div class="panel-heading" role="tab" id="head-saved-cart">
-			<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="saved-cart-panel">
-				<h2 class="panel-title">
-					Item Details
-				</h2>
-			</a>
-		</div>
+	<div class="left-panel">
+		<div class="panel panel-default">
+			<div class="panel-heading" id="head-saved-cart">
+				<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="saved-cart-panel">
+					<h2 class="panel-title">
+						Item Details
+					</h2>
+				</a>
+			</div>
 
-		<div id="saved-cart-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="head-saved-cart">
-			<div class="panel-body">
+			<div id="saved-cart-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="head-saved-cart">
+				<div class="panel-body">
 
-				<!-- alert notification -->
-				<div class="row">
-					<div class="col-md-12">
-						<div id="success-cart-list" class="alert alert-success hidden">
-							<i class="fa fa-check success"></i>
-							<strong>Item has been removed successfully</strong> 
+					<!-- alert notification -->
+					<div class="row">
+						<div class="col-md-12">
+							<div id="success-cart-list" class="alert alert-success hidden">
+								<i class="fa fa-check success"></i>
+								Item has been removed successfully
+							</div>
 						</div>
 					</div>
+
+					<div id="saved-cart-list"> 
+						{{#if user.cart}}
+							<div class="row b-margin cart-show carts">
+									<div class="col-md-3"></div>
+									<div class="col-md-3">Description</div>
+									<div class="col-md-2">Price</div>
+									<div class="col-md-1">Qty</div>
+									<div class="col-md-2">Total</div>
+								</div>
+							{{#each user.cart}}
+								<div class="row b-margin cart-show carts">
+									<div class="col-md-3">
+										<img src="{{image}}" alt="{{title}}" height="100" width="120" />
+									</div>
+
+									<div class="col-md-3">
+										<h3>{{title}}</h3>									
+										{{size}}											
+									</div>
+
+									<div class="col-md-2">
+										<i class="fa fa-dollar"></i>
+										{{price}}
+									</div>
+
+									<div class="col-md-1">
+										<input id="quantity-{{_id}}" type="text" onblur="updateQty('{{_id}}')" class="form-control" onfocus="saveQty('{{_id}}')" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="{{qty}}" maxlength="1" />
+									</div>
+
+									<div class="col-md-2">
+										<strong>
+											<i class="fa fa-dollar"></i>
+											{{total}}
+										</strong>
+									</div>
+
+									<div class="col-md-1">
+										<i class="fa fa-trash delete" onclick="deleteCartItem('{{_id}}');" title="Delete"></i>
+									</div>
+
+								</div>
+
+								<input type="text" class="form-control hidden" id="quant-{{_id}}" disabled/>
+							{{/each}}
+						{{else}}
+							<div class="row">
+								<p class="msg">Cart is empty</p>
+							</div>
+						{{/if}}
+					</div>
+					
 				</div>
-
-				<div id="saved-cart-list"> 
-					{{#if user.cart}}
-						<div class="row cart-show heading">
-							<!-- cart number -->
-							<div class="col-md-3">
-								cart Number
-							</div>
-
-							<!-- cart name -->
-							<div class="col-md-3">
-								cart Holder
-							</div>
-
-							<!-- cart expiry -->
-							<div class="col-md-2">
-								cart Expiry
-							</div>
-
-							<!-- cart type -->
-							<div class="col-md-3">
-								cart Type
-							</div>
-						</div>
-						{{#each user.cart}}
-							<div class="row cart-show carts">
-								<!-- cart number -->
-								<div class="col-md-3">
-									{{_id}}
-								</div>
-
-								<!-- cart name -->
-								<div class="col-md-3">
-									{{title}}
-								</div>
-
-								<!-- cart expiry -->
-								<div class="col-md-2">
-									{{description}}
-								</div>
-
-								<!-- cart expiry -->
-								<div class="col-md-3">
-									{{price}}
-								</div>
-
-								<!-- cart delete -->
-								<div class="col-md-1">
-									<i class="fa fa-trash" onclick="deletecart({{_id}});" title="Delete"></i> 
-									<!--i class="fa fa-trash" data-toggle="modal" data-target="#delete-alert" title="Delete"></i -->
-								</div>
-							</div>
-						{{/each}}
-					{{else}}
-						<div class="row">
-							<p class="msg">Cart is empty</p>
-						</div>
-					{{/if}}
-				</div>
-				
 			</div>
 		</div>
 	</div>
 	<!-- user saved cart item sections ends here -->
+
+	<!-- user checkout cart item section starts frome here -->
+	{{#if user.cart}}
+	<div class="right-panel" id="summary">
+		<div class="panel panel-default">
+			<div class="panel-heading" id="head-summary-cart">
+				<a role="button" data-parent="#accordion" aria-expanded="true" aria-controls="summary-cart-panel">
+					<h2 class="panel-title">
+						Payment Summary
+					</h2>
+				</a>
+			</div>
+
+			<div id="summary-cart-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="head-summary-cart">
+				<div class="panel-body">
+
+					<div class="row">
+						<div class="col-md-6 col-md-offset-1"><label>Price</label></div>
+						<div class="col-md-4 col-md-offset-1">
+							<i class="fa fa-dollar"></i>
+							<div class="cost-summary" id="total-cost">{{total}}</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 col-md-offset-1"><label>Taxes (@7%)</label></div>
+						<div class="col-md-4 col-md-offset-1">
+							<i class="fa fa-dollar"></i>
+							<div class="cost-summary" id="tax-cost">{{tax}}</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 col-md-offset-1"><label>Total Price</label></div>
+						<div class="col-md-4 col-md-offset-1">
+							<i class="fa fa-dollar"></i>
+							<div class="cost-summary" id="net-cost">{{net}}</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<form method="post" action="/payment/checkout" >
+								<input type="submit" class="btn btn-default" value="Checkout">
+							</form>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/if}}
+	<!-- user checkout item sections ends here -->
 
 </article>
 <!-- payment dashboard ends here -->

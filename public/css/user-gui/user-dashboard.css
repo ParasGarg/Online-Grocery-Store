@@ -10,12 +10,12 @@
 
 .dashboard .positive { color: #3c763d; }
 .dashboard .negative { color: #a94442; }
-.dashboard p.msg { font-size: 1.5rem;font-weight: 500;margin-top: 1rem; }
+.dashboard p.msg { font-size: 1.5rem;font-weight: 500;margin-top: 1rem;text-align: center; }
 .dashboard p.msg.banner { font-size: 1.5rem;font-style: italic;font-weight: 400;margin-top: 0; }
 
 /* account */ /* payments */
 .dashboard.account, .dashboard.payments { width: 60%; }
-.dashboard.account h2, .dashboard.payments h2, .dashboard.wallet h2, .dashboard.cart h2 { padding: 0; }
+.dashboard.account h2, .dashboard.payments h2, .dashboard.wallet h2, .dashboard.cart h2,.dashboard.orders h2 { padding: 0; }
 .dashboard.account .panel-title, .dashboard.payments .panel-title { cursor: text; }
 
 /* payments */
@@ -29,9 +29,23 @@
 .dashboard.wallet input.add-amount { text-indent: 1rem;color: #333; }
 .dashboard.wallet .panel-body { font-weight: 500;text-align: center; }
 
-/* cart */
+/* cart */ /* orders */
 .dashboard.cart { width: 100%; }
+.dashboard.cart h3 { font-size: 1.2rem;font-weight: bold;text-align: left;margin-top: 0; }
+.dashboard.cart .left-panel { display: inline-block;margin-right: 1%;width: 68%; }
+.dashboard.cart .right-panel { display: inline-block;width: 30%; }
+.dashboard.cart .row { text-align: left; }
+.dashboard.cart .row.b-margin { margin-bottom: 2rem; }
+.dashboard.cart .btn { margin-top: 1rem;width: 100%; }
+.dashboard.cart .cost-summary { display: inline; }
+.dashboard.cart i.delete { color: #a94442;cursor: pointer; }
+.dashboard.cart #success-cart-list { text-align: center; }
 
+/* orders */
+.dashboard.orders .panel-body { font-weight: 500;text-align: center; }
+.dashboard.orders .row { margin: 1.5rem 0;text-align: left }
+.dashboard.orders .row.separate { border: 1px solid #d2d2d2;font-weight: normal;padding: 2rem 0; }
+.dashboard.orders ul { padding: 0 0 0 1.5rem; }
 
 #wallet-transaction-panel { text-align: left; }
 #wallet-transaction-panel .row { font-size: 1.2rem;margin-bottom: 12px; }
@@ -44,7 +58,3 @@
 .dashboard input[type="number"]:last-child { float: right; }
 
 .dashboard select.btn-default { text-align: left;width: 100%; }
-
-
-
-

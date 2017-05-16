@@ -47,7 +47,7 @@ module.exports = subscriptionsControllers = {
 
             let newSubscription = {
                 _id: email,
-                subscribedDate: new Date("2010-06-09T15:20:00Z").toUTCString(),
+                subscribedDate: new Date().toUTCString(),
                 activeStatus: true
             }
 
@@ -67,7 +67,7 @@ module.exports = subscriptionsControllers = {
              // update subscription object (empty)
             let subscriptionChanges = { };
 
-            subscriptionChanges['subscribedDate'] = new Date("2010-06-09T15:20:00Z").toUTCString();
+            subscriptionChanges['subscribedDate'] = new Date().toUTCString();
             subscriptionChanges['activeStatus'] = true;
 
             // updating user information into the collection

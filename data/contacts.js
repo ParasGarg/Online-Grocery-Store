@@ -30,7 +30,7 @@ module.exports = contactsControllers = {
 				email: email,
                 mobile: mobile,
                 description: description,
-                contactedDate: new Date("2010-06-09T15:20:00Z").toUTCString()
+                contactedDate: new Date().toUTCString()
             }
 
             // adding a record in to the collection

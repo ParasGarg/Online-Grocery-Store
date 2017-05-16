@@ -65,10 +65,38 @@ module.exports = productsControllers = {
         });
     },
 
+    //------------------------ fetch a product information by search string
+    getProductBySearchFilter: (keyword, startRange, endRange) => {
+        return products().then((productsCollection) => {  // returning a found json document else returning null
+
+            let query = [ 
+                { _id:keyword }, 
+                { title: { $regex : `.*${keyword}.*`, $options : 'i' } }, 
+                { category: { $regex : `.*${keyword}.*`, $options : 'i' } },
+                { description: { $regex : `.*${keyword}.*`, $options : 'i' } }                  
+            ];
+
+            return productsCollection.find({ $or: query, price: { $gte: startRange, $lte: endRange } }, { _id:1, title:1, category:1, price:1, images:1 }).toArray();
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'products' collection.");
+        });
+    },
+
+    //------------------------ fetch a product information by filter string
+    getProductByFilter: (category, startRange, endRange) => {
+        return products().then((productsCollection) => {
+            return productsCollection.find({ category: { $regex : `.*${category}.*`, $options : 'i' }, price: { $gte: startRange, $lte: endRange } }, { _id:1, title:1, category:1, price:1, images:1 }).toArray();
+        })
+        .catch(() => {  // returning a reject promise
+            return Promise.reject("Server issue with 'products' collection.");
+        });
+    },
+// 
     //------------------------ fetch all product information
     getAllProducts: () => {
         return products().then((productsCollection) => {  // returning a found json document else returning null
-            return productsCollection.find({ }, { _id:1, title:1 }).toArray();
+            return productsCollection.find({ }).toArray();
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'products' collection.");
@@ -76,7 +104,7 @@ module.exports = productsControllers = {
     },
 
     //------------------------ insert/create a new product record
-    addNewProduct: (title, description, category, expDate, mfdDate, size, price, stock, images, suggestion, allegations) => {
+    addNewProduct: (title, description, category, brand, expDate, mfdDate, size, price, stock, images, suggestion, allegations) => {
         return products().then((productsCollection) => {
             
             // new product object
@@ -85,10 +113,11 @@ module.exports = productsControllers = {
                 title: xss(title),
                 description: xss(description),
                 category: xss(category),
+                brand: brand,
                 expDate: xss(expDate),
                 mfdDate: xss(mfdDate),
                 size: xss(size),
-                price: xss(price),
+                price: parseFloat(xss(price)),
                 stock: xss(stock),
                 images: images,
                 suggestion: suggestion,
@@ -99,10 +128,7 @@ module.exports = productsControllers = {
             return productsCollection.insertOne(newProduct)
                 .then((newProductInformation) => {
                     return newProductInformation.insertedId;
-                })
-                .then((newProductId) => {  // returning created product document
-                    return productsControllers.getUserById(newProductId);
-                })
+                });
         })
         .catch(() => {  // returning a reject promise
             return Promise.reject("Server issue with 'products' collection.");

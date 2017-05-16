@@ -23,13 +23,12 @@ router.get('/', (req, res) => {
 		res.render('index', {
             mainTitle: "Welcome to",
             user: req.user,
-			prod: productsList
+			products: productsList
         });
     })
     .catch((error) => {
     	res.send({ error: error });
     })
 });
-
 // exporting routing apis
 module.exports = router;

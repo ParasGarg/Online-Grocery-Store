@@ -57,15 +57,22 @@ router.post('/', isLoggedIn, (req, res) => {
 
                 // checking for user profile updates
                 if (userUpdates.name || userUpdates.mobile) {
-                    usersData.updateProfile(email, xss(userUpdates.name), xss(userUpdates.mobile)).then(() => {
+                    usersData.updateProfile(email, xss(userUpdates.name), xss(userUpdates.mobile)).then((userInfo) => {
+                        req.user.alias = userInfo.alias;
                         res.json({ success: true });
                     });
                 }
                 
                 // checking for user security updates
                 if (userUpdates.password) {
-                    credentialsData.updateCredential(email, xss(userUpdates.password)).then(() => {
-                        res.json({ success: true });
+                    var savedPassword = credentialJsonDocument.password;
+
+                    credentialsData.updateCredential(email, xss(userUpdates.password), savedPassword).then((updateStatus) => {
+                        if (updateStatus) {
+                            res.json({ success: true });
+                        } else {
+                            res.json({ success: false, error: "New password shoud be different from previous password" });
+                        }
                     });
                 }
                 

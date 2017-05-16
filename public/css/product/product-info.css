@@ -1,0 +1,10 @@
+.product { width: 100%; }
+
+.product.info a, .product.info a:hover { cursor: text;text-decoration: none; }
+.product.info h1 { margin-bottom: 2rem; }
+.product.info img { height: 275px; width: 443px; }
+
+.product.info .details { text-align: justify; }
+.product.info .btn { margin: 0 0 3rem; }
+
+.product.info input[type=text] { visibility: hidden; }

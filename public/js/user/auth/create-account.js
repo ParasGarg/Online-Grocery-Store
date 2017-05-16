@@ -13,42 +13,48 @@ $(document).ready(function() {
 
 		if (name.length > 0 && email.length > 0 && contact.length > 0 && password.length > 0 && confirm.length > 0) {
 			if (regex.test(email)) {
-				if (password === confirm) {
+				if(contact.length == 10) {
+					if (password === confirm) {
 
-					const formData = {
-						name: name,
-						email: email,
-						mobile: contact,
-						password: password
+						const formData = {
+							name: name,
+							email: email,
+							mobile: contact,
+							password: password
+						}
+						
+						$.ajax({
+							url: "/user/new",
+							type: "POST",
+							dataType: "json",
+							data: JSON.stringify(formData),
+							success: function() {
+								$("#error-create").addClass("hidden")						
+								$("#success-create").removeClass("hidden");
+
+								setTimeout(() => {
+									window.location.href =" /user/dashboard";
+								}, 2500);
+							},
+							error: function (xhr, ajaxOptions, thrownError) {
+								$("#success-create").addClass("hidden");
+								$("#error-create").removeClass("hidden");
+								
+								if(xhr.status === 400) {	// receiving 400 status code
+									$("#error-create-message").html("This email id is already registered");
+								}
+							},
+							contentType: "application/json"
+						});
+					} else {
+						$("#success-create").addClass("hidden");
+						$("#error-create").removeClass("hidden");
+						$("#error-create-message").html("Password does not match the confirm password.");
 					}
-					
-					$.ajax({
-						url: "/user/new",
-						type: "POST",
-						dataType: "json",
-						data: JSON.stringify(formData),
-						success: function() {
-							$("#error-create").addClass("hidden")						
-							$("#success-create").removeClass("hidden");
-
-							setTimeout(() => {
-								window.location.href =" /user/dashboard";
-							}, 2500);
-						},
-						error: function (xhr, ajaxOptions, thrownError) {
-							$("#success-create").addClass("hidden");
-							$("#error-create").removeClass("hidden");
-							
-							if(xhr.status === 400) {	// receiving 400 status code
-								$("#error-create-message").html("This email id is already registered");
-							}
-						},
-						contentType: "application/json"
-					});
 				} else {
 					$("#success-create").addClass("hidden");
 					$("#error-create").removeClass("hidden");
-					$("#error-create-message").html("Password does not match the confirm password.");
+					$("#error-create-message").html("Invalid contact number.");
 				}
 			} else {
 				$("#success-create").addClass("hidden");

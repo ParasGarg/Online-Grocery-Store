@@ -8,7 +8,7 @@
 		<!-- title --> 
         <title>{{ mainTitle }} Online Grocery Store</title>
 		<!-- stylesheets -->
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="/public/css/alerts.css">		
         <link rel="stylesheet" href="/public/css/main/header.css">		
@@ -16,7 +16,7 @@
 		<!-- scripts -->
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 
@@ -57,25 +57,29 @@
 									</li>
 								</ul>
 							
-								<form class="navbar-form navbar-left" action="/product/search" method="get" enctype='application/json'>
+								<form class="navbar-form navbar-left" action="/product/search" method="get">
 									<div class="form-group" id="form-search">
-										<input type="text" class="form-control" name="keyword" placeholder="Search">
+										<input type="text" id="searchbar" class="form-control" name="keyword" placeholder="Search">
 									</div>
 									<button type="submit" class="btn btn-default">Submit</button>
 								</form>
+								<label for="searchbar"></label>
 
 								<ul class="nav navbar-nav navbar-right">
 									{{#if user}}
 										<li>
-											<a href="/user/dashboard/cart"class="cart-items-number">
-												<!-- span>{{ cartSize }}</span -->
+											<a href="/user/dashboard/cart" class="cart-items-number">
+												<span id="cart-size">{{#if user.cartLen}}<span class="cart">{{ user.cartLen }}</span> {{/if}}</span>
 												<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 												Cart
 											</a>
 										</li>
 
 										<li class="dropdown">
-											<a href="/user/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome {{user.name}}!<span class="caret"></span></a>
+											<a href="/user/dashboard" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+												Welcome <span id="user-identity">{{user.alias}}!</span>
+													<span class="caret"></span>
+											</a>
 											<ul class="dropdown-menu">
 												<li><a href="/user/dashboard/account"><i class="fa fa-cog" aria-hidden="true"></i>Account</a></li>
 												<li role="separator" class="divider"></li>
@@ -84,6 +88,8 @@
 												<li><a href="/user/dashboard/wallet"><i class="fa fa-google-wallet" aria-hidden="true"></i>Wallet</a></li>
 												<li role="separator" class="divider"></li>
 												<li><a href="/user/dashboard/order-history"><i class="fa fa-shopping-basket" aria-hidden="true"></i>Order History</a></li>
+												<li role="separator" class="divider"></li>
+												<li><a href="/support/subscription/status"><i class="fa fa-newspaper-o" aria-hidden="true"></i>Newsletters</a></li>
 												<li role="separator" class="divider"></li>
 												<li><a onclick="javascript: logout()" href="#"><i class="fa fa-power-off" aria-hidden="true"></i>Logout</a></li>
 											</ul>
@@ -121,22 +127,23 @@
 					
 					<!-- about us starts from here -->
 					<div class="col-md-3">
-						<div class="row"><h6>About Project</h6></div>
+						<div class="row"><h3>About Project</h3></div>
 						<div class="row">
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
+							<p>Online Grocery Store is an eCommerce based web application for our Web Programming project. We had developed a sample in which user can search and find necessary information about any grocery item, can proceed to checkout to buy products.
+								User can create an account, update personal information, can check its past activities, orders and transactions, and cart items.
 							<p><i class="fa fa-map-pin"></i>Stevens Institute of Technology, NJ</p>
-							<p><i class="fa fa-envelope"></i>info@ogs.com</p>
 						</div>
 						
 					</div>
 					<!-- about us ends here -->
 					
 					<!-- contact us form starts from here -->
+					<script src="/public/js/support/contact-form-validation.js"></script>
 					<div class="col-md-3 col-md-offset-1">
-						<div class="row"><h6>Contact Us</h6></div>
+						<div class="row"><h3>Contact Us</h3></div>
 						
 						<div class="row">
-							<form method="post" action="/support/contact-us/" id="form-contact-us">
+							<form id="form-contact-us">
 								<div class="row">
 
 									<div class="col-md-12 inp-row-margin">
@@ -147,8 +154,13 @@
 
 									<div class="col-md-12 inp-row-margin">
 										<div class="row">
-											<input type="text" name="email" id="contact-email" class="form-control inp-equal-width" placeholder="Email Id" />
-											<input type="text" name="mobile" id="contact-mobile" class="form-control inp-equal-width" placeholder="Contact Number" />
+											<input type="text" name="email" id="contact-email" class="form-control" placeholder="Email Id" />
+										</div>
+									</div>
+
+									<div class="col-md-12 inp-row-margin">
+										<div class="row">
+											<input type="text" name="mobile" id="contact-mobile" class="form-control" placeholder="Contact Number" maxlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
 										</div>
 									</div>
 
@@ -161,17 +173,19 @@
 									<div class="col-md-12 inp-row-margin">
 										<div class="row">
 											<div class="col-md-3" style="padding-left: 0;">
-												<input type="submit" id="btn-submit" class="btn btn-default btn-full" value="Send" />
+												<input type="button" id="btn-send" class="btn btn-default btn-full" value="Send" />
 											</div>
+
+											<!-- alert notification -->
 											<div class="col-md-9" style="padding-left: 0;">
-												<p class="error">
-													<i class="fa fa-close error"></i>
-													Invalid email id
-												</p>
-												<p class="success">
-													<i class="fa fa-check success"></i>													
-													Message sent successfully
-												</p>
+												<div id="error-contact" class="alert error hidden">
+														<i class="fa fa-close error"></i>
+														<strong id="error-contact-message"></strong>
+												</div>
+												<div id="success-contact" class="alert success hidden">
+														<i class="fa fa-check success"></i>
+														<strong>Message sent.</strong>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -180,20 +194,28 @@
 							</form>
 						</div>
 					</div>
+
+					<label for="contact-name"></label>
+					<label for="contact-email"></label>
+					<label for="contact-mobile"></label>
+					<label for="contact-description"></label>
 					<!-- contact us form ends here -->
 
 					<!-- follow-us and subscription links starts from here -->
 					<div class="col-md-3 col-md-offset-1">
-						<div class="row"><h6>Follow Us</h6></div>
+						<div class="row"><h3>Follow Us</h3></div>
 						<div class="row">
 							<div data-href="https://github.com/ParasGarg/Online-Grocery-Store" data-tabs="repository" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-								<blockquote cite="https://github.com/ParasGarg/Online-Grocery-Store"><a href="https://github.com/ParasGarg/Online-Grocery-Store">GitHub</a></blockquote>
+								<blockquote cite="https://github.com/ParasGarg/Online-Grocery-Store">
+									<i class="fa fa-github"></i>
+									<a href="https://github.com/ParasGarg/Online-Grocery-Store" target="_blank">GitHub</a>
+								</blockquote>
 							</div>
 						</div>
 
 						<br/>
 						<script src="/public/js/support/subscription-form-validation.js"></script>
-						<div class="row"><h6>Subscribe Us</h6></div>
+						<div class="row"><h3>Subscribe</h3></div>
 						<div class="row">
 							<form method="post" id="form-subscribe">
 								<input type="text" name="email" id="subscribe-email" class="form-control" placeholder="Emai Id" />
@@ -203,11 +225,11 @@
 								<div class="row inp-row-margin">
 									<div class="col-md-12">
 										<div id="error-subscribe" class="alert error hidden">
-										<i class="fa fa-close error" id="btn-error-close" onclick="close()"></i>
+										<i class="fa fa-close error"></i>
 										<strong id="error-subscribe-message"></strong>
 										</div>
 										<div id="success-subscribe" class="alert success hidden">
-										<i class="fa fa-spinner fa-pulse fa-fw success"></i>
+										<i class="fa fa-check success"></i>
 										<strong>You have successfully subscribed for our notifications.</strong>
 										</div>
 									</div>
@@ -216,6 +238,7 @@
 							</form>
 						</div>
 					</div>
+					<label for="subscribe-email"></label>					
 					<!-- follow-us and subscription links ends here -->	
 
 				</div>		

@@ -15,18 +15,22 @@ $(document).ready(function() {
 		const cvv = $("#card-cvv").val();
 
 		if (cardName.length > 0 && cardNumber.length > 0 && expiryMonth.length > 0 && expiryYear.length > 0 && cvv.length > 0
-				&& cardType.length > 0 && cardIssuer.length > 0) {
+				&& cardType.length > 0 /*&& cardIssuer.length > 0*/) {
 
 			if (cardNumber.length == 16) {
 				if ((expiryMonth >= 1  && expiryMonth <= 12) && (expiryYear >= 2017 && expiryYear <= 2051)) {
-					if ((cvv >= 1 && cvv <= 9999) && (cvv.length >= 3 && cvv.length <=4)) {
-
-						$("#form-payment-detail").submit();
-						
+					if((expiryYear == 2017 && expiryMonth > 4) || (expiryYear > 2017)) {
+						if ((cvv >= 1 && cvv <= 9999) && (cvv.length >= 3 && cvv.length <=4)) {
+							$("#form-payment-detail").submit();
+						} else {
+							$("#success-add-cash").addClass("hidden");
+							$("#error-add-cash").removeClass("hidden");
+							$("#error-add-cash-message").html("Invalid CVV");
+						}
 					} else {
 						$("#success-add-cash").addClass("hidden");
 						$("#error-add-cash").removeClass("hidden");
-						$("#error-add-cash-message").html("Invalid CVV");
+						$("#error-add-cash-message").html("Card expiry date has been passed");
 					}
 				} else {
 					$("#success-add-cash").addClass("hidden");
