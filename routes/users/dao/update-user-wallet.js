@@ -79,18 +79,23 @@ router.put('/', isLoggedIn, (req, res) => {
 		}
 
 		usersWalletData.addCash(email, JSON.parse(amount)).then((walletInfo) => {
-			walletTransaction.logTransaction(email, amount, cardData, status, remark).then((transactions) => {		// logging transaction
-				
-				req.user.wallet = walletInfo.wallet;
-				let transactionsList = transactions.reverse();
+			if (walletInfo == false){
+				res.json({ success: false, error: "Total wallet limit exceed. Maximum $10000 are allowed." })
+			} else if (walletInfo) {
+				walletTransaction.logTransaction(email, amount, cardData, status, remark).then((transactions) => {		// logging transaction
+					
+					req.user.wallet = walletInfo.wallet;
+					let transactionsList = transactions.reverse();
 
-				let data = {
-					amount: walletInfo.wallet,
-					transactions: transactionsList
-				}
+					let data = {
+						amount: walletInfo.wallet,
+						success: true,
+						transactions: transactionsList
+					}
 
-				res.json(data);
-			});
+					res.json(data);
+				});
+			}
 		});
 	})		
 	.catch((error) => {     // rendering error page
@@ -139,20 +144,31 @@ router.post('/', isLoggedIn, (req, res) => {
 
 	// checking for user wallet updates
 	usersWalletData.addCash(email, JSON.parse(amount)).then((walletInfo) => {
-		walletTransaction.logTransaction(email, amount, cardData, status, remark).then((transactions) => {		// logging transaction
-			
-			req.user.wallet = walletInfo.wallet;
-			let transactionsList = transactions.reverse();
-			let transId = transactionsList[0]._id;
 
-			res.render('payment/payment-confirmation', {
-				mainTitle: "Payment Successful •",
-				user: req.user,
-				redirectURL: "/user/dashboard/wallet",
-				amount: amount,
-				transactionId: transId
+		if (walletInfo == false){
+			res.render('alerts/error', {
+				mainTitle: "Bad Request •",
+				code: 400,
+				message: "Total wallet limit exceed. Maximum $10000 are allowed.",
+				url: req.originalUrl,
+				user: req.user
 			});
-		});
+		} else if (walletInfo) {
+			walletTransaction.logTransaction(email, amount, cardData, status, remark).then((transactions) => {		// logging transaction
+			
+				req.user.wallet = walletInfo.wallet;
+				let transactionsList = transactions.reverse();
+				let transId = transactionsList[0]._id;
+
+				res.render('payment/payment-confirmation', {
+					mainTitle: "Payment Successful •",
+					user: req.user,
+					redirectURL: "/user/dashboard/wallet",
+					amount: amount,
+					transactionId: transId
+				});
+			});
+		}
 	})
 	.catch((error) => {     // rendering error page
 		res.render('alerts/error', {

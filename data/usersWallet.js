@@ -41,16 +41,22 @@ module.exports = walletControllers = {
 
                 let userChanges = {};
                 let availableCash = walletInfo.wallet;
-			
+                let totalWalletCash = 0;
+
                 // checking for values to update
                 if (newCash) {
-                    userChanges['wallet'] = Math.round(newCash * 100 + availableCash * 100)/100;
+                    totalWalletCash = Math.round(newCash * 100 + availableCash * 100)/100;
                 }
 
-                // updating user information into the collection
-                return usersCollection.updateOne({ _id: email }, { $set: userChanges }).then(() => {
-                    return walletControllers.getCashById(email);
-                });
+                if (totalWalletCash < 10000) {
+                    // updating user information into the collection
+                    userChanges['wallet'] = totalWalletCash;
+                    return usersCollection.updateOne({ _id: email }, { $set: userChanges }).then(() => {
+                        return walletControllers.getCashById(email);
+                    });
+                } else {
+                    return false;
+                }
             });
         })
         .catch(() => {  // returning a reject promise

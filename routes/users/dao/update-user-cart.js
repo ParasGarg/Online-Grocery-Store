@@ -96,12 +96,24 @@ router.put('/', isLoggedIn, (req, res) => {
                 res.json({ success: false });
         }
 
-        usersCartData.updateItemQty(email, prodId, quantity).then((userInfo) => {
+        usersCartData.getProductById(email, prodId).then((isProduct) => {
+                if (isProduct != null) {
+                        usersCartData.updateItemQty(email, prodId, quantity).then((userInfo) => {
 
-                req.user = userInfo;
-                req.user.cartLen = userInfo.cartLen;
-                res.json({ success: true });
-                
+                                req.user = userInfo;
+                                req.user.cartLen = userInfo.cartLen;
+                                res.json({ success: true });
+                                
+                        });
+                } else {
+                        res.render('alerts/error', {
+                                mainTitle: "Bad Request •",
+                                code: 400,
+                                message: "Invalid product id",
+                                url: req.originalUrl,
+                                user: req.user
+                        });
+                }
         })
         .catch((error) => {     // rendering error page
                 res.render('alerts/error', {
@@ -120,10 +132,43 @@ router.delete('/', isLoggedIn, (req, res) => {
         let prodId = xss(req.body.id);
         let email = xss(req.user._id);
 
-        usersCartData.deleteItemFromCart(email, prodId).then((userInfo) => {
-                req.user = userInfo;
-                req.user.cartLen = userInfo.cartLen;
-                res.json({ success: true, cartSize: userInfo.cartLen });
+        usersData.getUserById(email).then((userDetails) => {
+
+                let isItemExists = false;
+                if (userDetails != null) {
+                    for(var i = 0; i < userDetails.cart.length; i++ ) {
+                        if (userDetails.cart[i]._id === prodId) {
+
+                                isItemExists = true;
+                                usersCartData.deleteItemFromCart(email, prodId, userDetails.cart[i].qty).then((userInfo) => {
+
+                                        req.user = userInfo;
+                                        req.user.cartLen = userInfo.cartLen;
+                                        res.json({ success: true, cartSize: userInfo.cartLen });
+                                });
+                            break;
+                        }
+                    }
+
+                    if (isItemExists == false) {
+                        res.render('alerts/error', {
+                                mainTitle: "Bad Request •",
+                                code: 400,
+                                message: "Invalid product id",
+                                url: req.originalUrl,
+                                user: req.user
+                        });
+                    }
+
+                } else {
+                        res.render('alerts/error', {
+                                mainTitle: "Bad Request •",
+                                code: 400,
+                                message: "Invalid user",
+                                url: req.originalUrl,
+                                user: req.user
+                        }); 
+                }
         })
         .catch((error) => {     // rendering error page
                 res.render('alerts/error', {

@@ -26,6 +26,13 @@ const users = mongoDbCollection.users;
 
 module.exports = cartControllers = {
 
+    //------------------------ fetch a product information for a user by product id
+    getProductById: (email, prod) => {
+        return users().then((usersCollection) => {
+            return usersCollection.findOne({ _id:email, "cart._id":prod });
+        });
+    },
+
     //------------------------ fetch a all cart information for a user
     getAllCartItems: (email) => {
         return users().then((usersCollection) => {  // returning all found json document else returning null
@@ -118,10 +125,10 @@ module.exports = cartControllers = {
     },
 
     //------------------------ delete a cart information
-    deleteItemFromCart: (email, itemId) => {
+    deleteItemFromCart: (email, itemId, itemQtyToDelete) => {
         return users().then((usersCollection) => {
             return usersCollection.update({ _id:email }, { $pull: { cart: { _id:itemId } } }).then((deletedCartInfo) => {
-
+               
                 if (deletedCartInfo.deletedCount === 0) {
                     return "not deleted";
                 } else {
@@ -129,7 +136,7 @@ module.exports = cartControllers = {
 
                         // decrease cart length
                         let userChanges = {
-                            cartLen: userInfo.cartLen - 1
+                            cartLen: userInfo.cartLen - itemQtyToDelete
                         }
 
                         // updating user collection

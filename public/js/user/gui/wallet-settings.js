@@ -6,36 +6,46 @@ $(document).ready(function() {
 
 		const regex = /^[A-Za-z]+$/;
 		const amtRegex = /^\d+(\.\d{1,2})?$/;
+		const amtZeroRegex = /^[1-9][0-9]*$/;
 		const amount = $("#amount").val();
 		const card = $("#pay-card").val();
 		const form = $("#form-user-wallet");
 
 		if (amount.length > 0 && card != null) {
-			if (amount > 0) {
-				if (!regex.test(amount) && amtRegex.test(amount)) {
+			if (amount > 0 && amount < 1001) {
+				if (!regex.test(amount) && amtRegex.test(amount) && amtZeroRegex.test(amount)) {
+						const formData = {
+							amount: amount,
+							action: "Credit",
+							description: "Added cash in wallet",
+							cardUsed: card
+						}
 
-					const formData = {
-						amount: amount,
-						action: "Credit",
-						description: "Added cash in wallet",
-						cardUsed: card
-					}
-
-					$.ajax({
-						url: "/user/update/wallet",
-						type: "PUT",
-						dataType: "json",
-						data: JSON.stringify(formData),
-						success: function(data) {
-							$("#error-wallet").addClass("hidden");
-							$("#success-wallet").removeClass("hidden");
-							$("#wallet-amount").html(`<i class="fa fa-dollar"></i> ` + data.amount);
-							$("#wallet-transaction-panel").load(location.href + " #wallet-transaction-panel");
-							$("#amount").val("");
-							$("#pay-card").val("Select card to pay");
-						},
-						contentType: "application/json"
-					});
+						$.ajax({
+							url: "/user/update/wallet",
+							type: "PUT",
+							dataType: "json",
+							data: JSON.stringify(formData),
+							success: function(data) {
+								if (data.success == false) {
+									$("#success-wallet").addClass("hidden");
+									$("#error-wallet").removeClass("hidden");
+									$("#amount").val("");
+									$("#error-wallet-message").html("Total wallet limit exceed. Maximum $10000 are allowed.");
+								} else {
+									$("#error-wallet").addClass("hidden");
+									$("#success-wallet").removeClass("hidden");
+									$("#wallet-amount").html(`<i class="fa fa-dollar"></i> ` + data.amount);
+									$("#wallet-transaction-panel").load(location.href + " #wallet-transaction-panel");
+									$("#amount").val("");
+									$("#pay-card").val("Select card to pay");
+								}
+							},
+							error: function (xhr, ajaxOptions, thrownError) {
+								alert(thrownError);
+							},
+							contentType: "application/json"
+						});
 				} else {
 					$("#success-wallet").addClass("hidden");
 					$("#error-wallet").removeClass("hidden");
@@ -45,7 +55,7 @@ $(document).ready(function() {
 			} else {
 				$("#success-wallet").addClass("hidden");
 				$("#error-wallet").removeClass("hidden");
-				$("#error-wallet-message").html("Invalid Amount");
+				$("#error-wallet-message").html("Amount should be in between $1 and $1000");
 			}
 		} else {
 			$("#success-wallet").addClass("hidden");
