@@ -4,6 +4,9 @@ Online Grocery Store is an eCommerce based web application for our Web Programmi
 # GitHub Repository
 https://github.com/ParasGarg/Online-Grocery-Store/
 
+# Project Presentation
+https://drive.google.com/file/d/0B79vfV-wa7EZME9WVmsxTEpzMjg/view?usp=sharing
+
 # Technologies Used
 Frontend Languages: HTML, CSS, and Client-Side JavaScript
 Frontend Framework: Bootstrap
